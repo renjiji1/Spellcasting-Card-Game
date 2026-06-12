@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class Agent : MonoBehaviour
+public class Agent : Entity
 {
     [SerializeField] protected int turnIndx = 0; // 0 for player, 1 for enemy
     protected int totalDamage = 0;
@@ -9,10 +9,12 @@ public class Agent : MonoBehaviour
     [SerializeField] protected const int maxMana = 10;
     protected int mana = maxMana;
     protected List<GameObject> Hand = new List<GameObject>();
-    protected virtual void Start()
-    {     
-    }
-    protected virtual void Update()
+    protected override void Start()
     {
+        base.Start();
+    }
+    protected override void Update()
+    {
+        base.Update();
     }
 }

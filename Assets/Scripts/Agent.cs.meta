@@ -1,2 +1,14 @@
 fileFormatVersion: 2
 guid: f2332bf3fe576ec4a9f557d409161f42
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ProjectionSprite: {fileID: 469576451523655696, guid: f0abcb73c33245c4d9b3a2e0040b65cc, type: 3}
+  - FrontSprite: {instanceID: 0}
+  - BackSprite: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

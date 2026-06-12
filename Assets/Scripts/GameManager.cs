@@ -5,6 +5,7 @@ using Object = UnityEngine.Object;
 
 public class GameManager : MonoBehaviour
 {
+    [NonSerialized] public bool paused = false;
     Player[] players;
     AI[] AIs;
     [NonSerialized] public int round = 0;
