@@ -2,23 +2,28 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Object = UnityEngine.Object;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+    [SerializeField] public GameObject Deck;
+    [SerializeField] GameObject RoundTxt;
     [NonSerialized] public bool paused = false;
-    Player[] players;
-    AI[] AIs;
+    [SerializeField] Player player;
+    [SerializeField] AI AIPlayer;
     [NonSerialized] public int round = 0;
+    [SerializeField] int roundWinsToWin = 3;
     [NonSerialized] public int turn = 0; // 0 for player, 1 for enemy
     public const int maxDuels = 10;
     [NonSerialized] public int currentDuelNum = 0;
-    [SerializeField] float duelReadyUpTime = 5f;
-    float duelReadyUpTimer = 0;
-    [NonSerialized] public List<GameObject> Deck = new List<GameObject>();
+    void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
-        players = Object.FindObjectsByType<Player>(FindObjectsSortMode.None);
-        AIs = Object.FindObjectsByType<AI>(FindObjectsSortMode.None);
+        StartRound();
     }
 
     public void EndTurn()
@@ -27,7 +32,7 @@ public class GameManager : MonoBehaviour
         if (turn == 0)
         {
             currentDuelNum++;
-            StartDuelCountdown();
+            StartDuel();
         }
         
         if(currentDuelNum > maxDuels)
@@ -35,43 +40,39 @@ public class GameManager : MonoBehaviour
             EndRound();
         }
     }
-    void StartDuelCountdown()
-    {
-        duelReadyUpTimer = duelReadyUpTime;
-        foreach (Player player in players)
-        {
-            player.waitForDuelReadyUp = true;
-        }
-    }
+
     void StartDuel()
     {
         // Logic to start a duel between the player and the AI
+    }
+    void StartRound()
+    {
+        Deck.GetComponent<Deck>().RunStart();
+        Deck.GetComponent<Deck>().StartShuffle();
     }
     void EndRound()
     {
         round++;
         turn = 0;
         currentDuelNum = 0;
+        if(player.roundWins >= 3)
+        {
+            Win();
+            return;
+        }
+        if(AIPlayer.roundWins >= 3)
+        {
+            Lose();
+            return;
+        }
+        StartRound();
     }
+    void Win() {}
+    void Lose() {}
+    
+
     void Update()
     {
-        bool allPlayersReady = true;
-        if(duelReadyUpTimer > 0)
-        {
-            duelReadyUpTimer -= Time.deltaTime;
-            foreach (Player player in players)
-            {
-                if (!player.readyForDuel) 
-                {
-                    allPlayersReady = false;
-                    break;
-                }
-            }
-        }
-        
-        if(duelReadyUpTimer <= 0 || allPlayersReady)        {
-            StartDuel();
-        }
         
     }
 }

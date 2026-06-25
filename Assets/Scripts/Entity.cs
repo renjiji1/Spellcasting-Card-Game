@@ -17,7 +17,7 @@ public class Entity : MonoBehaviour
     [Header("Depth Projection Settings")]
     [SerializeField] protected bool depthProjection = true;
     [ShowIf("depthProjection")]
-    [SerializeField] protected float thickness = .004f;
+    [SerializeField] public float thickness = .004f;
     [ShowIf("depthProjection")]
     [SerializeField] protected float projectionOffset = .0005f;
     [ShowIf("depthProjection")] 
@@ -28,13 +28,14 @@ public class Entity : MonoBehaviour
     [SerializeField] protected GameObject BackSprite;
     Sprite currentSprite;
     protected List<GameObject> projectionSprites = new List<GameObject>();
+    protected bool startHasRan = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
-        gameManager = Object.FindObjectsByType<GameManager>(FindObjectsSortMode.None)[0];
+        gameManager = GameManager.instance;
         if (depthProjection)
         {
             currentSprite = FrontSprite.GetComponent<SpriteRenderer>().sprite;   
@@ -47,6 +48,7 @@ public class Entity : MonoBehaviour
             }
             BackSprite.transform.localPosition = new Vector3(0, 0, -thickness*2);
         }
+        startHasRan = true;
     }
 
     // Update is called once per frame
@@ -54,7 +56,10 @@ public class Entity : MonoBehaviour
     {
         if (RunUpdate())
         {
-            UpdateDepthProjections();
+            if(depthProjection)
+            {
+                UpdateDepthProjections();
+            }
         }
     }
     protected virtual void UpdateDepthProjections()

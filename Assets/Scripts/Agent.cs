@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class Agent : Entity
 {
@@ -8,6 +9,7 @@ public class Agent : Entity
     protected int currentDamage = 0;
     [SerializeField] protected const int maxMana = 10;
     protected int mana = maxMana;
+    [NonSerialized] public int roundWins = 0;
     protected List<GameObject> Hand = new List<GameObject>();
     protected override void Start()
     {
