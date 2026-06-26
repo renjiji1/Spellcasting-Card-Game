@@ -10,7 +10,8 @@ public class Agent : Entity
     [SerializeField] protected const int maxMana = 10;
     protected int mana = maxMana;
     [NonSerialized] public int roundWins = 0;
-    protected List<GameObject> Hand = new List<GameObject>();
+    protected List<Card> HandOfCards = new List<Card>();
+    public GameObject Hand;
     protected override void Start()
     {
         base.Start();
@@ -18,5 +19,9 @@ public class Agent : Entity
     protected override void Update()
     {
         base.Update();
+    }
+    public virtual void AddCard(Card card)
+    {
+        HandOfCards.Add(card);
     }
 }

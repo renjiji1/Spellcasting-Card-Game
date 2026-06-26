@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System;
 using Object = UnityEngine.Object;
@@ -10,9 +11,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Deck;
     [SerializeField] GameObject RoundTxt;
     [NonSerialized] public bool paused = false;
-    [SerializeField] Player player;
-    [SerializeField] AI AIPlayer;
-    [NonSerialized] public int round = 0;
+    [SerializeField] public Player player;
+    [SerializeField] public AI AIEnemy;
+    [NonSerialized] public int round = 1;
     [SerializeField] int roundWinsToWin = 3;
     [NonSerialized] public int turn = 0; // 0 for player, 1 for enemy
     public const int maxDuels = 10;
@@ -48,7 +49,16 @@ public class GameManager : MonoBehaviour
     void StartRound()
     {
         Deck.GetComponent<Deck>().RunStart();
-        Deck.GetComponent<Deck>().StartShuffle();
+        StartCoroutine(Deck.GetComponent<Deck>().StartShuffle());
+        RoundTxt.GetComponent<TMP_Text>().text = "Round " + round;
+        RoundTxt.SetActive(true);
+        StartCoroutine(DeactivateRoundTxt());
+    }
+    IEnumerator DeactivateRoundTxt()
+    {
+        float animLength = RoundTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length;
+        yield return new WaitForSeconds(animLength);
+        RoundTxt.SetActive(false);
     }
     void EndRound()
     {
@@ -60,7 +70,7 @@ public class GameManager : MonoBehaviour
             Win();
             return;
         }
-        if(AIPlayer.roundWins >= 3)
+        if(AIEnemy.roundWins >= 3)
         {
             Lose();
             return;

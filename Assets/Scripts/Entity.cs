@@ -14,6 +14,8 @@ public class Entity : MonoBehaviour
     protected Animator anim;
     protected Collider2D col;
     protected GameManager gameManager;
+    protected Player player;
+    protected AI AIEnemy;
     [Header("Depth Projection Settings")]
     [SerializeField] protected bool depthProjection = true;
     [ShowIf("depthProjection")]
@@ -36,6 +38,8 @@ public class Entity : MonoBehaviour
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
         gameManager = GameManager.instance;
+        player = gameManager.player;
+        AIEnemy = gameManager.AIEnemy;
         if (depthProjection)
         {
             currentSprite = FrontSprite.GetComponent<SpriteRenderer>().sprite;   
