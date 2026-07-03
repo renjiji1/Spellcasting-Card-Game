@@ -15,6 +15,9 @@ public class Deck : Entity
     [SerializeField] float delayBetweenCardShuffles = .05f;
     [SerializeField] float delayBetweenCardDealings = .1f;
     [NonSerialized] public bool isShuffling = false;
+    [SerializeField] float enterShuffleAnimSpeed = 10;
+    [SerializeField] float enterShufflePosXOffset = 10;
+    [SerializeField] float exitShuffleAnimSpeed = 10;
     GameObject ShuffleRotationAxis;
 
     protected override void Start()
@@ -33,7 +36,6 @@ public class Deck : Entity
     }
     public void RunStart() {Start();}
 
-    // Update is called once per frame
     protected override void Update()
     {
         base.Update();
@@ -47,7 +49,7 @@ public class Deck : Entity
         isShuffling = true;
         foreach(Card card in DeckOfCards)
         {
-            card.BeginShuffle();
+            card.BeginShuffle(enterShufflePosXOffset, enterShuffleAnimSpeed);
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
         StartCoroutine(ExitShuffle());
@@ -55,37 +57,44 @@ public class Deck : Entity
     IEnumerator ExitShuffle()
     {
         List<Card> tmpDeck = new List<Card>(DeckOfCards);
-        DeckOfCards.Clear();
+        List<Card> newDeck = new List<Card>();
         for(int i = 0; i < DeckOfCards.Count; i++)
         {
             int rng = Random.Range(0, tmpDeck.Count);
             Card choosenCard = tmpDeck[rng];
-            DeckOfCards.Add(choosenCard);
+            newDeck.Add(choosenCard);
+            tmpDeck.RemoveAt(rng);
             Vector3 cardPos = new Vector3(transform.position.x, transform.position.y + (i+1) * choosenCard.thickness, transform.position.z);
-            choosenCard.ExitShuffle(cardPos);
+            choosenCard.ExitShuffle(cardPos, exitShuffleAnimSpeed);
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
-        DeckOfCards.Reverse();
+        newDeck.Reverse();
+        DeckOfCards = newDeck;
         isShuffling = false;
         StartCoroutine(DealCards());
     }
     IEnumerator DealCards()
     { 
+        List<Card> tmpDeck = new List<Card>(DeckOfCards);
         for(int i = 0; i < player.Hand.transform.childCount*2; i += 2)
         {
-            Quaternion playerSideRotation = Quaternion.Euler(0,0,player.Hand.transform.rotation.z);
-            Vector3 playerTargetPos = player.Hand.transform.GetChild(Mathf.FloorToInt(i/2)).position;
-            DeckOfCards[i].StartMoving(playerTargetPos, playerSideRotation, fn: () =>
+            Transform playerCardTransform = player.Hand.transform.GetChild(i/2);
+            Vector3 playerTargetPos = playerCardTransform.position;
+            Card playerCard = tmpDeck[i];
+            playerCard.StartMoving(playerTargetPos, playerCardTransform.rotation, fn: () =>
             {
-                player.AddCard(DeckOfCards[i]);
-                DeckOfCards.RemoveAt(i);
+                player.AddCard(playerCard);
+                DeckOfCards.Remove(playerCard);
+                playerCard.HandTransform = playerCardTransform;
             });
-            Quaternion enemySideRotation = Quaternion.Euler(0,180, AIEnemy.Hand.transform.rotation.z);
-            Vector3 enemyTargetPos = AIEnemy.Hand.transform.GetChild(Mathf.FloorToInt(i/2)).position;
-            DeckOfCards[i+1].StartMoving(enemyTargetPos, playerSideRotation, fn: () =>
+            Transform enemyCardTransform = AIEnemy.Hand.transform.GetChild(i/2);
+            Vector3 enemyTargetPos = enemyCardTransform.position;
+            Card enemyCard = tmpDeck[i+1];
+            enemyCard.StartMoving(enemyTargetPos, enemyCardTransform.rotation, fn: () =>
             {
-                AIEnemy.AddCard(DeckOfCards[i+1]);
-                DeckOfCards.RemoveAt(i+1);
+                AIEnemy.AddCard(enemyCard);
+                DeckOfCards.Remove(enemyCard);
+                enemyCard.HandTransform = enemyCardTransform;
             });
             yield return new WaitForSeconds(delayBetweenCardDealings);
         }

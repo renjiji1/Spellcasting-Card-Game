@@ -14,6 +14,7 @@ public class Entity : MonoBehaviour
     protected Animator anim;
     protected Collider2D col;
     protected GameManager gameManager;
+    protected Camera cam;
     protected Player player;
     protected AI AIEnemy;
     [Header("Depth Projection Settings")]
@@ -37,6 +38,7 @@ public class Entity : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
+        cam = Camera.main.GetComponent<Camera>();
         gameManager = GameManager.instance;
         player = gameManager.player;
         AIEnemy = gameManager.AIEnemy;
@@ -47,10 +49,14 @@ public class Entity : MonoBehaviour
             {
                 GameObject projectionSpriteInstance = Instantiate(ProjectionSprite, transform.position, transform.rotation, FrontSprite.transform);
                 projectionSpriteInstance.transform.localPosition = new Vector3(0, 0, projectionOffset * (i + 1));
+                projectionSpriteInstance.transform.localRotation = Quaternion.identity;
                 projectionSpriteInstance.GetComponent<SpriteRenderer>().sprite = currentSprite;
                 projectionSprites.Add(projectionSpriteInstance);
             }
-            BackSprite.transform.localPosition = new Vector3(0, 0, -thickness*2);
+            if(BackSprite != null)
+            {
+                BackSprite.transform.localPosition = new Vector3(0, 0, -thickness * 2);
+            }
         }
         startHasRan = true;
     }

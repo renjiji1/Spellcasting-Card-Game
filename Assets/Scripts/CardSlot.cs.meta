@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f32133e26f951374e808b57fd94c9546
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - ProjectionSprite: {instanceID: 0}
+  - FrontSprite: {instanceID: 0}
+  - BackSprite: {instanceID: 0}
+  - primalIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  - divineIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  - arcaneIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
