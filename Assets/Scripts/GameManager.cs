@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator ChooseNewSupremeCard()
     {
-        yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling);
+        yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing);
         bool canChooseSupremeCard = false;
         if(SupremeCard != null)
         {

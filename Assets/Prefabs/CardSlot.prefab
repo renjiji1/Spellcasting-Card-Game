@@ -113,9 +113,9 @@ MonoBehaviour:
   BackSprite: {fileID: 0}
   isPlayerSlot: 1
   source: 0
-  primalIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  divineIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  arcaneIcon: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  primalIcon: {fileID: 21300000, guid: 24d0cce455fdd4e4abbd06c640ddf776, type: 3}
+  divineIcon: {fileID: 21300000, guid: 9bde22f9c5240024c99241ee75aa41e3, type: 3}
+  arcaneIcon: {fileID: 21300000, guid: dcedb88859e452044b16a1808b2264a3, type: 3}
 --- !u!65 &747850657703741877
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -135,5 +135,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.13796909, y: 0.13970464, z: 0.016200926}
-  m_Center: {x: -0.0009700767, y: -0.00017697115, z: -0.0035616644}
+  m_Size: {x: 6.915717, y: 10.315323, z: 0.022818182}
+  m_Center: {x: 0.012274339, y: -0.02942085, z: 0.006199543}

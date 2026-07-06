@@ -11,12 +11,13 @@ public class Deck : Entity
 {
     [NonSerialized] public List<Card> DeckOfCards = new List<Card>();
     [Header("Deck")]
-    [SerializeField] Vector3 deckPosInsertOffset = new Vector3(0, .1f, 0);
+    [SerializeField] Vector3 deckPosInsertOffset = new Vector3(.1f, 0, 0);
     [SerializeField] float deckInsertDelay = 10;
     [SerializeField] float rotationAxisSpeed = 200;
     [SerializeField] float delayBetweenCardShuffles = .05f;
     [SerializeField] float delayBetweenCardDealings = .1f;
     [NonSerialized] public bool isShuffling = false;
+    [NonSerialized] public bool isDealing = false;
     [SerializeField] float enterShuffleAnimSpeed = 10;
     [SerializeField] float enterShufflePosXOffset = 10;
     [SerializeField] float exitShuffleAnimSpeed = 10;
@@ -59,7 +60,7 @@ public class Deck : Entity
             deckCard.StartMoving(targetPos);
         }
         yield return new WaitForSeconds(deckInsertDelay);
-        card.StartMoving(transform.position, Quaternion.Euler(0,0,180), fn: () => {
+        card.StartMoving(transform.position, Quaternion.Euler(90,0,180), fn: () => {
             DeckOfCards.Insert(rng, card);
             if(fn != null) fn.Invoke();
         });
@@ -116,6 +117,7 @@ public class Deck : Entity
     }
     IEnumerator DealCards()
     { 
+        isDealing = true;
         List<Card> tmpDeck = new List<Card>(DeckOfCards);
         for(int i = 0; i < player.Hand.transform.childCount*2; i += 2)
         {
@@ -139,6 +141,7 @@ public class Deck : Entity
             });
             yield return new WaitForSeconds(delayBetweenCardDealings);
         }
+        isDealing = false;
     }
 
 }
