@@ -24,4 +24,22 @@ public class Agent : Entity
     {
         HandOfCards.Add(card);
     }
+    public virtual void StartTurn()
+    {
+        
+    }
+    public virtual void EndRound()
+    {
+        mana = maxMana;
+        totalDamage = 0;
+    }
+    public virtual void WinRound()
+    {
+        EndRound();
+        roundWins++;
+    }
+    public virtual void LoseRound()
+    {
+        EndRound();
+    }
 }

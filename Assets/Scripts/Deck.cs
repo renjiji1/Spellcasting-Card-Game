@@ -11,6 +11,8 @@ public class Deck : Entity
 {
     [NonSerialized] public List<Card> DeckOfCards = new List<Card>();
     [Header("Deck")]
+    [SerializeField] Vector3 deckPosInsertOffset = new Vector3(0, .1f, 0);
+    [SerializeField] float deckInsertDelay = 10;
     [SerializeField] float rotationAxisSpeed = 200;
     [SerializeField] float delayBetweenCardShuffles = .05f;
     [SerializeField] float delayBetweenCardDealings = .1f;
@@ -43,6 +45,45 @@ public class Deck : Entity
         {
             ShuffleRotationAxis.transform.Rotate(new Vector3(0, Time.deltaTime * rotationAxisSpeed, 0));
         }
+    }
+    public IEnumerator InsertCardRandomlyIntoDeck(Card card, Action fn = null)
+    {
+        int rng = Random.Range(0, DeckOfCards.Count);
+        bool movedToInsertPos = false;
+        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(0,0,180), fn: () => movedToInsertPos = true);
+        yield return new WaitUntil(() => movedToInsertPos);
+        for(int i = rng; i < DeckOfCards.Count; i++)
+        {
+            Card deckCard = DeckOfCards[i];
+            Vector3 targetPos = new Vector3(card.transform.position.x, card.transform.position.y + card.thickness, card.transform.position.z);
+            deckCard.StartMoving(targetPos);
+        }
+        yield return new WaitForSeconds(deckInsertDelay);
+        card.StartMoving(transform.position, Quaternion.Euler(0,0,180), fn: () => {
+            DeckOfCards.Insert(rng, card);
+            if(fn != null) fn.Invoke();
+        });
+    }
+    public IEnumerator TakeCardRandomlyFromDeck(Vector3 targetPos, Quaternion? targetRot = null, Action<Card> fn = null)
+    {
+        int rng = Random.Range(0, DeckOfCards.Count);
+        Card card = DeckOfCards[rng];
+        bool movedToInsertPos = false;
+        card.StartMoving(transform.position + deckPosInsertOffset, fn: () => {
+            movedToInsertPos = true;
+            DeckOfCards.RemoveAt(rng);
+        });
+        yield return new WaitForSeconds(deckInsertDelay);
+        for(int i = rng; i < DeckOfCards.Count; i++)
+        {
+            Card deckCard = DeckOfCards[i];
+            Vector3 newPos = new Vector3(card.transform.position.x, card.transform.position.y - card.thickness, card.transform.position.z);
+            deckCard.StartMoving(newPos);
+        }
+        yield return new WaitUntil(() => movedToInsertPos);
+        card.StartMoving(targetPos, targetRot, fn: () => {
+            if(fn != null) fn.Invoke(card);
+        });
     }
     public IEnumerator StartShuffle()
     {
@@ -99,4 +140,5 @@ public class Deck : Entity
             yield return new WaitForSeconds(delayBetweenCardDealings);
         }
     }
+
 }

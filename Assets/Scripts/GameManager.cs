@@ -15,7 +15,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] public AI AIEnemy;
     [NonSerialized] public int round = 1;
     [SerializeField] int roundWinsToWin = 3;
-    [NonSerialized] public int turn = 0; // 0 for player, 1 for enemy
+    [NonSerialized] public int turn = 0; // number of turns that happened in the current duel
+    [NonSerialized] public GameObject currentPlayer; // the player whose turn it is
+    [NonSerialized] public Card SupremeCard;
+    [SerializeField] Transform SupremeCardSpawnPoint;
     public const int maxDuels = 10;
     [NonSerialized] public int currentDuelNum = 0;
     void Awake()
@@ -29,22 +32,25 @@ public class GameManager : MonoBehaviour
 
     public void EndTurn()
     {
-        turn = (turn + 1) % 2;
-        if (turn == 0)
+        turn++;
+        currentPlayer = currentPlayer == player.gameObject ? AIEnemy.gameObject : player.gameObject;
+        if (turn > 1)
         {
             currentDuelNum++;
+            turn = 0;
+            if(currentDuelNum > maxDuels)
+            {
+                EndRound();
+                return;
+            }
             StartDuel();
         }
-        
-        if(currentDuelNum > maxDuels)
-        {
-            EndRound();
-        }
+        currentPlayer.GetComponent<Agent>().StartTurn();
     }
 
     void StartDuel()
     {
-        // Logic to start a duel between the player and the AI
+        
     }
     void StartRound()
     {
@@ -53,6 +59,27 @@ public class GameManager : MonoBehaviour
         RoundTxt.GetComponent<TMP_Text>().text = "Round " + round;
         RoundTxt.SetActive(true);
         StartCoroutine(DeactivateRoundTxt());
+        StartCoroutine(ChooseNewSupremeCard());
+        StartDuel();
+    }
+    IEnumerator ChooseNewSupremeCard()
+    {
+        yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling);
+        bool canChooseSupremeCard = false;
+        if(SupremeCard != null)
+        {
+            StartCoroutine(Deck.GetComponent<Deck>().InsertCardRandomlyIntoDeck(SupremeCard, fn: () =>
+            {
+                SupremeCard = null;
+                canChooseSupremeCard = true;
+            }));
+
+        } else {canChooseSupremeCard = true;}
+        yield return new WaitUntil(() => canChooseSupremeCard);
+        StartCoroutine(Deck.GetComponent<Deck>().TakeCardRandomlyFromDeck(SupremeCardSpawnPoint.position, targetRot: Quaternion.identity, fn: (card) =>
+        {
+            SupremeCard = card;
+        }));
     }
     IEnumerator DeactivateRoundTxt()
     {
@@ -67,20 +94,18 @@ public class GameManager : MonoBehaviour
         currentDuelNum = 0;
         if(player.roundWins >= 3)
         {
-            Win();
+            player.WinRound();
+            AIEnemy.LoseRound();
             return;
         }
         if(AIEnemy.roundWins >= 3)
         {
-            Lose();
+            AIEnemy.WinRound();
+            player.LoseRound();
             return;
         }
         StartRound();
     }
-    void Win() {}
-    void Lose() {}
-    
-
     void Update()
     {
         
