@@ -55,7 +55,7 @@ public class Entity : MonoBehaviour
             }
             if(BackSprite != null)
             {
-                BackSprite.transform.localPosition = new Vector3(0, 0, -thickness * 2);
+                BackSprite.transform.localPosition = new Vector3(0, 0, -thickness * 2 - projectionOffset);
             }
         }
         startHasRan = true;

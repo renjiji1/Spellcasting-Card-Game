@@ -111,6 +111,7 @@ MonoBehaviour:
   ProjectionSprite: {fileID: 469576451523655696, guid: f0abcb73c33245c4d9b3a2e0040b65cc, type: 3}
   FrontSprite: {fileID: 2052848268380237972}
   BackSprite: {fileID: 0}
+  cardOnSlotYOffset: 0.002
   isPlayerSlot: 1
   source: 0
   primalIcon: {fileID: 21300000, guid: 24d0cce455fdd4e4abbd06c640ddf776, type: 3}
@@ -135,5 +136,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.915717, y: 10.315323, z: 0.022818182}
-  m_Center: {x: 0.012274339, y: -0.02942085, z: 0.006199543}
+  m_Size: {x: 6.915717, y: 10.315319, z: 0.032228447}
+  m_Center: {x: 0.012274336, y: -0.02942085, z: 0.0014944095}

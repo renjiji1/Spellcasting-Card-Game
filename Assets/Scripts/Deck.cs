@@ -52,6 +52,7 @@ public class Deck : Entity
         int rng = Random.Range(0, DeckOfCards.Count);
         bool movedToInsertPos = false;
         card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(0,0,180), fn: () => movedToInsertPos = true);
+        
         yield return new WaitUntil(() => movedToInsertPos);
         for(int i = rng; i < DeckOfCards.Count; i++)
         {
@@ -59,6 +60,7 @@ public class Deck : Entity
             Vector3 targetPos = new Vector3(card.transform.position.x, card.transform.position.y + card.thickness, card.transform.position.z);
             deckCard.StartMoving(targetPos);
         }
+        
         yield return new WaitForSeconds(deckInsertDelay);
         card.StartMoving(transform.position, Quaternion.Euler(90,0,180), fn: () => {
             DeckOfCards.Insert(rng, card);
@@ -74,14 +76,14 @@ public class Deck : Entity
             movedToInsertPos = true;
             DeckOfCards.RemoveAt(rng);
         });
-        yield return new WaitForSeconds(deckInsertDelay);
         for(int i = rng; i < DeckOfCards.Count; i++)
         {
             Card deckCard = DeckOfCards[i];
-            Vector3 newPos = new Vector3(card.transform.position.x, card.transform.position.y - card.thickness, card.transform.position.z);
+            Vector3 newPos = new Vector3(deckCard.transform.position.x, deckCard.transform.position.y - card.thickness, deckCard.transform.position.z);
             deckCard.StartMoving(newPos);
         }
-        yield return new WaitUntil(() => movedToInsertPos);
+        
+        yield return new WaitForSeconds(deckInsertDelay);
         card.StartMoving(targetPos, targetRot, fn: () => {
             if(fn != null) fn.Invoke(card);
         });

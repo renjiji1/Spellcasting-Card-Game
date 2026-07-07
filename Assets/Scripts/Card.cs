@@ -81,7 +81,7 @@ public class Card : Entity
     public virtual void BeginShuffle(float xOffset, float speed)
     {
         GameObject shuffleRotAxis = GameManager.instance.Deck.transform.Find("ShuffleRotationAxis").gameObject;
-        Quaternion backTurnedRot = Quaternion.Euler(0, 180, 0);
+        Quaternion backTurnedRot = Quaternion.Euler(0, 0, 0);
         Vector3 aroundShuffleAxis = new Vector3(shuffleRotAxis.transform.position.x + xOffset, shuffleRotAxis.transform.position.y, shuffleRotAxis.transform.position.z);
         StartMoving(aroundShuffleAxis, backTurnedRot, speed, () =>
         {
@@ -95,7 +95,7 @@ public class Card : Entity
         {
             isMoving = true;
             moveTimer += Time.deltaTime * currentSpeed;
-            cardAnimPivot.transform.rotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
+            cardAnimPivot.transform.localRotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
             transform.position = Vector3.Lerp(moveInitialPos, moveTargetPos, moveTimer);
         } else if(isMoving)
         {
@@ -106,7 +106,7 @@ public class Card : Entity
     }
     public void StartMoving(Vector3 pos, Quaternion? rot = null, float speed = moveSpeed, Action fn = null)
     {
-        moveInitialRot = transform.Find("CardAnimPivot").transform.rotation;
+        moveInitialRot = transform.Find("CardAnimPivot").transform.localRotation;
         moveInitialPos = transform.position;
         currentSpeed = speed;
         moveTargetPos = pos;

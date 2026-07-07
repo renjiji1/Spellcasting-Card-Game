@@ -4,7 +4,8 @@ public enum MagicSource {Primal, Divine, Arcane};
 public class CardSlot : Entity
 {
     InputAction selectInput;
-    float cardOnSlotYOffset = .001f;
+    [Header("Card Slot")]
+    [SerializeField] float cardOnSlotYOffset = .002f;
     [SerializeField] bool isPlayerSlot = true;
     [Header("Card Source")]
     [SerializeField] public MagicSource source;

@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
         } else {canChooseSupremeCard = true;}
         yield return new WaitUntil(() => canChooseSupremeCard);
-        StartCoroutine(Deck.GetComponent<Deck>().TakeCardRandomlyFromDeck(SupremeCardSpawnPoint.position, targetRot: Quaternion.identity, fn: (card) =>
+        StartCoroutine(Deck.GetComponent<Deck>().TakeCardRandomlyFromDeck(SupremeCardSpawnPoint.position, targetRot: Quaternion.Euler(90,0,0), fn: (card) =>
         {
             SupremeCard = card;
         }));
