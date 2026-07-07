@@ -13,6 +13,8 @@ public class Deck : Entity
     [Header("Deck")]
     [SerializeField] Vector3 deckPosInsertOffset = new Vector3(.1f, 0, 0);
     [SerializeField] float deckInsertDelay = 10;
+    [SerializeField] float deckInsertSpeed = 2;
+    [SerializeField] float deckTakeReturnSpeed = 4;
     [SerializeField] float rotationAxisSpeed = 200;
     [SerializeField] float delayBetweenCardShuffles = .05f;
     [SerializeField] float delayBetweenCardDealings = .1f;
@@ -21,6 +23,7 @@ public class Deck : Entity
     [SerializeField] float enterShuffleAnimSpeed = 10;
     [SerializeField] float enterShufflePosXOffset = 10;
     [SerializeField] float exitShuffleAnimSpeed = 10;
+    
     GameObject ShuffleRotationAxis;
 
     protected override void Start()
@@ -51,18 +54,18 @@ public class Deck : Entity
     {
         int rng = Random.Range(0, DeckOfCards.Count);
         bool movedToInsertPos = false;
-        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(0,0,180), fn: () => movedToInsertPos = true);
+        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(0,0,180), speed: deckInsertSpeed, fn: () => movedToInsertPos = true);
         
         yield return new WaitUntil(() => movedToInsertPos);
         for(int i = rng; i < DeckOfCards.Count; i++)
         {
             Card deckCard = DeckOfCards[i];
             Vector3 targetPos = new Vector3(card.transform.position.x, card.transform.position.y + card.thickness, card.transform.position.z);
-            deckCard.StartMoving(targetPos);
+            deckCard.StartMoving(targetPos, speed: deckInsertSpeed);
         }
         
         yield return new WaitForSeconds(deckInsertDelay);
-        card.StartMoving(transform.position, Quaternion.Euler(90,0,180), fn: () => {
+        card.StartMoving(transform.position, Quaternion.Euler(90,0,180), speed: deckInsertSpeed, fn: () => {
             DeckOfCards.Insert(rng, card);
             if(fn != null) fn.Invoke();
         });
@@ -72,19 +75,20 @@ public class Deck : Entity
         int rng = Random.Range(0, DeckOfCards.Count);
         Card card = DeckOfCards[rng];
         bool movedToInsertPos = false;
-        card.StartMoving(transform.position + deckPosInsertOffset, fn: () => {
+        card.StartMoving(transform.position + deckPosInsertOffset, speed: deckInsertSpeed, fn: () => {
             movedToInsertPos = true;
             DeckOfCards.RemoveAt(rng);
         });
+        
+        yield return new WaitUntil(() => movedToInsertPos);
         for(int i = rng; i < DeckOfCards.Count; i++)
         {
             Card deckCard = DeckOfCards[i];
             Vector3 newPos = new Vector3(deckCard.transform.position.x, deckCard.transform.position.y - card.thickness, deckCard.transform.position.z);
-            deckCard.StartMoving(newPos);
+            deckCard.StartMoving(newPos, speed: deckInsertSpeed);
         }
-        
         yield return new WaitForSeconds(deckInsertDelay);
-        card.StartMoving(targetPos, targetRot, fn: () => {
+        card.StartMoving(targetPos, targetRot, speed: deckTakeReturnSpeed, fn: () => {
             if(fn != null) fn.Invoke(card);
         });
     }

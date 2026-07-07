@@ -102,10 +102,13 @@ public class Card : Entity
             isMoving = false;
             moveTimer = 0;
             OnMoveFinished?.Invoke();
+            OnMoveFinished = null;
         }
     }
     public void StartMoving(Vector3 pos, Quaternion? rot = null, float speed = moveSpeed, Action fn = null)
     {
+        OnMoveFinished?.Invoke();
+        
         moveInitialRot = transform.Find("CardAnimPivot").transform.localRotation;
         moveInitialPos = transform.position;
         currentSpeed = speed;
