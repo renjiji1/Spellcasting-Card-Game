@@ -4,14 +4,17 @@ using System;
 
 public class Agent : Entity
 {
-    [SerializeField] protected int turnIndx = 0; // 0 for player, 1 for enemy
+    [NonSerialized] public bool isAgentTurn = false;
     protected int totalDamage = 0;
     protected int currentDamage = 0;
     [SerializeField] protected const int maxMana = 10;
     protected int mana = maxMana;
     [NonSerialized] public int roundWins = 0;
+    [SerializeField] protected float useCardSpeed = 5;
     protected List<Card> HandOfCards = new List<Card>();
+    [NonSerialized] public List<Card> WonCards = new List<Card>();
     public GameObject Hand;
+    [NonSerialized] public Card cardBeingPlayed;
     protected override void Start()
     {
         base.Start();
@@ -26,8 +29,26 @@ public class Agent : Entity
     }
     public virtual void StartTurn()
     {
-        
+        isAgentTurn = true;
     }
+    public virtual void EndTurn()
+    {
+        isAgentTurn = false;
+        gameManager.EndTurn();
+    }
+    public virtual void UseCard(Card card, CardSlot slot)
+    {
+        cardBeingPlayed = card;
+        card.GetComponent<Animator>().SetBool("UseCard", true);
+        card.GetComponent<Animator>().speed = card.GetAnimLengthByName("UseCard") / card.GetTotalMoveTime(useCardSpeed);
+        card.StartMoving(slot.transform.position + new Vector3(0, slot.cardOnSlotYOffset,0), slot.transform.rotation, speed: useCardSpeed, fn: () =>
+        {
+            card.isBeingPlayed = true;
+            card.GetComponent<Animator>().SetBool("UseCard", false);
+            EndTurn();
+        });
+    }
+
     public virtual void EndRound()
     {
         mana = maxMana;

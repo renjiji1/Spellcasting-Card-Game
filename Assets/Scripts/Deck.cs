@@ -54,7 +54,12 @@ public class Deck : Entity
     {
         int rng = Random.Range(0, DeckOfCards.Count);
         bool movedToInsertPos = false;
-        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(0,0,180), speed: deckInsertSpeed, fn: () => movedToInsertPos = true);
+        card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", true);
+        card.GetComponent<Animator>().speed = card.GetAnimLengthByName("Insert&TakeFromDeck") / card.GetTotalMoveTime(deckInsertSpeed);
+        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(0,0,180), speed: deckInsertSpeed, fn: () =>  {
+            movedToInsertPos = true;
+            card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", false);
+        });
         
         yield return new WaitUntil(() => movedToInsertPos);
         for(int i = rng; i < DeckOfCards.Count; i++)
@@ -64,7 +69,7 @@ public class Deck : Entity
             deckCard.StartMoving(targetPos, speed: deckInsertSpeed);
         }
         
-        yield return new WaitForSeconds(deckInsertDelay);
+        yield return new WaitForSeconds(deckInsertDelay);     
         card.StartMoving(transform.position, Quaternion.Euler(90,0,180), speed: deckInsertSpeed, fn: () => {
             DeckOfCards.Insert(rng, card);
             if(fn != null) fn.Invoke();
@@ -87,8 +92,12 @@ public class Deck : Entity
             Vector3 newPos = new Vector3(deckCard.transform.position.x, deckCard.transform.position.y - card.thickness, deckCard.transform.position.z);
             deckCard.StartMoving(newPos, speed: deckInsertSpeed);
         }
+        
         yield return new WaitForSeconds(deckInsertDelay);
+        card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", true);
+        card.GetComponent<Animator>().speed = card.GetAnimLengthByName("Insert&TakeFromDeck") / card.GetTotalMoveTime(deckTakeReturnSpeed);
         card.StartMoving(targetPos, targetRot, speed: deckTakeReturnSpeed, fn: () => {
+            card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", false);
             if(fn != null) fn.Invoke(card);
         });
     }
@@ -148,6 +157,16 @@ public class Deck : Entity
             yield return new WaitForSeconds(delayBetweenCardDealings);
         }
         isDealing = false;
+    }
+    public void AddCardToTopOfDeck(Card card, float speed, Action? fn = null) 
+    {
+        Vector3 pos = transform.position + new Vector3(0, DeckOfCards.Count * card.thickness,0);
+        Quaternion rot = Quaternion.Euler(-90, 0, 180);
+        card.StartMoving(pos, rot, speed: speed, fn: () =>
+        {
+            DeckOfCards.Add(card);
+            fn?.Invoke();
+        });
     }
 
 }

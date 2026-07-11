@@ -5,8 +5,8 @@ public class CardSlot : Entity
 {
     InputAction selectInput;
     [Header("Card Slot")]
-    [SerializeField] float cardOnSlotYOffset = .002f;
-    [SerializeField] bool isPlayerSlot = true;
+    [SerializeField] public float cardOnSlotYOffset = .002f;
+    [SerializeField] public bool isPlayerSlot = true;
     [Header("Card Source")]
     [SerializeField] public MagicSource source;
     [SerializeField] Sprite primalIcon;
@@ -37,7 +37,7 @@ public class CardSlot : Entity
     }
     public void OnHoverOverSlot()
     {
-        if(isPlayerSlot)
+        if(isPlayerSlot && player.isAgentTurn)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -55,7 +55,7 @@ public class CardSlot : Entity
                     }
                     if (selectInput.WasPressedThisFrame())
                     {
-                        OnSelect(); 
+                        OnSelect(player.selectedCard); 
                     } 
                 } else if(player.highlightedCardSlot == this)
                 {
@@ -76,9 +76,8 @@ public class CardSlot : Entity
         player.highlightedCardSlot = null;
         player.CardMovePreview.SetActive(false);
     }
-    void OnSelect()
+    public void OnSelect(Card card)
     {
-        player.selectedCard.StartMoving(transform.position + new Vector3(0, cardOnSlotYOffset,0), transform.rotation);
-        player.selectedCard.isBeingPlayed = true;
+        player.UseCard(card, this);
     }
 }

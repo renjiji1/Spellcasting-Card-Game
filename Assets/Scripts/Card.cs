@@ -7,7 +7,6 @@ using TMPro;
 public enum MagicType {Illusion, Abjuration, Evocation};
 public class Card : Entity
 {
-    GameObject cardAnimPivot;
     InputAction selectInput;
     [Header("Card")]
     [SerializeField] Sprite Image;
@@ -18,28 +17,18 @@ public class Card : Entity
     [SerializeField] Sprite illusionIcon;
     [SerializeField] Sprite abjurationIcon;
     [SerializeField] Sprite evocationIcon;
-    
+    [NonSerialized] public string frontPath = "CardRotPivot/CardAnimPivot/Front";
     protected bool shuffle = false;
 
     [Header("Move")]
     [SerializeField] float selectMoveMultiplier = 3;
     [NonSerialized] public Transform HandTransform;
-    bool isMoving = false;
     Vector3 highlightMoveOffset = new Vector3(0, .1f, .05f);
-    [SerializeField] const float moveSpeed = 8;
-    float moveTimer = 0;
-    Vector3 moveInitialPos;
-    Quaternion moveInitialRot;
-    Vector3 moveTargetPos;
-    Quaternion moveTargetRot;
-    float currentSpeed = 0;
-    Action OnMoveFinished;
 
     protected override void Start()
     {
         if(startHasRan) return;
         base.Start();
-        cardAnimPivot = transform.Find("CardAnimPivot").gameObject;
         selectInput = InputSystem.actions.FindAction("Select");
         InitializeCard(gameObject, type, denomination, Image);
     }
@@ -48,23 +37,22 @@ public class Card : Entity
         switch(type)
         {
             case MagicType.Illusion:
-                obj.transform.Find("CardAnimPivot/Front/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite = illusionIcon;
+                obj.transform.Find($"{frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite = illusionIcon;
                 break;
             case MagicType.Abjuration:
-                obj.transform.Find("CardAnimPivot/Front/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite = abjurationIcon;
+                obj.transform.Find($"{frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite = abjurationIcon;
                 break;
             case MagicType.Evocation:
-                obj.transform.Find("CardAnimPivot/Front/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite = evocationIcon;
+                obj.transform.Find($"{frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite = evocationIcon;
                 break;
         }
-        obj.transform.Find("CardAnimPivot/Front/Background").GetComponent<SpriteRenderer>().sprite = image;
-        obj.transform.Find("CardAnimPivot/Front/Deonomination").GetComponent<TMP_Text>().text = "" + denomination;
+        obj.transform.Find($"{frontPath}/Background").GetComponent<SpriteRenderer>().sprite = image;
+        obj.transform.Find($"{frontPath}/Denomination").GetComponent<TMP_Text>().text = "" + denomination;
     }
 
     protected override void Update()
     {
         base.Update();
-        Move();
     }
     public virtual void ExitShuffle(Vector3 pos, float speed)
     {
@@ -74,7 +62,7 @@ public class Card : Entity
         {
             transform.parent = GameManager.instance.Deck.transform;
             transform.rotation = Quaternion.Euler(Vector3.zero);
-            cardAnimPivot.transform.rotation = deckCardRot;
+            moveRotPivot.transform.rotation = deckCardRot;
             shuffle = false;
         });
     }
@@ -89,49 +77,14 @@ public class Card : Entity
         });
         shuffle = true;
     }
-    void Move()
-    { 
-        if(isMoving && moveTimer < 1)
-        {
-            isMoving = true;
-            moveTimer += Time.deltaTime * currentSpeed;
-            cardAnimPivot.transform.localRotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
-            transform.position = Vector3.Lerp(moveInitialPos, moveTargetPos, moveTimer);
-        } else if(isMoving)
-        {
-            isMoving = false;
-            moveTimer = 0;
-            OnMoveFinished?.Invoke();
-            OnMoveFinished = null;
-        }
-    }
-    public void StartMoving(Vector3 pos, Quaternion? rot = null, float speed = moveSpeed, Action fn = null)
-    {
-        OnMoveFinished?.Invoke();
-        
-        moveInitialRot = transform.Find("CardAnimPivot").transform.localRotation;
-        moveInitialPos = transform.position;
-        currentSpeed = speed;
-        moveTargetPos = pos;
-        moveTargetRot = rot ?? moveInitialRot;
-        OnMoveFinished = fn;
-        moveTimer = 0;
-        isMoving = true;
-    }
+    
     public void OnHoverOverCard()
     {
-        if(player.selectedCard != null)
-        {
-            if(player.selectedCard.isBeingPlayed)
-            {
-                return;
-            }
-        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit))
         {
-            if(hit.collider == cardAnimPivot.GetComponent<Collider>())
+            if(hit.collider == moveRotPivot.GetComponent<Collider>())
             {
                 if(player.highlightedCard != this)
                 {
@@ -150,7 +103,7 @@ public class Card : Entity
                     OnSelect(); 
                 } 
                 
-            } else if(player.highlightedCard == this)
+            } else if(player.highlightedCard == this && player.selectedCard != this)
             {
                 OnHoverExit();
             }
@@ -163,26 +116,21 @@ public class Card : Entity
     }
     public void OnHoverExit()
     {
-        player.highlightedCard = null;
+        if(player.highlightedCard == this)
+        {
+            player.highlightedCard = null;
+        }
         StartMoving(HandTransform.position, HandTransform.rotation);
     }
     void OnSelect()
     {
         player.selectedCard = this;
-        transform.Find("CardAnimPivot/Front/HighlightBg").gameObject.SetActive(true);
+        transform.Find($"{frontPath}/HighlightBg").gameObject.SetActive(true);
         InitializeCard(player.CardMovePreview, type, denomination, Image);
-        /*Vector3 screenPos = Input.mousePosition;
-        screenPos.z = 1;
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenPos);
-        worldPos.z = (worldPos.y - HandTransform.position.y) * selectMoveMultiplier + HandTransform.position.z + highlightMoveOffset.z;
-        worldPos.y = (HandTransform.position.z - worldPos.y) / selectMoveMultiplier + HandTransform.position.y + highlightMoveOffset.y;
-        //worldPos.x = (HandTransform.position.x + highlightMoveOffset.x) + (worldPos.x - HandTransform.position.x - highlightMoveOffset.x) * -(screenPos.z/worldPos.z) * .7f;
-        transform.position = worldPos;
-        //transform.Translate(/*new Vector3(worldPos.x * -Vector3.forward.x, worldPos.y * -Vector3.forward.y, worldPos.z * -Vector3.forward.z)worldPos, Space.World);*/
     }
     public void OnDeselect()
     {
         player.selectedCard = null;
-        transform.Find("CardAnimPivot/Front/HighlightBg").gameObject.SetActive(false);
+        transform.Find($"{frontPath}/HighlightBg").gameObject.SetActive(false);
     }
 }

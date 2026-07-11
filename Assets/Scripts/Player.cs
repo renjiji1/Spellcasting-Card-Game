@@ -18,10 +18,14 @@ public class Player : Agent
     protected override void Update()
     {
         base.Update();
-        foreach(Card card in HandOfCards)
+        if(isAgentTurn)
         {
-            card.OnHoverOverCard();
+            foreach(Card card in HandOfCards)
+            {
+                card.OnHoverOverCard();
+            }
         }
+        
     }
     void LateUpdate()
     {
