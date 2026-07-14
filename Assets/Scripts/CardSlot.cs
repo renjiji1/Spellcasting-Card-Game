@@ -12,7 +12,7 @@ public class CardSlot : Entity
     [SerializeField] Sprite primalIcon;
     [SerializeField] Sprite divineIcon;
     [SerializeField] Sprite arcaneIcon;
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         selectInput = InputSystem.actions.FindAction("Select");

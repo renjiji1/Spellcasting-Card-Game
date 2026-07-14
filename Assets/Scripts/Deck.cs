@@ -26,7 +26,7 @@ public class Deck : Entity
     
     GameObject ShuffleRotationAxis;
 
-    protected override void Start()
+    public override void Start()
     {
         if(startHasRan) return;
         base.Start();
@@ -40,8 +40,6 @@ public class Deck : Entity
             }
         }
     }
-    public void RunStart() {Start();}
-
     protected override void Update()
     {
         base.Update();
@@ -56,21 +54,22 @@ public class Deck : Entity
         bool movedToInsertPos = false;
         card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", true);
         card.GetComponent<Animator>().speed = card.GetAnimLengthByName("Insert&TakeFromDeck") / card.GetTotalMoveTime(deckInsertSpeed);
-        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(0,0,180), speed: deckInsertSpeed, fn: () =>  {
+        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(-90,0,180), speed: deckInsertSpeed, fn: () =>  {
             movedToInsertPos = true;
             card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", false);
         });
         
         yield return new WaitUntil(() => movedToInsertPos);
-        for(int i = rng; i < DeckOfCards.Count; i++)
+        for(int i = rng-1; i < DeckOfCards.Count; i++)
         {
+            if(i < 0) continue;
             Card deckCard = DeckOfCards[i];
-            Vector3 targetPos = new Vector3(card.transform.position.x, card.transform.position.y + card.thickness, card.transform.position.z);
+            Vector3 targetPos = new Vector3(deckCard.transform.position.x, deckCard.transform.position.y + deckCard.thickness, deckCard.transform.position.z);
             deckCard.StartMoving(targetPos, speed: deckInsertSpeed);
         }
         
         yield return new WaitForSeconds(deckInsertDelay);     
-        card.StartMoving(transform.position, Quaternion.Euler(90,0,180), speed: deckInsertSpeed, fn: () => {
+        card.StartMoving(transform.position + card.thickness * rng * transform.up, speed: deckInsertSpeed, fn: () => {
             DeckOfCards.Insert(rng, card);
             if(fn != null) fn.Invoke();
         });
@@ -86,8 +85,9 @@ public class Deck : Entity
         });
         
         yield return new WaitUntil(() => movedToInsertPos);
-        for(int i = rng; i < DeckOfCards.Count; i++)
+        for(int i = rng-1; i < DeckOfCards.Count; i++)
         {
+            if(i < 0) continue;
             Card deckCard = DeckOfCards[i];
             Vector3 newPos = new Vector3(deckCard.transform.position.x, deckCard.transform.position.y - card.thickness, deckCard.transform.position.z);
             deckCard.StartMoving(newPos, speed: deckInsertSpeed);
@@ -103,13 +103,31 @@ public class Deck : Entity
     }
     public IEnumerator StartShuffle()
     {
+        yield return ReturnSupremeCardToDeck();
         isShuffling = true;
-        foreach(Card card in DeckOfCards)
+        for(int i = DeckOfCards.Count-1; i >= 0; i--)
         {
+            Card card = DeckOfCards[i];
             card.BeginShuffle(enterShufflePosXOffset, enterShuffleAnimSpeed);
+            card.ActivateCard();
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
         StartCoroutine(ExitShuffle());
+    }
+    IEnumerator ReturnSupremeCardToDeck()
+    {
+        bool isReturningSupremeCardToDeck = true;
+        if(gameManager.SupremeCard != null)
+        {
+            StartCoroutine(InsertCardRandomlyIntoDeck(gameManager.SupremeCard, fn: () =>
+            {
+                gameManager.SupremeCard = null;
+                isReturningSupremeCardToDeck = false;
+            }));
+
+        } else {isReturningSupremeCardToDeck = false;}
+        yield return new WaitUntil(() => !isReturningSupremeCardToDeck);
+        Debug.Log("supreme card returned");
     }
     IEnumerator ExitShuffle()
     {
@@ -125,10 +143,22 @@ public class Deck : Entity
             choosenCard.ExitShuffle(cardPos, exitShuffleAnimSpeed);
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
-        newDeck.Reverse();
         DeckOfCards = newDeck;
         isShuffling = false;
+        yield return ChooseNewSupremeCard();
         StartCoroutine(DealCards());
+    }
+    IEnumerator ChooseNewSupremeCard()
+    {
+        bool isChoosingSupremeCard = true;
+        StartCoroutine(TakeCardRandomlyFromDeck(gameManager.SupremeCardSpawnPoint.position, targetRot: Quaternion.Euler(90,0,0), fn: (card) =>
+        {
+            gameManager.SupremeCard = card;
+            gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
+            gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").gameObject.SetActive(true);
+            isChoosingSupremeCard = false;
+        }));
+        yield return new WaitUntil(() => !isChoosingSupremeCard);
     }
     IEnumerator DealCards()
     { 
@@ -138,7 +168,7 @@ public class Deck : Entity
         {
             Transform playerCardTransform = player.Hand.transform.GetChild(i/2);
             Vector3 playerTargetPos = playerCardTransform.position;
-            Card playerCard = tmpDeck[i];
+            Card playerCard = tmpDeck[tmpDeck.Count-1-i];
             playerCard.StartMoving(playerTargetPos, playerCardTransform.rotation, fn: () =>
             {
                 player.AddCard(playerCard);
@@ -147,7 +177,7 @@ public class Deck : Entity
             });
             Transform enemyCardTransform = AIEnemy.Hand.transform.GetChild(i/2);
             Vector3 enemyTargetPos = enemyCardTransform.position;
-            Card enemyCard = tmpDeck[i+1];
+            Card enemyCard = tmpDeck[tmpDeck.Count-2-i];
             enemyCard.StartMoving(enemyTargetPos, enemyCardTransform.rotation, fn: () =>
             {
                 AIEnemy.AddCard(enemyCard);
@@ -162,9 +192,9 @@ public class Deck : Entity
     {
         Vector3 pos = transform.position + new Vector3(0, DeckOfCards.Count * card.thickness,0);
         Quaternion rot = Quaternion.Euler(-90, 0, 180);
+        DeckOfCards.Add(card);
         card.StartMoving(pos, rot, speed: speed, fn: () =>
-        {
-            DeckOfCards.Add(card);
+        {  
             fn?.Invoke();
         });
     }

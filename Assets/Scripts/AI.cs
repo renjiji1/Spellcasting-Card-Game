@@ -17,7 +17,7 @@ public class AI : Agent
     CardSlot DivineSlot;
     CardSlot ArcaneSlot;
     
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
         foreach(Transform child in gameManager.AllCardSlots.transform)

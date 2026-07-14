@@ -44,8 +44,9 @@ public class Entity : MonoBehaviour
     protected bool isMoving = false;
     protected bool startHasRan = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected virtual void Start()
+    public virtual void Start()
     {
+        if(startHasRan) return;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();

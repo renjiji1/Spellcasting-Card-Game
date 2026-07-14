@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using TMPro;
 
 public class Agent : Entity
 {
@@ -15,7 +16,7 @@ public class Agent : Entity
     [NonSerialized] public List<Card> WonCards = new List<Card>();
     public GameObject Hand;
     [NonSerialized] public Card cardBeingPlayed;
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
     }
@@ -26,6 +27,14 @@ public class Agent : Entity
     public virtual void AddCard(Card card)
     {
         HandOfCards.Add(card);
+    }
+    public virtual void DeactivateCurrentCard(int addedDenomination)
+    {
+        cardBeingPlayed.denomination -= addedDenomination;
+        cardBeingPlayed.transform.Find($"{cardBeingPlayed.frontPath}/Denomination").GetComponent<TMP_Text>().text = ""+cardBeingPlayed.denomination;
+        cardBeingPlayed.hasBeenPlayed = true;
+        cardBeingPlayed.isBeingPlayed = false;
+        cardBeingPlayed = null;
     }
     public virtual void StartTurn()
     {
@@ -39,12 +48,14 @@ public class Agent : Entity
     public virtual void UseCard(Card card, CardSlot slot)
     {
         cardBeingPlayed = card;
+        card.OnDeselect();
+        card.isBeingPlayed = true;
         card.GetComponent<Animator>().SetBool("UseCard", true);
         card.GetComponent<Animator>().speed = card.GetAnimLengthByName("UseCard") / card.GetTotalMoveTime(useCardSpeed);
         card.StartMoving(slot.transform.position + new Vector3(0, slot.cardOnSlotYOffset,0), slot.transform.rotation, speed: useCardSpeed, fn: () =>
         {
-            card.isBeingPlayed = true;
             card.GetComponent<Animator>().SetBool("UseCard", false);
+            HandOfCards.Remove(card);
             EndTurn();
         });
     }

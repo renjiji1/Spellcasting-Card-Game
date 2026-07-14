@@ -12,6 +12,7 @@ public class Card : Entity
     [SerializeField] Sprite Image;
     [SerializeField] public int denomination = 1;
     [NonSerialized] public bool isBeingPlayed = false;
+    [NonSerialized] public bool hasBeenPlayed = false;
     [Header("Card Type")]
     [SerializeField] public MagicType type;
     [SerializeField] Sprite illusionIcon;
@@ -25,7 +26,7 @@ public class Card : Entity
     [NonSerialized] public Transform HandTransform;
     Vector3 highlightMoveOffset = new Vector3(0, .1f, .05f);
 
-    protected override void Start()
+    public override void Start()
     {
         if(startHasRan) return;
         base.Start();
@@ -53,6 +54,11 @@ public class Card : Entity
     protected override void Update()
     {
         base.Update();
+    }
+    public void ActivateCard()
+    {
+        isBeingPlayed = false;
+        hasBeenPlayed = false;
     }
     public virtual void ExitShuffle(Vector3 pos, float speed)
     {
@@ -100,10 +106,10 @@ public class Card : Entity
                     {
                         player.selectedCard.OnDeselect();
                     }
-                    OnSelect(); 
+                    OnSelect();
                 } 
                 
-            } else if(player.highlightedCard == this && player.selectedCard != this)
+            } else if(player.highlightedCard == this)
             {
                 OnHoverExit();
             }

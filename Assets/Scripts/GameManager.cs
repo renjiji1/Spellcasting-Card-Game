@@ -15,17 +15,22 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool paused = false;
     [SerializeField] public Player player;
     [SerializeField] public AI AIEnemy;
+
+    [Header("Round")]
+    [SerializeField] float delayBetweenWonCardsReturnToDeck = .2f;
     [NonSerialized] public int round = 1;
     [SerializeField] int roundWinsToWin = 3;
     [NonSerialized] public bool isChoosingSupremeCard = false;
     [NonSerialized] public int turn = 0; // number of turns that happened in the current duel
     [NonSerialized] public GameObject currentPlayer; // the player whose turn it is
+
     [Header("Supreme Card")]
     [NonSerialized] public Card SupremeCard;
-    [SerializeField] Transform SupremeCardSpawnPoint;
+    [SerializeField] public Transform SupremeCardSpawnPoint;
     [SerializeField] int supremeCardDenominationBonus = 3;
     [SerializeField] GameObject SupremeCardBonus;
     [SerializeField] float supremeCardBonusMoveDelay = .5f;
+
     [Header("Card Clash Tie")]
     [SerializeField] int cardClashTieWinnerBonus = 3;
     [SerializeField] float cardClashTieDelay = .15f;
@@ -58,6 +63,7 @@ public class GameManager : MonoBehaviour
     {
         turn++;
         currentPlayer = currentPlayer == player.gameObject ? AIEnemy.gameObject : player.gameObject;
+        Debug.Log(currentPlayer);
         if (turn > 1)
         {
             currentDuelNum++;
@@ -72,14 +78,18 @@ public class GameManager : MonoBehaviour
     {
         // move cards into position in front of camera for clash
         yield return new WaitForSeconds(cardClashEnterDelay);
-        bool cardsInPositionForClash = false;
-        player.cardBeingPlayed.StartMoving(cam.transform.position + cam.transform.forward * cardClashDistanceFromCamera + cam.transform.right * -cardClashXOffset, cam.transform.rotation, fn: () =>
+        int cardsInPositionForClash = 0;
+        player.cardBeingPlayed.StartMoving(cam.transform.position + cam.transform.forward * cardClashDistanceFromCamera + cam.transform.right * -cardClashXOffset/2, cam.transform.rotation, fn: () =>
         {
-            cardsInPositionForClash = true;
+            cardsInPositionForClash++;
+        });
+        AIEnemy.cardBeingPlayed.StartMoving(cam.transform.position + cam.transform.forward * cardClashDistanceFromCamera + cam.transform.right * cardClashXOffset/2, cam.transform.rotation, fn: () =>
+        {
+            cardsInPositionForClash++;
         });
         int enemyDenominationAdder = 0;
         int playerDenominationAdder = 0;
-        yield return new WaitUntil(() => cardsInPositionForClash);
+        yield return new WaitUntil(() => cardsInPositionForClash >= 2);
         if(AIEnemy.cardBeingPlayed.type == SupremeCard.type)
         {
             yield return AddSupremeCardBonus(AIEnemy);
@@ -110,31 +120,38 @@ public class GameManager : MonoBehaviour
         {
             AIEnemy.cardBeingPlayed.StartMoving(PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).position, PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).rotation, fn: () =>
             {
+                player.WonCards.Add(AIEnemy.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
             player.cardBeingPlayed.StartMoving(PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).Find("WinningCard").position, PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).Find("WinningCard").rotation, fn: () =>
             {
+                player.WonCards.Add(player.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
         } else
         {
             AIEnemy.cardBeingPlayed.StartMoving(EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("WinningCard").position, EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("WinningCard").rotation, fn: () =>
             {
+                AIEnemy.WonCards.Add(AIEnemy.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
             player.cardBeingPlayed.StartMoving(EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).position, EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).rotation, fn: () =>
             {
+                AIEnemy.WonCards.Add(player.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
         }
 
         yield return new WaitUntil(() => cardsMovedToPosition >= 2);
+        player.DeactivateCurrentCard(playerDenominationAdder);
+        AIEnemy.DeactivateCurrentCard(enemyDenominationAdder);
         if(currentDuelNum > maxDuels)
         {
             StartCoroutine(EndRound());
         } else
         {
-            StartCoroutine(StartDuel());
+            Agent agentWithInitiative = playerWon ? player : AIEnemy;
+            StartCoroutine(StartDuel(agentWithInitiative));
         }
     }
     IEnumerator AddSupremeCardBonus(Agent agent)
@@ -163,7 +180,6 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator CardClashTie()
     {
-        yield return new WaitForSeconds(cardClashTieDelay);
         CardClashTiePlayerTypeProjection.SetActive(true);
         CardClashTiePlayerTypeProjection.GetComponent<SpriteRenderer>().sprite = player.cardBeingPlayed.transform.Find($"{player.cardBeingPlayed.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
         CardClashTiePlayerTypeProjection.transform.position = player.cardBeingPlayed.transform.position + cam.transform.up * CardClashTieProjectionOffsetY;
@@ -174,12 +190,15 @@ public class GameManager : MonoBehaviour
         CardClashTieEnemyTypeProjection.transform.position = AIEnemy.cardBeingPlayed.transform.position + cam.transform.up * CardClashTieProjectionOffsetY;
         CardClashTieEnemyTypeProjection.transform.rotation = AIEnemy.cardBeingPlayed.transform.Find($"{AIEnemy.cardBeingPlayed.frontPath}").rotation;
         
+        yield return new WaitForSeconds(cardClashTieDelay);
         Vector3 projectionTargetPos = cam.transform.position + cam.transform.forward * cardClashDistanceFromCamera + cam.transform.up * CardClashTieProjectionOffsetY;
         bool typeProjectionsFinishedMoving = false;
+        CardClashTiePlayerTypeProjection.GetComponent<Entity>().Start();
         CardClashTiePlayerTypeProjection.GetComponent<Entity>().StartMoving(projectionTargetPos, CardClashTiePlayerTypeProjection.transform.rotation, fn: () =>
         {
             typeProjectionsFinishedMoving = true;
         });
+        CardClashTieEnemyTypeProjection.GetComponent<Entity>().Start();
         CardClashTieEnemyTypeProjection.GetComponent<Entity>().StartMoving(projectionTargetPos, CardClashTieEnemyTypeProjection.transform.rotation, fn: () =>
         {
             typeProjectionsFinishedMoving = true;
@@ -236,74 +255,30 @@ public class GameManager : MonoBehaviour
         return -1;
     }
 
-    IEnumerator StartDuel()
+    IEnumerator StartDuel(Agent agentWithInitiative)
     {
         yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing && !isChoosingSupremeCard);
-        currentPlayer.GetComponent<Agent>().StartTurn();
+        agentWithInitiative.GetComponent<Agent>().StartTurn();
+        currentPlayer = agentWithInitiative.gameObject;
     }
     void StartRound()
     {
-        Deck.GetComponent<Deck>().RunStart();
+        Deck.GetComponent<Deck>().Start();
         StartCoroutine(Deck.GetComponent<Deck>().StartShuffle());
+        StartCoroutine(ShowRoundTxt());
+        StartCoroutine(StartDuel(player));
+    }
+    IEnumerator ShowRoundTxt()
+    {
         RoundTxt.GetComponent<TMP_Text>().text = "Round " + round;
         RoundTxt.SetActive(true);
-        StartCoroutine(DeactivateRoundTxt());
-        StartCoroutine(ChooseNewSupremeCard());
-        StartCoroutine(StartDuel());
-    }
-    IEnumerator ChooseNewSupremeCard()
-    {
-        yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing);
-        isChoosingSupremeCard = true;
-        bool canChooseSupremeCard = true;
-        if(SupremeCard != null)
-        {
-            StartCoroutine(Deck.GetComponent<Deck>().InsertCardRandomlyIntoDeck(SupremeCard, fn: () =>
-            {
-                SupremeCard = null;
-                canChooseSupremeCard = true;
-            }));
-
-        } else {canChooseSupremeCard = true;}
-        yield return new WaitUntil(() => canChooseSupremeCard);
-        StartCoroutine(Deck.GetComponent<Deck>().TakeCardRandomlyFromDeck(SupremeCardSpawnPoint.position, targetRot: Quaternion.Euler(90,0,0), fn: (card) =>
-        {
-            SupremeCard = card;
-            SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
-            SupremeCardSpawnPoint.transform.Find("TypeProjection").gameObject.SetActive(true);
-            isChoosingSupremeCard = false;
-        }));
-    }
-    IEnumerator DeactivateRoundTxt()
-    {
         float animLength = RoundTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length;
         yield return new WaitForSeconds(animLength);
         RoundTxt.SetActive(false);
     }
     IEnumerator EndRound()
     {
-        int mostWonCardsCount = player.WonCards.Count > AIEnemy.WonCards.Count ? player.WonCards.Count : AIEnemy.WonCards.Count;
-        for(int i = mostWonCardsCount-1; i >= 0; i--)
-        {
-            if(player.WonCards.Count > i)
-            {
-                bool playerWonCardReturnedToDeck = false;
-                Deck.GetComponent<Deck>().AddCardToTopOfDeck(player.WonCards[i], speed: player.WonCards[i].moveSpeed, fn: () =>
-                {
-                    playerWonCardReturnedToDeck = true;
-                });
-                yield return new WaitUntil(() => playerWonCardReturnedToDeck);
-            }
-            if(AIEnemy.WonCards.Count > i)
-            {
-                bool enemyWonCardReturnedToDeck = false;
-                Deck.GetComponent<Deck>().AddCardToTopOfDeck(AIEnemy.WonCards[i], speed: AIEnemy.WonCards[i].moveSpeed, fn: () =>
-                {
-                    enemyWonCardReturnedToDeck = true;
-                });
-                yield return new WaitUntil(() => enemyWonCardReturnedToDeck);
-            }
-        }
+        yield return ReturnWonCardsToDeck();
         round++;
         turn = 0;
         currentDuelNum = 0;
@@ -318,6 +293,24 @@ public class GameManager : MonoBehaviour
         } else
         {
            StartRound(); 
+        }
+    }
+    IEnumerator ReturnWonCardsToDeck()
+    {
+        int mostWonCardsCount = player.WonCards.Count > AIEnemy.WonCards.Count ? player.WonCards.Count : AIEnemy.WonCards.Count;
+        for(int i = mostWonCardsCount-1; i >= 0; i--)
+        {
+            if(player.WonCards.Count > i)
+            {
+                Deck.GetComponent<Deck>().AddCardToTopOfDeck(player.WonCards[i], speed: player.WonCards[i].moveSpeed);
+                player.WonCards.RemoveAt(i);
+            }
+            if(AIEnemy.WonCards.Count > i)
+            {
+                Deck.GetComponent<Deck>().AddCardToTopOfDeck(AIEnemy.WonCards[i], speed: AIEnemy.WonCards[i].moveSpeed);
+                AIEnemy.WonCards.RemoveAt(i);
+            }
+            yield return new WaitForSeconds(delayBetweenWonCardsReturnToDeck);
         }
     }
     void Update()

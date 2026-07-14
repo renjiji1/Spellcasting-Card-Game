@@ -10,7 +10,7 @@ public class Player : Agent
     [NonSerialized] public Card highlightedCard;
     [NonSerialized] public Card selectedCard;
     [NonSerialized] public CardSlot highlightedCardSlot;
-    protected override void Start()
+    public override void Start()
     {
         base.Start();
     }
@@ -22,7 +22,10 @@ public class Player : Agent
         {
             foreach(Card card in HandOfCards)
             {
-                card.OnHoverOverCard();
+                if(!card.hasBeenPlayed && !card.isBeingPlayed)
+                {
+                    card.OnHoverOverCard();
+                } 
             }
         }
         
