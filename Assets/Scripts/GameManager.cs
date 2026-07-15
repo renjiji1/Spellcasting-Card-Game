@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool isChoosingSupremeCard = false;
     [NonSerialized] public int turn = 0; // number of turns that happened in the current duel
     [NonSerialized] public GameObject currentPlayer; // the player whose turn it is
-
+    int playerDamageDone = 0;
+    int enemyDamageDone = 0;
     [Header("Supreme Card")]
     [NonSerialized] public Card SupremeCard;
     [SerializeField] public Transform SupremeCardSpawnPoint;
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject CardClashTieEnemyTypeProjection;
     [SerializeField] float CardClashTieProjectionOffsetY = .1f;
 
-    public const int maxDuels = 10;
+    public int maxDuels = 10;
     [NonSerialized] public int currentDuelNum = 0;
     [Header("Card Clash")]
     [SerializeField] float cardClashEnterDelay = .5f;
@@ -116,10 +117,15 @@ public class GameManager : MonoBehaviour
         
         yield return new WaitForSeconds(cardClashExitDelay);
         int cardsMovedToPosition = 0;
+        int damageDealt = Mathf.Abs(player.cardBeingPlayed.denomination - AIEnemy.cardBeingPlayed.denomination);
+        
         if(playerWon)
         {
+            playerDamageDone += damageDealt;
             AIEnemy.cardBeingPlayed.StartMoving(PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).position, PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).rotation, fn: () =>
             {
+                PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).Find("DamageTxt").GetComponent<TMP_Text>().text = "" + damageDealt;
+                PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(true);
                 player.WonCards.Add(AIEnemy.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
@@ -130,8 +136,11 @@ public class GameManager : MonoBehaviour
             });
         } else
         {
+            enemyDamageDone += damageDealt;
             AIEnemy.cardBeingPlayed.StartMoving(EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("WinningCard").position, EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("WinningCard").rotation, fn: () =>
             {
+                EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("DamageTxt").GetComponent<TMP_Text>().text = "" + damageDealt;
+                EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(true);
                 AIEnemy.WonCards.Add(AIEnemy.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
@@ -143,14 +152,20 @@ public class GameManager : MonoBehaviour
         }
 
         yield return new WaitUntil(() => cardsMovedToPosition >= 2);
+        if(playerWon)
+        {
+            player.UseMana();
+        } else {
+            AIEnemy.UseMana();
+        }
         player.DeactivateCurrentCard(playerDenominationAdder);
         AIEnemy.DeactivateCurrentCard(enemyDenominationAdder);
-        if(currentDuelNum > maxDuels)
+        Agent agentWithInitiative = playerWon ? player : AIEnemy;
+        if(currentDuelNum >= maxDuels)
         {
             StartCoroutine(EndRound());
         } else
         {
-            Agent agentWithInitiative = playerWon ? player : AIEnemy;
             StartCoroutine(StartDuel(agentWithInitiative));
         }
     }
@@ -278,15 +293,20 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator EndRound()
     {
-        yield return ReturnWonCardsToDeck();
+        Agent winningAgent = playerDamageDone >= enemyDamageDone ? player : AIEnemy;
+        yield return ReturnWonCardsToDeck(winningAgent);
         round++;
         turn = 0;
         currentDuelNum = 0;
-        if(player.roundWins >= 3)
+        playerDamageDone = 0;
+        enemyDamageDone = 0;
+        player.ResetMana();
+        AIEnemy.ResetMana();
+        if(player.points >= player.pointsToWin)
         {
             player.WinRound();
             AIEnemy.LoseRound();
-        } else if(AIEnemy.roundWins >= 3)
+        } else if(AIEnemy.points >= AIEnemy.pointsToWin)
         {
             AIEnemy.WinRound();
             player.LoseRound();
@@ -295,11 +315,25 @@ public class GameManager : MonoBehaviour
            StartRound(); 
         }
     }
-    IEnumerator ReturnWonCardsToDeck()
+    IEnumerator ReturnWonCardsToDeck(Agent winningAgent)
     {
         int mostWonCardsCount = player.WonCards.Count > AIEnemy.WonCards.Count ? player.WonCards.Count : AIEnemy.WonCards.Count;
+        Transform winningWonCardsTransform = winningAgent == player ? PlayerCardsWonTransform : EnemyCardsWonTransform;       
+        Transform losingWonCardsTransform = winningAgent != player ? PlayerCardsWonTransform : EnemyCardsWonTransform;
+        int winningCardDamageStoppedMoving = 0;
         for(int i = mostWonCardsCount-1; i >= 0; i--)
         {
+            
+            winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").GetComponent<Entity>().Start();
+            winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").GetComponent<Entity>().StartMoving(winningAgent.PointsTxt.transform.position, winningAgent.PointsTxt.transform.rotation, fn: () =>
+            {
+                winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(false);
+                winningAgent.AddPoints(int.Parse(winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").GetComponent<TMP_Text>().text));
+                winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").position = winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("WinningCard").position;
+                winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").localRotation = winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").rotation;
+                winningCardDamageStoppedMoving++;            
+            });
+            losingWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(false);
             if(player.WonCards.Count > i)
             {
                 Deck.GetComponent<Deck>().AddCardToTopOfDeck(player.WonCards[i], speed: player.WonCards[i].moveSpeed);
@@ -310,8 +344,9 @@ public class GameManager : MonoBehaviour
                 Deck.GetComponent<Deck>().AddCardToTopOfDeck(AIEnemy.WonCards[i], speed: AIEnemy.WonCards[i].moveSpeed);
                 AIEnemy.WonCards.RemoveAt(i);
             }
-            yield return new WaitForSeconds(delayBetweenWonCardsReturnToDeck);
+            yield return new WaitForSeconds(delayBetweenWonCardsReturnToDeck);        
         }
+        yield return new WaitUntil(() => winningCardDamageStoppedMoving >= winningAgent.WonCards.Count);
     }
     void Update()
     {

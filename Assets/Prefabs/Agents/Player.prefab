@@ -60,6 +60,27 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8027675670264089002}
   m_SourcePrefab: {fileID: 100100000, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+--- !u!114 &273636282846412960 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3361037691668286858, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+  m_PrefabInstance: {fileID: 3272123818456272170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshPro
+--- !u!1 &1521676745819998773 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4068720474513508127, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+  m_PrefabInstance: {fileID: 3272123818456272170}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1849596221118065794 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3802162544136413608, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+  m_PrefabInstance: {fileID: 3272123818456272170}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2336655914420305033 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 938318182085046691, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
@@ -88,5 +109,11 @@ MonoBehaviour:
   ProjectionSprite: {fileID: 469576451523655696, guid: f0abcb73c33245c4d9b3a2e0040b65cc, type: 3}
   FrontSprite: {fileID: 0}
   BackSprite: {fileID: 0}
-  turnIndx: 0
+  moveSpeed: 8
+  moveRotPivot: {fileID: 0}
+  useCardSpeed: 5
   Hand: {fileID: 2336655914420305033}
+  ManaBar: {fileID: 1849596221118065794}
+  PointsWheel: {fileID: 1521676745819998773}
+  PointsTxt: {fileID: 273636282846412960}
+  CardMovePreview: {fileID: 0}

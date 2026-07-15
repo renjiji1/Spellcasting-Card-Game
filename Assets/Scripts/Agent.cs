@@ -6,8 +6,8 @@ using TMPro;
 public class Agent : Entity
 {
     [NonSerialized] public bool isAgentTurn = false;
-    protected int totalDamage = 0;
-    protected int currentDamage = 0;
+    [NonSerialized] public int points = 0;
+    [SerializeField] public int pointsToWin = 55;
     [SerializeField] protected const int maxMana = 10;
     protected int mana = maxMana;
     [NonSerialized] public int roundWins = 0;
@@ -16,6 +16,10 @@ public class Agent : Entity
     [NonSerialized] public List<Card> WonCards = new List<Card>();
     public GameObject Hand;
     [NonSerialized] public Card cardBeingPlayed;
+
+    [SerializeField] GameObject ManaBar;
+    [SerializeField] GameObject PointsWheel;
+    [SerializeField] public TMP_Text PointsTxt;
     public override void Start()
     {
         base.Start();
@@ -23,6 +27,23 @@ public class Agent : Entity
     protected override void Update()
     {
         base.Update();
+    }
+    public virtual void UseMana()
+    {
+        mana--;
+        ManaBar.transform.localScale = new Vector3((float)mana/(float)maxMana, ManaBar.transform.localScale.y, ManaBar.transform.localScale.z);
+    }
+    public virtual void ResetMana()
+    {
+        mana = maxMana;
+        ManaBar.transform.localScale = new Vector3((float)mana/(float)maxMana, ManaBar.transform.localScale.y, ManaBar.transform.localScale.z);
+    }
+    public virtual int AddPoints(int addedPoints)
+    {
+        points += addedPoints;
+        PointsTxt.text = "" + points;
+        PointsWheel.transform.localScale = new Vector3((float)points / (float)pointsToWin, (float)points / (float)pointsToWin, PointsWheel.transform.localScale.z);
+        return points;    
     }
     public virtual void AddCard(Card card)
     {
@@ -63,12 +84,10 @@ public class Agent : Entity
     public virtual void EndRound()
     {
         mana = maxMana;
-        totalDamage = 0;
     }
     public virtual void WinRound()
     {
         EndRound();
-        roundWins++;
     }
     public virtual void LoseRound()
     {
