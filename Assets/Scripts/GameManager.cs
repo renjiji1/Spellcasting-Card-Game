@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool isChoosingSupremeCard = false;
     [NonSerialized] public int turn = 0; // number of turns that happened in the current duel
     [NonSerialized] public GameObject currentPlayer; // the player whose turn it is
+    [SerializeField] GameObject PlayerDamageDealtTxt;
+    [SerializeField] GameObject EnemyDamageDealtTxt;
+    [SerializeField] float damageAddedUpDelay = 1f;
+    [SerializeField] float damageAddedToPointsDelay = 1f;
     int playerDamageDone = 0;
     int enemyDamageDone = 0;
     [Header("Supreme Card")]
@@ -64,7 +68,6 @@ public class GameManager : MonoBehaviour
     {
         turn++;
         currentPlayer = currentPlayer == player.gameObject ? AIEnemy.gameObject : player.gameObject;
-        Debug.Log(currentPlayer);
         if (turn > 1)
         {
             currentDuelNum++;
@@ -78,6 +81,7 @@ public class GameManager : MonoBehaviour
     IEnumerator CardBattle()
     {
         // move cards into position in front of camera for clash
+        yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Default"));
         yield return new WaitForSeconds(cardClashEnterDelay);
         int cardsInPositionForClash = 0;
         player.cardBeingPlayed.StartMoving(cam.transform.position + cam.transform.forward * cardClashDistanceFromCamera + cam.transform.right * -cardClashXOffset/2, cam.transform.rotation, fn: () =>
@@ -91,17 +95,17 @@ public class GameManager : MonoBehaviour
         int enemyDenominationAdder = 0;
         int playerDenominationAdder = 0;
         yield return new WaitUntil(() => cardsInPositionForClash >= 2);
-        if(AIEnemy.cardBeingPlayed.type == SupremeCard.type)
-        {
-            yield return AddSupremeCardBonus(AIEnemy);
-            enemyDenominationAdder += supremeCardDenominationBonus;
-        }
         if(player.cardBeingPlayed.type == SupremeCard.type)
         {
             yield return AddSupremeCardBonus(player);
             playerDenominationAdder += supremeCardDenominationBonus;
         }
-
+        if(AIEnemy.cardBeingPlayed.type == SupremeCard.type)
+        {
+            yield return AddSupremeCardBonus(AIEnemy);
+            enemyDenominationAdder += supremeCardDenominationBonus;
+        }
+        
         bool playerWon = player.cardBeingPlayed.denomination > AIEnemy.cardBeingPlayed.denomination;
         if(AIEnemy.cardBeingPlayed.denomination == player.cardBeingPlayed.denomination)
         {
@@ -294,7 +298,7 @@ public class GameManager : MonoBehaviour
     IEnumerator EndRound()
     {
         Agent winningAgent = playerDamageDone >= enemyDamageDone ? player : AIEnemy;
-        yield return ReturnWonCardsToDeck(winningAgent);
+        yield return ReturnWonCardsToDeck();
         round++;
         turn = 0;
         currentDuelNum = 0;
@@ -315,38 +319,121 @@ public class GameManager : MonoBehaviour
            StartRound(); 
         }
     }
-    IEnumerator ReturnWonCardsToDeck(Agent winningAgent)
+    IEnumerator ReturnWonCardsToDeck()
     {
-        int mostWonCardsCount = player.WonCards.Count > AIEnemy.WonCards.Count ? player.WonCards.Count : AIEnemy.WonCards.Count;
-        Transform winningWonCardsTransform = winningAgent == player ? PlayerCardsWonTransform : EnemyCardsWonTransform;       
-        Transform losingWonCardsTransform = winningAgent != player ? PlayerCardsWonTransform : EnemyCardsWonTransform;
-        int winningCardDamageStoppedMoving = 0;
-        for(int i = mostWonCardsCount-1; i >= 0; i--)
+        // Return Player Cards
+        cam.GetComponent<Animator>().SetBool("LookAtPlayerWonCards", true);
+        
+        yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("LookAtPlayerWonCards"));
+        PlayerDamageDealtTxt.SetActive(true);
+        PlayerDamageDealtTxt.GetComponent<Denomination>().PositionInFrontOfCam = true;
+        PlayerDamageDealtTxt.GetComponent<Animator>().speed = 3;
+        PlayerDamageDealtTxt.GetComponent<TMP_Text>().text = "0";
+        int playerCardDamageStoppedMoving = 0;
+        int totalPlayerDamageDealt = 0;
+        for(int i = player.WonCards.Count-1; i >= 0; i--)
         {
-            
-            winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").GetComponent<Entity>().Start();
-            winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").GetComponent<Entity>().StartMoving(winningAgent.PointsTxt.transform.position, winningAgent.PointsTxt.transform.rotation, fn: () =>
+            if(i % 2 == 0)
             {
-                winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(false);
-                winningAgent.AddPoints(int.Parse(winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").GetComponent<TMP_Text>().text));
-                winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").position = winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("WinningCard").position;
-                winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").localRotation = winningWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").rotation;
-                winningCardDamageStoppedMoving++;            
-            });
-            losingWonCardsTransform.GetChild(winningAgent.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(false);
-            if(player.WonCards.Count > i)
-            {
-                Deck.GetComponent<Deck>().AddCardToTopOfDeck(player.WonCards[i], speed: player.WonCards[i].moveSpeed);
-                player.WonCards.RemoveAt(i);
+                Transform DamageTxt = PlayerCardsWonTransform.GetChild(i/2).Find("DamageTxt");
+                int playerDamageDealt = int.Parse(DamageTxt.GetComponent<TMP_Text>().text);
+                totalPlayerDamageDealt += playerDamageDealt;
+                DamageTxt.GetComponent<Entity>().Start();
+                Vector3 prevPos = DamageTxt.position;
+                Quaternion prevRot = DamageTxt.rotation;
+                DamageTxt.GetComponent<Entity>().StartMoving(PlayerDamageDealtTxt.transform.position, PlayerDamageDealtTxt.transform.rotation, useLocalRot: false, fn: () =>
+                {
+                    DamageTxt.gameObject.SetActive(false);
+                    PlayerDamageDealtTxt.GetComponent<Denomination>().AddToDenomination();
+                    PlayerDamageDealtTxt.GetComponent<Denomination>().adder += playerDamageDealt;
+                    PlayerDamageDealtTxt.GetComponent<Animator>().SetBool("Add", true);
+                    StartCoroutine(SetDamageTextAnimToFalse(PlayerDamageDealtTxt));
+                    DamageTxt.position = prevPos;
+                    DamageTxt.rotation = prevRot;
+                    playerCardDamageStoppedMoving++;
+                    Debug.Log($"playerCardDamageStoppedMoving {playerCardDamageStoppedMoving}, playerDamageDealt {playerDamageDealt}");
+                });
             }
-            if(AIEnemy.WonCards.Count > i)
-            {
-                Deck.GetComponent<Deck>().AddCardToTopOfDeck(AIEnemy.WonCards[i], speed: AIEnemy.WonCards[i].moveSpeed);
-                AIEnemy.WonCards.RemoveAt(i);
-            }
-            yield return new WaitForSeconds(delayBetweenWonCardsReturnToDeck);        
+            Deck.GetComponent<Deck>().AddCardToTopOfDeck(player.WonCards[i], speed: player.WonCards[i].moveSpeed);
+            yield return new WaitForSeconds(delayBetweenWonCardsReturnToDeck);
         }
-        yield return new WaitUntil(() => winningCardDamageStoppedMoving >= winningAgent.WonCards.Count);
+        yield return new WaitUntil(() => playerCardDamageStoppedMoving >= player.WonCards.Count/2);
+        yield return new WaitUntil(() => !PlayerDamageDealtTxt.GetComponent<Animator>().GetBool("Add"));
+        Debug.Log($"playerCardDamageStoppedMoving {playerCardDamageStoppedMoving}, player.WonCards.Count/2 {player.WonCards.Count/2}");
+        yield return new WaitForSeconds(damageAddedUpDelay);
+        PlayerDamageDealtTxt.GetComponent<Denomination>().PositionInFrontOfCam = false;
+        bool PlayerDamageDealtTxtStopMoving = false;
+        
+        PlayerDamageDealtTxt.GetComponent<Entity>().StartMoving(player.PointsTxt.transform.position, player.PointsTxt.transform.rotation, useLocalRot: false, fn: () =>
+        {
+            player.AddPoints(totalPlayerDamageDealt);
+            PlayerDamageDealtTxt.SetActive(false);
+            PlayerDamageDealtTxtStopMoving = true;
+            Debug.Log($"player.PointsTxt.transform.position {player.PointsTxt.transform.position} PlayerDamageDealtTxt {PlayerDamageDealtTxt.transform.position}");
+        });
+        
+        yield return new WaitUntil(() => PlayerDamageDealtTxtStopMoving);
+        player.WonCards.Clear();
+        
+        yield return new WaitForSeconds(damageAddedToPointsDelay);
+        cam.GetComponent<Animator>().SetBool("LookAtPlayerWonCards", false);
+
+        // Return Enemy Cards
+        cam.GetComponent<Animator>().SetBool("LookAtEnemyWonCards", true);
+        yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("LookAtEnemyWonCards"));
+        EnemyDamageDealtTxt.SetActive(true);
+        EnemyDamageDealtTxt.GetComponent<Denomination>().PositionInFrontOfCam = true;
+        EnemyDamageDealtTxt.GetComponent<Animator>().speed = 3;
+        EnemyDamageDealtTxt.GetComponent<TMP_Text>().text = "0";
+        int enemyCardDamageStoppedMoving = 0;
+        int totalEnemyDamageDealt = 0;
+        for(int i = AIEnemy.WonCards.Count-1; i >= 0; i--)
+        {
+            if(i % 2 == 0)
+            {
+                Transform DamageTxt = EnemyCardsWonTransform.GetChild(i/2).Find("DamageTxt");
+                int enemyDamageDealt = int.Parse(DamageTxt.GetComponent<TMP_Text>().text);
+                totalEnemyDamageDealt += enemyDamageDealt;
+                DamageTxt.GetComponent<Entity>().Start();
+                Vector3 prevPos = DamageTxt.position;
+                Quaternion prevRot = DamageTxt.rotation;
+                DamageTxt.GetComponent<Entity>().StartMoving(EnemyDamageDealtTxt.transform.position, EnemyDamageDealtTxt.transform.rotation, useLocalRot: false, fn: () =>
+                {
+                    DamageTxt.gameObject.SetActive(false);
+                    PlayerDamageDealtTxt.GetComponent<Denomination>().AddToDenomination();
+                    EnemyDamageDealtTxt.GetComponent<Denomination>().adder += enemyDamageDealt;
+                    EnemyDamageDealtTxt.GetComponent<Animator>().SetBool("Add", true);
+                    StartCoroutine(SetDamageTextAnimToFalse(EnemyDamageDealtTxt));
+                    DamageTxt.position = EnemyCardsWonTransform.GetChild(i/2).Find("WinningCard").position;
+                    DamageTxt.rotation = EnemyCardsWonTransform.GetChild(i/2).Find("WinningCard").rotation;
+                    enemyCardDamageStoppedMoving++;            
+                });
+            }
+            Deck.GetComponent<Deck>().AddCardToTopOfDeck(AIEnemy.WonCards[i], speed: AIEnemy.WonCards[i].moveSpeed);
+            yield return new WaitForSeconds(delayBetweenWonCardsReturnToDeck);
+        }
+        yield return new WaitUntil(() => enemyCardDamageStoppedMoving >= AIEnemy.WonCards.Count/2);
+        yield return new WaitUntil(() => !EnemyDamageDealtTxt.GetComponent<Animator>().GetBool("Add"));
+        yield return new WaitForSeconds(damageAddedUpDelay);
+        bool EnemyDamageDealtTxtStopMoving = false;
+        EnemyDamageDealtTxt.GetComponent<Denomination>().PositionInFrontOfCam = false;
+        EnemyDamageDealtTxt.GetComponent<Entity>().StartMoving(AIEnemy.PointsTxt.transform.position, AIEnemy.PointsTxt.transform.rotation, useLocalRot: false, fn: () =>
+        {
+            AIEnemy.AddPoints(totalEnemyDamageDealt);
+            EnemyDamageDealtTxt.SetActive(false);
+            EnemyDamageDealtTxtStopMoving = true;
+        });
+        yield return new WaitUntil(() => EnemyDamageDealtTxtStopMoving);
+        AIEnemy.WonCards.Clear();
+
+        yield return new WaitForSeconds(damageAddedToPointsDelay);
+        cam.GetComponent<Animator>().SetBool("LookAtEnemyWonCards", false);
+    }
+    IEnumerator SetDamageTextAnimToFalse(GameObject DamageDealtTxt)
+    {
+        float animLength = player.GetAnimLengthByName("Add", DamageDealtTxt.GetComponent<Animator>());
+        yield return new WaitForSeconds(animLength);
+        DamageDealtTxt.GetComponent<Animator>().SetBool("Add", false);
     }
     void Update()
     {

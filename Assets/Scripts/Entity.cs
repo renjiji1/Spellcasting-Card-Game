@@ -43,6 +43,7 @@ public class Entity : MonoBehaviour
     protected Action OnMoveFinished;
     protected bool isMoving = false;
     protected bool startHasRan = false;
+    protected bool useLocalRotationForMoving = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Start()
     {
@@ -103,7 +104,13 @@ public class Entity : MonoBehaviour
         {
             isMoving = true;
             moveTimer += Time.deltaTime * currentSpeed;
-            moveRotPivot.transform.localRotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
+            if(useLocalRotationForMoving)
+            {
+                moveRotPivot.transform.localRotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
+            } else
+            {
+                moveRotPivot.transform.rotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
+            }
             transform.position = Vector3.Lerp(moveInitialPos, moveTargetPos, moveTimer);
         } else if(isMoving)
         {
@@ -113,11 +120,12 @@ public class Entity : MonoBehaviour
             OnMoveFinished = null;
         }
     }
-    public void StartMoving(Vector3 pos, Quaternion? rot = null, float? speed = null, Action fn = null)
+    public void StartMoving(Vector3 pos, Quaternion? rot = null, float? speed = null, Action fn = null, bool useLocalRot = true)
     {
         OnMoveFinished?.Invoke();
-        
-        moveInitialRot = moveRotPivot.transform.localRotation;
+        useLocalRotationForMoving = useLocalRot;
+            
+        moveInitialRot = useLocalRotationForMoving ? moveRotPivot.transform.localRotation : moveRotPivot.transform.rotation;
         moveInitialPos = transform.position;
         currentSpeed = speed ?? moveSpeed;
         moveTargetPos = pos;

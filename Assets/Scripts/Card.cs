@@ -109,7 +109,7 @@ public class Card : Entity
                     OnSelect();
                 } 
                 
-            } else if(player.highlightedCard == this)
+            } else if(player.highlightedCard == this && player.selectedCard != this)
             {
                 OnHoverExit();
             }
@@ -122,11 +122,14 @@ public class Card : Entity
     }
     public void OnHoverExit()
     {
-        if(player.highlightedCard == this)
+        if(!hasBeenPlayed && !isBeingPlayed)
         {
-            player.highlightedCard = null;
+            if(player.highlightedCard == this)
+            {
+                player.highlightedCard = null;
+            }
+            StartMoving(HandTransform.position, HandTransform.rotation);
         }
-        StartMoving(HandTransform.position, HandTransform.rotation);
     }
     void OnSelect()
     {

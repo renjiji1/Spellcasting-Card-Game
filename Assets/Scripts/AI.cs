@@ -56,7 +56,17 @@ public class AI : Agent
     }
     IEnumerator PlayCardAfterDelay(Card card, CardSlot slot)
     {
+        cam.GetComponent<Animator>().SetBool("GoToEnemy", true);
+        float camToEnemyTime = GetAnimLengthByName("GoToEnemy", cam.GetComponent<Animator>());
+        yield return new WaitForSeconds(camToEnemyTime);
+        cam.GetComponent<Animator>().SetBool("LookAtEnemyPlaceCard", true);
+        yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("LookAtEnemyPlaceCard"));
+
         yield return new WaitForSeconds(waitToPlayCard);
-        UseCard(card, slot);
+        UseCard(card, slot, fn: () =>
+        {
+            cam.GetComponent<Animator>().SetBool("GoToEnemy", false);
+            cam.GetComponent<Animator>().SetBool("LookAtEnemyPlaceCard", false);
+        });
     }
 }

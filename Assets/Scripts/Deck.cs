@@ -104,6 +104,7 @@ public class Deck : Entity
     public IEnumerator StartShuffle()
     {
         yield return ReturnSupremeCardToDeck();
+        cam.GetComponent<Animator>().SetBool("LookAtShuffle", true);
         isShuffling = true;
         for(int i = DeckOfCards.Count-1; i >= 0; i--)
         {
@@ -145,6 +146,7 @@ public class Deck : Entity
         }
         DeckOfCards = newDeck;
         isShuffling = false;
+        cam.GetComponent<Animator>().SetBool("LookAtShuffle", false);
         yield return ChooseNewSupremeCard();
         StartCoroutine(DealCards());
     }

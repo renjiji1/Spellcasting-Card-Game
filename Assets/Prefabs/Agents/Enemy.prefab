@@ -208,6 +208,7 @@ MonoBehaviour:
   BackSprite: {fileID: 5782012695346955960}
   moveSpeed: 8
   moveRotPivot: {fileID: 0}
+  pointsToWin: 85
   useCardSpeed: 5
   Hand: {fileID: 2377273794550827063}
   ManaBar: {fileID: 1818231805648558140}

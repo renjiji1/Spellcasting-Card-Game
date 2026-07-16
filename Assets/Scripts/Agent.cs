@@ -66,7 +66,7 @@ public class Agent : Entity
         isAgentTurn = false;
         gameManager.EndTurn();
     }
-    public virtual void UseCard(Card card, CardSlot slot)
+    public virtual void UseCard(Card card, CardSlot slot, Action fn = null)
     {
         cardBeingPlayed = card;
         card.OnDeselect();
@@ -75,6 +75,7 @@ public class Agent : Entity
         card.GetComponent<Animator>().speed = card.GetAnimLengthByName("UseCard") / card.GetTotalMoveTime(useCardSpeed);
         card.StartMoving(slot.transform.position + new Vector3(0, slot.cardOnSlotYOffset,0), slot.transform.rotation, speed: useCardSpeed, fn: () =>
         {
+            fn?.Invoke();
             card.GetComponent<Animator>().SetBool("UseCard", false);
             HandOfCards.Remove(card);
             EndTurn();
