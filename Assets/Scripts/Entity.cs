@@ -33,7 +33,7 @@ public class Entity : MonoBehaviour
     protected List<GameObject> projectionSprites = new List<GameObject>();
     [Header("Move")]
     [SerializeField] public float moveSpeed = 8;
-    [SerializeField] protected GameObject moveRotPivot;
+    [SerializeField] public GameObject moveRotPivot;
     protected float moveTimer = 0;
     protected Vector3 moveInitialPos;
     protected Quaternion moveInitialRot;
@@ -136,7 +136,7 @@ public class Entity : MonoBehaviour
     }
     protected virtual bool RunUpdate()
     {
-        return !gameManager.paused;
+        return !GameManager.paused;
     }
     public float GetTotalMoveTime(float speed)
     {

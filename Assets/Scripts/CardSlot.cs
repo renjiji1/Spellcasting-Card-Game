@@ -7,6 +7,7 @@ public class CardSlot : Entity
     [Header("Card Slot")]
     [SerializeField] public float cardOnSlotYOffset = .002f;
     [SerializeField] public bool isPlayerSlot = true;
+    [SerializeField] public GameObject MatchSourceAnim;
     [Header("Card Source")]
     [SerializeField] public MagicSource source;
     [SerializeField] Sprite primalIcon;
@@ -33,11 +34,14 @@ public class CardSlot : Entity
     protected override void Update()
     {
         base.Update();
-        OnHoverOverSlot();
+        if(RunUpdate())
+        {
+            OnHoverOverSlot();
+        }
     }
     public void OnHoverOverSlot()
     {
-        if(isPlayerSlot && player.isAgentTurn)
+        if(isPlayerSlot && player.isAgentTurn && !player.cardOnSlot)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2849162238132632423, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Lich
       objectReference: {fileID: 0}
     - target: {fileID: 3461473241860855495, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,8 +52,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5747029250946383795, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: difficulty
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5747029250946383795, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: RunesTransform
+      value: 
+      objectReference: {fileID: 1223817872335727148}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+--- !u!4 &1223817872335727148 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4636051425405875211, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+  m_PrefabInstance: {fileID: 5813390567116824103}
+  m_PrefabAsset: {fileID: 0}

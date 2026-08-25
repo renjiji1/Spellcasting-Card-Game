@@ -43,9 +43,12 @@ public class Deck : Entity
     protected override void Update()
     {
         base.Update();
-        if(isShuffling)
+        if(RunUpdate())
         {
-            ShuffleRotationAxis.transform.Rotate(new Vector3(0, Time.deltaTime * rotationAxisSpeed, 0));
+            if(isShuffling)
+            {
+                ShuffleRotationAxis.transform.Rotate(new Vector3(0, Time.deltaTime * rotationAxisSpeed, 0));
+            }
         }
     }
     public IEnumerator InsertCardRandomlyIntoDeck(Card card, Action fn = null)
@@ -128,7 +131,6 @@ public class Deck : Entity
 
         } else {isReturningSupremeCardToDeck = false;}
         yield return new WaitUntil(() => !isReturningSupremeCardToDeck);
-        Debug.Log("supreme card returned");
     }
     IEnumerator ExitShuffle()
     {
@@ -141,6 +143,7 @@ public class Deck : Entity
             newDeck.Add(choosenCard);
             tmpDeck.RemoveAt(rng);
             Vector3 cardPos = new Vector3(transform.position.x, transform.position.y + (i+1) * choosenCard.thickness, transform.position.z);
+            choosenCard.transform.parent = transform;
             choosenCard.ExitShuffle(cardPos, exitShuffleAnimSpeed);
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
@@ -166,16 +169,28 @@ public class Deck : Entity
     { 
         isDealing = true;
         List<Card> tmpDeck = new List<Card>(DeckOfCards);
+        List<Card> futurePlayerCards = new List<Card>();
+        int playerCardsInHand = 0;
+        int enemyCardsInHand = 0;
+        int j = tmpDeck.Count-1;
+        for(int i = 0; i < player.Hand.transform.childCount; i++)
+        {
+            futurePlayerCards.Add(tmpDeck[j]);
+            j -= 2;
+        }
+        futurePlayerCards = OrderCards(futurePlayerCards);
         for(int i = 0; i < player.Hand.transform.childCount*2; i += 2)
         {
-            Transform playerCardTransform = player.Hand.transform.GetChild(i/2);
-            Vector3 playerTargetPos = playerCardTransform.position;
             Card playerCard = tmpDeck[tmpDeck.Count-1-i];
+            Transform playerCardTransform = player.Hand.transform.GetChild(futurePlayerCards.IndexOf(playerCard));
+            Vector3 playerTargetPos = playerCardTransform.position;
             playerCard.StartMoving(playerTargetPos, playerCardTransform.rotation, fn: () =>
             {
                 player.AddCard(playerCard);
                 DeckOfCards.Remove(playerCard);
+                playerCard.ogHandPos = playerCardTransform.position;
                 playerCard.HandTransform = playerCardTransform;
+                playerCardsInHand++;
             });
             Transform enemyCardTransform = AIEnemy.Hand.transform.GetChild(i/2);
             Vector3 enemyTargetPos = enemyCardTransform.position;
@@ -185,10 +200,35 @@ public class Deck : Entity
                 AIEnemy.AddCard(enemyCard);
                 DeckOfCards.Remove(enemyCard);
                 enemyCard.HandTransform = enemyCardTransform;
+                enemyCardsInHand++;
             });
             yield return new WaitForSeconds(delayBetweenCardDealings);
         }
+        yield return new WaitUntil(() => playerCardsInHand >= player.Hand.transform.childCount && enemyCardsInHand >= AIEnemy.Hand.transform.childCount);
+        player.ReOrderCards();
         isDealing = false;
+    }
+    public static List<Card> OrderCards(List<Card> cards)
+    {
+        int[] cardsOrderRanked = new int[cards.Count];
+        Card[] newCards = new Card[cards.Count];
+        for(int i = 0; i < cards.Count; i++)
+        {
+            int rank = cards[i].denomination;
+            if(cards[i].type == MagicType.Evocation)
+            {
+                rank += GameManager.maxCardDenomination;
+            }
+            if(cards[i].type == MagicType.Illusion)
+            {
+                rank += GameManager.maxCardDenomination*2;
+            }
+            cardsOrderRanked[i] = rank;
+            newCards[i] = cards[i];
+        }
+        
+        Array.Sort(cardsOrderRanked, newCards);
+        return newCards.Reverse().ToList();
     }
     public void AddCardToTopOfDeck(Card card, float speed, Action? fn = null) 
     {

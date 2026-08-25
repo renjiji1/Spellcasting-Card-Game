@@ -13,6 +13,7 @@ public class Card : Entity
     [SerializeField] public int denomination = 1;
     [NonSerialized] public bool isBeingPlayed = false;
     [NonSerialized] public bool hasBeenPlayed = false;
+    [NonSerialized] public bool isBeingSwapped = false;
     [Header("Card Type")]
     [SerializeField] public MagicType type;
     [SerializeField] Sprite illusionIcon;
@@ -24,6 +25,7 @@ public class Card : Entity
     [Header("Move")]
     [SerializeField] float selectMoveMultiplier = 3;
     [NonSerialized] public Transform HandTransform;
+    [NonSerialized] public Vector3 ogHandPos; 
     Vector3 highlightMoveOffset = new Vector3(0, .1f, .05f);
 
     public override void Start()
@@ -66,7 +68,6 @@ public class Card : Entity
         Quaternion deckCardRot = Quaternion.Euler(-90, 0, 180);
         StartMoving(pos, deckCardRot, speed, () =>
         {
-            transform.parent = GameManager.instance.Deck.transform;
             transform.rotation = Quaternion.Euler(Vector3.zero);
             moveRotPivot.transform.rotation = deckCardRot;
             shuffle = false;
@@ -80,6 +81,7 @@ public class Card : Entity
         StartMoving(aroundShuffleAxis, backTurnedRot, speed, () =>
         {
             transform.parent = shuffleRotAxis.transform;
+            moveRotPivot.transform.rotation = backTurnedRot;
         });
         shuffle = true;
     }
@@ -106,7 +108,11 @@ public class Card : Entity
                     {
                         player.selectedCard.OnDeselect();
                     }
-                    OnSelect();
+                    player.UseCardForPower(this);
+                    if(!player.powerActiveCantPlayCard)
+                    {
+                        OnSelect();
+                    }
                 } 
                 
             } else if(player.highlightedCard == this && player.selectedCard != this)
@@ -117,12 +123,14 @@ public class Card : Entity
     }
     void OnHoverEnter()
     {
-        player.highlightedCard = this;
-        StartMoving(HandTransform.position + highlightMoveOffset, HandTransform.rotation);
+        if(!isBeingSwapped && player.ContainsCard(this)) {
+            player.highlightedCard = this;
+            StartMoving(HandTransform.position + highlightMoveOffset, HandTransform.rotation);
+        } 
     }
     public void OnHoverExit()
     {
-        if(!hasBeenPlayed && !isBeingPlayed)
+        if(!hasBeenPlayed && !isBeingPlayed && !isBeingSwapped && player.ContainsCard(this))
         {
             if(player.highlightedCard == this)
             {
