@@ -53,8 +53,8 @@ public class Entity : MonoBehaviour
         col = GetComponent<Collider2D>();
         cam = Camera.main.GetComponent<Camera>();
         gameManager = GameManager.instance;
-        player = gameManager.player;
-        AIEnemy = gameManager.AIEnemy;
+        player = GameManager.player;
+        AIEnemy = GameManager.AIEnemy;
         if(moveRotPivot == null) moveRotPivot = gameObject;
         if (depthProjection)
         {

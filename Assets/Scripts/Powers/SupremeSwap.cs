@@ -24,7 +24,6 @@ public class SupremeSwap : Power
             agent.RemoveCard(card);
             card.isBeingSwapped = false;
             gameManager.SupremeCard = card;
-            Debug.Log($"card pos {card.transform.position} supreme point pos {gameManager.SupremeCardSpawnPoint.position}");
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
         });
         Card currentSupremeCard = gameManager.SupremeCard;

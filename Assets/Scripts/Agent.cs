@@ -15,13 +15,14 @@ public class Agent : Entity
     [NonSerialized] public bool powerActiveCantPlayCard = false;
     [NonSerialized] public bool canRedraw = false;
     [NonSerialized] public bool canSupremeCardSwap = false;
-    [NonSerialized] public bool dominateActive = false;
     [NonSerialized] public bool envigorateActive = false;
     [NonSerialized] public bool adrenalineActive = false;
     [NonSerialized] public int points = 0;
     [SerializeField] public int pointsToWin = 55;
     [SerializeField] public int maxMana = 10;
     [NonSerialized] public int mana;
+    [NonSerialized] public int manaLossOnLose = 0;
+    [NonSerialized] public int manaLossOnWin = 1;
     protected int level = 0;
     [NonSerialized] public bool cardOnSlot = false;
     [NonSerialized] public int roundWins = 0;
@@ -69,17 +70,19 @@ public class Agent : Entity
     {
         base.Update();
     }
-    public virtual void UseMana()
+    public virtual void UseMana(bool win = true)
     {
         if(!envigorateActive)
         {
-            int manaSubtracter = adrenalineActive ? 2 : 1;
+            int manaSubtracter = win ? manaLossOnWin : manaLossOnLose;
             mana = Mathf.Clamp(mana - manaSubtracter, 0, maxMana);
             ManaTxt.text = "" + mana;
             ManaCrystalFill.transform.localScale = new Vector3((float)mana/(float)maxMana, (float)mana/(float)maxMana, ManaCrystalFill.transform.localScale.z);
         }
         adrenalineActive = false;
         envigorateActive = false;
+        manaLossOnLose = 0;
+        manaLossOnWin = 1;
     }
     public virtual void ResetMana()
     {

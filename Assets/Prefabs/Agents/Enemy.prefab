@@ -211,6 +211,18 @@ PrefabInstance:
       value: -0.004
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.901
+      objectReference: {fileID: 0}
+    - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.162
+      objectReference: {fileID: 0}
+    - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.855
+      objectReference: {fileID: 0}
+    - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.12473243
       objectReference: {fileID: 0}
@@ -297,6 +309,14 @@ PrefabInstance:
     - target: {fileID: 1337591738906219424, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.054
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472576679437343910, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 1472576679437343910, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.869
       objectReference: {fileID: 0}
     - target: {fileID: 1472576679437343910, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -492,7 +512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6523066565898396639, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.183
+      value: 1.077
       objectReference: {fileID: 0}
     - target: {fileID: 6568096956584403382, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -591,7 +611,7 @@ MonoBehaviour:
   BackSprite: {fileID: 5782012695346955960}
   moveSpeed: 8
   moveRotPivot: {fileID: 0}
-  pointsToWin: 85
+  pointsToWin: 150
   maxMana: 9
   useCardSpeed: 5
   Hand: {fileID: 2377273794550827063}
@@ -603,6 +623,7 @@ MonoBehaviour:
   AddedArcanaTxt: {fileID: 8341242839483361909}
   ArcanaBagTxt: {fileID: 6204900073261620608}
   AddedArcanaTxtYOffset: 0
+  arcana: 0
   waitToChooseBehavior: 0.5
   waitAfterActivatingPower: 1
   cardInitialDistFromCam: 1.4

@@ -12,6 +12,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mimicry
       objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.g
+      value: 0.14901961
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.1451273
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

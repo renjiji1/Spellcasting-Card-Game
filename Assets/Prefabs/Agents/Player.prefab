@@ -235,6 +235,10 @@ PrefabInstance:
       propertyPath: agent
       value: 
       objectReference: {fileID: 8027675670264089002}
+    - target: {fileID: 6523066565898396639, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.748
+      objectReference: {fileID: 0}
     - target: {fileID: 7317887023097403063, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: agent
       value: 
@@ -303,7 +307,7 @@ MonoBehaviour:
   BackSprite: {fileID: 0}
   moveSpeed: 8
   moveRotPivot: {fileID: 0}
-  pointsToWin: 85
+  pointsToWin: 150
   maxMana: 9
   useCardSpeed: 4
   Hand: {fileID: 2336655914420305033}
@@ -315,6 +319,7 @@ MonoBehaviour:
   AddedArcanaTxt: {fileID: 8309899889756036811}
   ArcanaBagTxt: {fileID: 6236507446485428542}
   AddedArcanaTxtYOffset: 0
+  arcana: 0
   CardMovePreview: {fileID: 0}
   cardPosDifference: {x: 0.2, y: 0, z: 0.005}
   powerPanelsPoses:

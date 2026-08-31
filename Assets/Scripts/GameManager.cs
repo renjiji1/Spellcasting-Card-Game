@@ -23,13 +23,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject Deck;
     [SerializeField] public GameObject AllCardSlots;
     [SerializeField] GameObject RoundTxt;
-    [SerializeField] public Player player;
+    [SerializeField] public Player Player;
+    [NonSerialized] public static Player player;
     [SerializeField] GameObject ApprenticeEnemy;
     [SerializeField] GameObject MageEnemy;
     [SerializeField] GameObject ArchWizardEnemy;
     [SerializeField] GameObject SimulacrumEnemy;
     [SerializeField] GameObject LichEnemy;
-    [NonSerialized] public AI AIEnemy;
+    [NonSerialized] public static AI AIEnemy;
     [SerializeField] public GameObject CantUsePowerTxt;
     [SerializeField] public GameObject LevelUpTxt;
     [SerializeField] public GameObject RedrawTxt;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     int enemyDamageDone = 0;
     bool manaBust = false;
     [NonSerialized] public Agent agentForceInitiative = null;
+    [NonSerialized] public Agent agentDominate = null;
     [NonSerialized] public bool mimicryActive = false;
     [SerializeField] public TMP_Text PowerNameTxt;
     [Header("Supreme Card")]
@@ -81,6 +83,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] float cardClashExitDelay = .5f;
     [SerializeField] Transform PlayerCardsWonTransform;
     [SerializeField] Transform EnemyCardsWonTransform;
+    [SerializeField] GameObject DamageNumTxt;
+    [SerializeField] float damageNumTxtYOffset = -1;
+    [SerializeField] float damageNumTxtDistFromCamScalar = .5f;
+    [SerializeField] GameObject PlayerDamageBonusTxt;
+    [SerializeField] GameObject EnemyDamageBonusTxt;
+    [SerializeField] GameObject PlayerDenominationBonusTxt;
+    [SerializeField] GameObject EnemyDenominationBonusTxt;
+    [SerializeField] int streakAdder = 1;
+    [SerializeField] float damageBonusDelay = .1f;
+    [SerializeField] float afterStreakDelay = .25f;
+    [NonSerialized] public int playerStreak = 0;
+    [NonSerialized] public int enemyStreak = 0;
 
     [Header("End Game")]
     [SerializeField] GameObject EndGameLosePanel;
@@ -96,6 +110,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         paused = false;
+        player = Player;
     }
     void Start()
     {
@@ -120,6 +135,8 @@ public class GameManager : MonoBehaviour
         }
         AIEnemy.gameObject.SetActive(true);
         cam = Camera.main.GetComponent<Camera>();
+        PlayerDenominationBonusTxt.GetComponent<Animator>().speed = 1.5f;
+        EnemyDenominationBonusTxt.GetComponent<Animator>().speed = 1.5f;
         StartRound();
     }
 
@@ -165,37 +182,31 @@ public class GameManager : MonoBehaviour
         int enemyDenominationAdder = 0;
         int playerDenominationAdder = 0;
         yield return new WaitUntil(() => cardsInPositionForClash >= 2);
-        //Supreme Card Bonus
-        //Agent roShamBoBonusAgent = RoShamBoWinner()
-        bool supremeBonusApplied = false;
-        if(player.cardBeingPlayed.type == SupremeCard.type || player.dominateActive)
+
+        // Ro Sham Bo Bonus
+        int roShamBoWinner = RoShamBoWinner(player.cardBeingPlayed.type, AIEnemy.cardBeingPlayed.type);
+        if(roShamBoWinner == 1 || agentDominate == player)
         {
-            yield return AddSupremeCardBonus(player);
+            yield return AddRoShamBoBonus(player, PlayerDenominationBonusTxt);
             playerDenominationAdder += RoShamBoWinnerDenominationBonus;
-            player.dominateActive = false;
-            supremeBonusApplied = true;
         }
-        if(AIEnemy.cardBeingPlayed.type == SupremeCard.type || AIEnemy.dominateActive)
+        if(roShamBoWinner == 2 || agentDominate == AIEnemy)
         {
-            yield return AddSupremeCardBonus(AIEnemy);
+            yield return AddRoShamBoBonus(AIEnemy, EnemyDenominationBonusTxt);
             enemyDenominationAdder += RoShamBoWinnerDenominationBonus;
-            AIEnemy.dominateActive = false;
-            supremeBonusApplied = true;
         }
-        if(supremeBonusApplied) {
-            yield return new WaitForSeconds(cardClashPowerUseDelay);
-        }
+        agentDominate = null;
         
         //Adrenaline Bonus
         if(player.adrenalineActive)
         {
             playerDenominationAdder += player.cardBeingPlayed.denomination;
-            yield return AddAdrenalineBonus(player);
+            yield return AddAdrenalineBonus(player, PlayerDenominationBonusTxt);
         }
         if(AIEnemy.adrenalineActive)
         {
             enemyDenominationAdder += AIEnemy.cardBeingPlayed.denomination;
-            yield return AddAdrenalineBonus(AIEnemy);
+            yield return AddAdrenalineBonus(AIEnemy, EnemyDenominationBonusTxt);
         }
 
         //Mimicry turn card to 0
@@ -214,7 +225,6 @@ public class GameManager : MonoBehaviour
             yield return MimicryPenalty();
         }
         
-
         //Card Clash Tie
         bool playerWon = player.cardBeingPlayed.denomination > AIEnemy.cardBeingPlayed.denomination;
         if(AIEnemy.cardBeingPlayed.denomination == player.cardBeingPlayed.denomination)
@@ -228,18 +238,48 @@ public class GameManager : MonoBehaviour
                 playerWon = false; 
             }
         }
+
+        // Damage Txt
+        Agent agentThatWon = playerWon ? player : AIEnemy;
+        int damageDealt = Mathf.Abs(player.cardBeingPlayed.denomination - AIEnemy.cardBeingPlayed.denomination);
+        yield return ActivateDamageNumTxt(playerWon, damageDealt);
+
+        // Streak
+        if(playerStreak > 0 && agentThatWon == player)
+        {
+            yield return AddStreakBonus(player, playerStreak, PlayerDamageBonusTxt);
+            damageDealt += playerStreak * streakAdder;
+        }
+        if(enemyStreak > 0 && agentThatWon == AIEnemy)
+        {
+            yield return AddStreakBonus(AIEnemy, enemyStreak, EnemyDamageBonusTxt);
+            damageDealt += enemyStreak * streakAdder;
+        }
+        playerStreak = playerWon ? playerStreak + 1 : 0;
+        enemyStreak = playerWon ? 0 : enemyStreak + 1;
+
+        // Manage Supreme Card Bonus
+        if(player.cardBeingPlayed.type == SupremeCard.type && agentThatWon == player)
+        {
+            yield return AddSupremeCardBonus(player, damageDealt, PlayerDamageBonusTxt);
+            damageDealt *= 2;
+        }
+        if(AIEnemy.cardBeingPlayed.type == SupremeCard.type && agentThatWon == AIEnemy)
+        {
+            yield return AddSupremeCardBonus(AIEnemy, damageDealt, EnemyDamageBonusTxt);
+            damageDealt *= 2;
+        }
         
         //Move the cards to the winner's side
         yield return new WaitForSeconds(cardClashExitDelay);
         int cardsMovedToPosition = 0;
-        int damageDealt = Mathf.Abs(player.cardBeingPlayed.denomination - AIEnemy.cardBeingPlayed.denomination);
+        GameObject WonCardDamageTxt;
         if(playerWon)
         {
             playerDamageDone += damageDealt;
+            WonCardDamageTxt = PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).Find("DamageTxt").gameObject;
             AIEnemy.cardBeingPlayed.StartMoving(PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).position, PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).rotation, fn: () =>
             {
-                PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).Find("DamageTxt").GetComponent<TMP_Text>().text = "" + damageDealt;
-                PlayerCardsWonTransform.GetChild(player.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(true);
                 player.WonCards.Add(AIEnemy.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
@@ -251,10 +291,9 @@ public class GameManager : MonoBehaviour
         } else
         {
             enemyDamageDone += damageDealt;
+            WonCardDamageTxt = EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("DamageTxt").gameObject;
             AIEnemy.cardBeingPlayed.StartMoving(EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("WinningCard").position, EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("WinningCard").rotation, fn: () =>
             {
-                EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("DamageTxt").GetComponent<TMP_Text>().text = "" + damageDealt;
-                EnemyCardsWonTransform.GetChild(AIEnemy.WonCards.Count/2).Find("DamageTxt").gameObject.SetActive(true);
                 AIEnemy.WonCards.Add(AIEnemy.cardBeingPlayed);
                 cardsMovedToPosition++;
             });
@@ -264,17 +303,24 @@ public class GameManager : MonoBehaviour
                 cardsMovedToPosition++;
             });
         }
-
+        DamageNumTxt.transform.parent.GetComponent<Entity>().StartMoving(WonCardDamageTxt.transform.position, WonCardDamageTxt.transform.rotation, fn: () =>
+        {
+            WonCardDamageTxt.GetComponent<TMP_Text>().text = "" + damageDealt;
+            WonCardDamageTxt.SetActive(true);
+        });
         yield return new WaitUntil(() => cardsMovedToPosition >= 2);
+
         if(playerWon)
         {
             AIEnemy.adrenalineActive = false;
             AIEnemy.envigorateActive = false;
             player.UseMana();
+            AIEnemy.UseMana(win: false);
         } else {
             player.adrenalineActive = false;
             player.envigorateActive = false;
             AIEnemy.UseMana();
+            player.UseMana(win: false);
         }
         player.DeactivateCurrentCard(playerDenominationAdder);
         AIEnemy.DeactivateCurrentCard(enemyDenominationAdder);
@@ -294,42 +340,58 @@ public class GameManager : MonoBehaviour
             yield return ReturnWonCardsOnManaBust(AIEnemy);
         }
         
-        Agent agentWithInitiative = playerWon ? player : AIEnemy;
         if(currentDuelNum >= maxDuels || manaBust)
         {
             StartCoroutine(EndRound());
         } else
         {
-            StartCoroutine(StartDuel(agentWithInitiative));
+            StartCoroutine(StartDuel(agentThatWon));
         }
     }
-    IEnumerator AddSupremeCardBonus(Agent agent)
+    IEnumerator ActivateDamageNumTxt(bool playerWon, int damageDealt)
     {
-        GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
-        SupremeCardBonus.transform.position = SupremeCardSpawnPoint.Find("TypeProjection").position;
-        SupremeCardBonus.GetComponent<TMP_Text>().text = "" + RoShamBoWinnerDenominationBonus;
-        SupremeCardBonus.SetActive(true);
+        DamageNumTxt.transform.parent.position = cam.transform.position + cam.transform.forward * cardClashDistanceFromCamera * damageNumTxtDistFromCamScalar + cam.transform.up * damageNumTxtYOffset;
+        DamageNumTxt.transform.parent.rotation = cam.transform.rotation;
         
-        yield return new WaitForSeconds(supremeCardBonusMoveDelay);
-        bool supremeCardBonusMoveFinished = false;
-        SupremeCardBonus.GetComponent<Entity>().StartMoving(CardDenomination.transform.position, CardDenomination.transform.rotation, fn: () =>
-        {
-            SupremeCardBonus.SetActive(false);
-            supremeCardBonusMoveFinished = true;
-        });
+        DamageNumTxt.GetComponent<TMP_Text>().color = playerWon ? Color.blue : Color.red;
+        DamageNumTxt.GetComponent<TMP_Text>().text = "" + 0;
+        DamageNumTxt.SetActive(true);
+        yield return null;
+        DamageNumTxt.GetComponent<Denomination>().adder = damageDealt;
+        DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
+        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        float addAnimLength = player.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());  
+        yield return new WaitForSeconds(addAnimLength);
+        DamageNumTxt.GetComponent<Animator>().SetBool("Add", false);
+    }
+    IEnumerator AddRoShamBoBonus(Agent agent, GameObject DenominationBonusTxt)
+    {
+        DenominationBonusTxt.GetComponent<TMP_Text>().text = agentDominate == null ? "Advantage" : "Dominate";
+        DenominationBonusTxt.SetActive(true);
+        yield return new WaitForSeconds(damageBonusDelay / DenominationBonusTxt.GetComponent<Animator>().speed);
 
-        yield return new WaitUntil(() => supremeCardBonusMoveFinished);
+        float streakActivateAnimLength = DenominationBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;        
+        GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
+
         CardDenomination.GetComponent<Denomination>().adder = RoShamBoWinnerDenominationBonus;
         CardDenomination.GetComponent<Animator>().SetBool("Add", true);
         CardDenomination.GetComponent<Animator>().Play("Add", 0, 0);
         agent.cardBeingPlayed.denomination += RoShamBoWinnerDenominationBonus;
-        float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
+        float addAnimLength = agent.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
         
-        yield return new WaitForSeconds(supremeCardBonusAnimLength);
+        float waitTime = streakActivateAnimLength > addAnimLength ? streakActivateAnimLength : addAnimLength;
+        yield return new WaitForSeconds(waitTime);
         CardDenomination.GetComponent<Animator>().SetBool("Add", false);
+        DenominationBonusTxt.SetActive(false);
+        yield return new WaitForSeconds(cardClashPowerUseDelay);
     }
-    IEnumerator AddAdrenalineBonus(Agent agent)
+    IEnumerator AddAdrenalineBonus(Agent agent, GameObject DenominationBonusTxt)
     {
+        DenominationBonusTxt.GetComponent<TMP_Text>().text = "Surge";
+        DenominationBonusTxt.SetActive(true);
+        yield return new WaitForSeconds(damageBonusDelay / DenominationBonusTxt.GetComponent<Animator>().speed);
+
+        float streakActivateAnimLength = DenominationBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;
         GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
 
         CardDenomination.GetComponent<Denomination>().adder = agent.cardBeingPlayed.denomination;
@@ -339,27 +401,36 @@ public class GameManager : MonoBehaviour
         agent.cardBeingPlayed.denomination *= 2;
         float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
         
-        yield return new WaitForSeconds(supremeCardBonusAnimLength);
+        float waitTime = streakActivateAnimLength > supremeCardBonusAnimLength ? streakActivateAnimLength : supremeCardBonusAnimLength;
+        yield return new WaitForSeconds(waitTime);
         CardDenomination.GetComponent<Animator>().SetBool("Add", false);
+        DenominationBonusTxt.SetActive(false);
         yield return new WaitForSeconds(cardClashPowerUseDelay);
     }
     IEnumerator MimicryPenalty()
     {
         mimicryActive = false;
         Agent followingPlayer = currentPlayer == player.gameObject ? AIEnemy : player;
-
+        GameObject DenominationBonusTxt = followingPlayer == player ? PlayerDenominationBonusTxt : EnemyDenominationBonusTxt;
         if(followingPlayer.cardBeingPlayed.type != currentPlayer.GetComponent<Agent>().cardBeingPlayed.type)
         {
+            DenominationBonusTxt.GetComponent<TMP_Text>().text = "Mimicry";
+            DenominationBonusTxt.SetActive(true);
+            yield return new WaitForSeconds(damageBonusDelay /  DenominationBonusTxt.GetComponent<Animator>().speed);
+
+            float streakActivateAnimLength = DenominationBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;
             GameObject CardDenomination = followingPlayer.cardBeingPlayed.transform.Find($"{followingPlayer.cardBeingPlayed.frontPath}/Denomination").gameObject;
 
             CardDenomination.GetComponent<Denomination>().adder = -followingPlayer.cardBeingPlayed.denomination;
             CardDenomination.GetComponent<Animator>().SetBool("Add", true);
             CardDenomination.GetComponent<Animator>().Play("Add", 0, 0);
             followingPlayer.cardBeingPlayed.denomination = 0;
-            float supremeCardBonusAnimLength = followingPlayer.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
+            float mimicrySubtractAnimLength = followingPlayer.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
             
-            yield return new WaitForSeconds(supremeCardBonusAnimLength);
+            float waitTime = streakActivateAnimLength > mimicrySubtractAnimLength ? streakActivateAnimLength : mimicrySubtractAnimLength;
+            yield return new WaitForSeconds(waitTime);
             CardDenomination.GetComponent<Animator>().SetBool("Add", false);
+            DenominationBonusTxt.SetActive(false);
             yield return new WaitForSeconds(cardClashPowerUseDelay);
         }
     }
@@ -411,8 +482,58 @@ public class GameManager : MonoBehaviour
         CardClashTieEnemyTypeProjection.SetActive(false);
         CardClashTiePlayerTypeProjection.SetActive(false);
     }
+    IEnumerator AddStreakBonus(Agent agent, int streak, GameObject StreakTxt)
+    {
+        StreakTxt.GetComponent<TMP_Text>().text = $"{streak} Streak";
+        StreakTxt.SetActive(true);
+        yield return new WaitForSeconds(damageBonusDelay);
 
-    public int RoShamBoWinner(MagicType type1, MagicType type2)
+        float streakActivateAnimLength = player.GetAnimLengthByName("ActivatePowerTxt", StreakTxt.GetComponent<Animator>()) - damageBonusDelay;
+        DamageNumTxt.GetComponent<Denomination>().adder = streak * streakAdder;
+        DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
+        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        float damageNumAddAnimLength = player.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());  
+        
+        float waitTime = streakActivateAnimLength > damageNumAddAnimLength ? streakActivateAnimLength : damageNumAddAnimLength;
+        yield return new WaitForSeconds(waitTime);
+        DamageNumTxt.GetComponent<Animator>().SetBool("Add", false);
+        StreakTxt.SetActive(false);
+        yield return new WaitForSeconds(afterStreakDelay);
+    }
+    IEnumerator AddSupremeCardBonus(Agent agent, int damageDealt, GameObject SupremeBonusTxt)
+    {
+        int bonusDamage = damageDealt;
+        SupremeBonusTxt.GetComponent<TMP_Text>().text = $"Supreme Bonus +{bonusDamage}";
+        SupremeBonusTxt.SetActive(true);
+        float supremeBonusActivateAnimLength = player.GetAnimLengthByName("ActivatePowerTxt", SupremeBonusTxt.GetComponent<Animator>());
+        
+        GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
+        SupremeCardBonus.transform.position = SupremeCardSpawnPoint.Find("TypeProjection").position;
+        
+        SupremeCardBonus.GetComponent<TMP_Text>().text = "" + bonusDamage;
+        SupremeCardBonus.SetActive(true);
+        
+        yield return new WaitForSeconds(supremeCardBonusMoveDelay);
+        bool supremeCardBonusMoveFinished = false;
+        SupremeCardBonus.GetComponent<Entity>().StartMoving(DamageNumTxt.transform.position, DamageNumTxt.transform.rotation, fn: () =>
+        {
+            SupremeCardBonus.SetActive(false);
+            supremeCardBonusMoveFinished = true;
+        });
+
+        yield return new WaitUntil(() => supremeCardBonusMoveFinished);
+        DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
+        DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
+        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
+        
+        yield return new WaitForSeconds(supremeCardBonusAnimLength);
+        DamageNumTxt.GetComponent<Animator>().SetBool("Add", false);
+        SupremeBonusTxt.SetActive(false);
+        yield return new WaitForSeconds(cardClashPowerUseDelay);
+    }
+
+    public static int RoShamBoWinner(MagicType type1, MagicType type2)
     {
         if(type1 == MagicType.Illusion && type2 == MagicType.Abjuration)
         {
@@ -440,6 +561,32 @@ public class GameManager : MonoBehaviour
         }
         return -1;
     }
+    public static MagicType GetAdvantageMatchupType(MagicType type)
+    {
+        switch(type)
+        {
+            case MagicType.Illusion:
+                return MagicType.Abjuration;
+            case MagicType.Abjuration:
+                return MagicType.Evocation;
+            case MagicType.Evocation:
+                return MagicType.Illusion;
+        }
+        return MagicType.Abjuration;
+    }
+    public static MagicType GetDisadvantageMatchupType(MagicType type)
+    {
+        switch(type)
+        {
+            case MagicType.Illusion:
+                return MagicType.Evocation;
+            case MagicType.Evocation:
+                return MagicType.Abjuration;
+            case MagicType.Abjuration:
+                return MagicType.Illusion;
+        }
+        return MagicType.Abjuration;
+    }
 
     IEnumerator StartDuel(Agent agentWithInitiative)
     {
@@ -460,7 +607,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator ShowRoundTxt()
     {
-        RoundTxt.GetComponent<TMP_Text>().text = "Round " + round;
+        RoundTxt.GetComponent<TMP_Text>().text = round < 3 ? "Round " + round : "Final Round";
         RoundTxt.SetActive(true);
         float animLength = RoundTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length;
         yield return new WaitForSeconds(animLength);
@@ -481,7 +628,7 @@ public class GameManager : MonoBehaviour
         enemyDamageDone = 0;
         player.ResetMana();
         AIEnemy.ResetMana();
-        if(player.points >= player.pointsToWin && AIEnemy.points >= AIEnemy.pointsToWin)
+        if(player.points >= player.pointsToWin && AIEnemy.points >= AIEnemy.pointsToWin || round > 3)
         {
             Agent wonAgent = player.points >= AIEnemy.pointsToWin ? player : AIEnemy;
             yield return EndGame(wonAgent);

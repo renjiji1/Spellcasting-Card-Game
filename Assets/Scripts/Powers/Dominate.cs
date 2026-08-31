@@ -9,7 +9,13 @@ public class Dominate : Power
 {
     public override void OnSelect()
     {
-        base.OnSelect();
-        agent.dominateActive = true;
+        if(gameManager.agentDominate == null)
+        {
+            base.OnSelect();
+            gameManager.agentDominate = agent;
+        } else
+        {
+            StartCoroutine(ShowCantUsePowerTxt("Opponent Already Used Initiative"));
+        }
     }  
 }

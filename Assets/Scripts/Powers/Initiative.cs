@@ -15,7 +15,7 @@ public class Initiative : Power
             gameManager.agentForceInitiative = agent == player ? AIEnemy : player;
         } else
         {
-            StartCoroutine(ShowCantUsePowerTxt("Opponent Already Used Initiative"));
+            StartCoroutine(ShowCantUsePowerTxt("Opponent Already Used Patience"));
         }
         
     }  

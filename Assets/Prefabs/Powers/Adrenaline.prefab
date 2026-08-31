@@ -12,6 +12,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Adrenaline
       objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.7995194
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -104,7 +116,7 @@ MonoBehaviour:
   AmountTxt: {fileID: 611425277232748332}
   Panel: {fileID: 299800803226838380}
   nameTxt: Surge
-  description: Deal double damage but expend 2 mana on a win
+  description: Deal double damage but expend 2 mana on a win and 1 mana on a loss
   highlightedGlow: {fileID: 6802061264140050446}
   canUseGlow: {fileID: 8509835324610051864}
   greyedOutMat: {fileID: 2100000, guid: 3d56c536b1e75db45b7df74152817581, type: 2}

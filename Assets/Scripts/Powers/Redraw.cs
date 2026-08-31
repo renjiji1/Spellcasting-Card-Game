@@ -11,7 +11,7 @@ public class Redraw : Power
     [SerializeField] Vector3 offsetFromCam = new Vector3(0,0, 1f);
     [NonSerialized] public bool drawedCardInPlace = false;
     GameObject DumpCardButton;
-    Card drawedCard;
+    [NonSerialized] public Card drawedCard;
     public override void Start()
     {
         base.Start();

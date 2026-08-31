@@ -12,6 +12,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dominate
       objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.b
+      value: 0.007843138
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.009791374
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -104,7 +120,8 @@ MonoBehaviour:
   AmountTxt: {fileID: 2098749031567146849}
   Panel: {fileID: 1258019623862816033}
   nameTxt: Dominate
-  description: Treat the card you play as if it had the Supreme suit.
+  description: Your card is treated as if it beats the opposing card regardless of
+    its type.
   highlightedGlow: {fileID: 5420574446981548099}
   canUseGlow: {fileID: 7153259060359714645}
   greyedOutMat: {fileID: 2100000, guid: 3d56c536b1e75db45b7df74152817581, type: 2}
