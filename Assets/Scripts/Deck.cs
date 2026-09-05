@@ -109,13 +109,15 @@ public class Deck : Entity
         yield return ReturnSupremeCardToDeck();
         cam.GetComponent<Animator>().SetBool("LookAtShuffle", true);
         isShuffling = true;
+        int cardsBegunShuffling = 0;
         for(int i = DeckOfCards.Count-1; i >= 0; i--)
         {
             Card card = DeckOfCards[i];
-            card.BeginShuffle(enterShufflePosXOffset, enterShuffleAnimSpeed);
+            card.BeginShuffle(enterShufflePosXOffset, enterShuffleAnimSpeed, fn: () => {cardsBegunShuffling++;});
             card.ActivateCard();
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
+        yield return new WaitUntil(() => cardsBegunShuffling >= DeckOfCards.Count);
         StartCoroutine(ExitShuffle());
     }
     IEnumerator ReturnSupremeCardToDeck()
@@ -136,6 +138,7 @@ public class Deck : Entity
     {
         List<Card> tmpDeck = new List<Card>(DeckOfCards);
         List<Card> newDeck = new List<Card>();
+        int cardsReturnedToDeck = 0;
         for(int i = 0; i < DeckOfCards.Count; i++)
         {
             int rng = Random.Range(0, tmpDeck.Count);
@@ -144,9 +147,13 @@ public class Deck : Entity
             tmpDeck.RemoveAt(rng);
             Vector3 cardPos = new Vector3(transform.position.x, transform.position.y + (i+1) * choosenCard.thickness, transform.position.z);
             choosenCard.transform.parent = transform;
-            choosenCard.ExitShuffle(cardPos, exitShuffleAnimSpeed);
+            choosenCard.ExitShuffle(cardPos, exitShuffleAnimSpeed, fn: () =>
+            {
+                cardsReturnedToDeck++;
+            });
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
+        yield return new WaitUntil(() => cardsReturnedToDeck >= DeckOfCards.Count);
         DeckOfCards = newDeck;
         isShuffling = false;
         cam.GetComponent<Animator>().SetBool("LookAtShuffle", false);

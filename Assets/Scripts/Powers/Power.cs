@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using System;
 using TMPro;
+using UnityEngine.Rendering;
 
 public class Power : Entity
 {
@@ -99,11 +100,14 @@ public class Power : Entity
     }
     public bool BuyPower()
     {
-        bool canBuy = agent.SpendArcana(cost);
+        Debug.Log($"{cost}");
+        bool canBuy = agent.CanSpendArcana(cost);
         if(canBuy)
         {
+            int prevCost = cost;
             cost++;
             if(agent == player) ShopPanelCost.text = ""+cost;
+            agent.SpendArcana(prevCost);
             AddPower();
         } else
         {

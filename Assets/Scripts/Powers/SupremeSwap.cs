@@ -18,15 +18,15 @@ public class SupremeSwap : Power
     {
         card.isBeingSwapped = true;
         int cardsInPosition = 0;
+        agent.RemoveCard(card);
+        Card currentSupremeCard = gameManager.SupremeCard;
         card.StartMoving(gameManager.SupremeCardSpawnPoint.position, Quaternion.Euler(90,0,0), fn: () =>
         {
             cardsInPosition++;
-            agent.RemoveCard(card);
             card.isBeingSwapped = false;
             gameManager.SupremeCard = card;
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
         });
-        Card currentSupremeCard = gameManager.SupremeCard;
         currentSupremeCard.StartMoving(prevCardPos, prevCardRot, fn: () =>
         {
             cardsInPosition++;

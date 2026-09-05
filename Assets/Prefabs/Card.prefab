@@ -672,6 +672,12 @@ MonoBehaviour:
   BackSprite: {fileID: 476084880143190632}
   moveSpeed: 10
   moveRotPivot: {fileID: 6792965635082947361}
+  moveSFX:
+    clip: {fileID: 8300000, guid: 988cb105902761143861855780aebae8, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
   Image: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   denomination: 1
   type: 0

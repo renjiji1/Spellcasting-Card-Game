@@ -62,7 +62,7 @@ public class Card : Entity
         isBeingPlayed = false;
         hasBeenPlayed = false;
     }
-    public virtual void ExitShuffle(Vector3 pos, float speed)
+    public virtual void ExitShuffle(Vector3 pos, float speed, Action fn = null)
     {
         GameObject shuffleRotAxis = GameManager.instance.Deck.transform.Find("ShuffleRotationAxis").gameObject;
         Quaternion deckCardRot = Quaternion.Euler(-90, 0, 180);
@@ -71,9 +71,10 @@ public class Card : Entity
             transform.rotation = Quaternion.Euler(Vector3.zero);
             moveRotPivot.transform.rotation = deckCardRot;
             shuffle = false;
+            fn?.Invoke();
         });
     }
-    public virtual void BeginShuffle(float xOffset, float speed)
+    public virtual void BeginShuffle(float xOffset, float speed, Action fn = null)
     {
         GameObject shuffleRotAxis = GameManager.instance.Deck.transform.Find("ShuffleRotationAxis").gameObject;
         Quaternion backTurnedRot = Quaternion.Euler(0, 0, 0);
@@ -82,6 +83,7 @@ public class Card : Entity
         {
             transform.parent = shuffleRotAxis.transform;
             moveRotPivot.transform.rotation = backTurnedRot;
+            fn?.Invoke();
         });
         shuffle = true;
     }

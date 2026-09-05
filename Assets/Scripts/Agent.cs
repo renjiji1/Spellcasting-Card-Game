@@ -34,7 +34,6 @@ public class Agent : Entity
     [NonSerialized] public CardSlot cardSlotBeingPlayed;
 
     [SerializeField] GameObject ManaCrystalFill;
-    [SerializeField] GameObject DamageSlider;
     [SerializeField] public TMP_Text DamageNumTxt;
     [SerializeField] protected Transform PowersTransform;
     [SerializeField] protected TMP_Text ManaTxt;
@@ -51,20 +50,22 @@ public class Agent : Entity
         mana = maxMana;
         ResetMana();
         DamageNumTxt.text = "" + points;
-        DamageSlider.GetComponent<SpriteRenderer>().size = new Vector2(Mathf.Clamp((float)points/(float)pointsToWin, .05f, 1), DamageSlider.GetComponent<SpriteRenderer>().size.y);
         ArcanaBagTxt.text = "" + arcana;
         selectInput = InputSystem.actions.FindAction("Select");
         OnArcanaChanged.Invoke(arcana);
     }
-    public bool SpendArcana(int amount)
+    public bool CanSpendArcana(int amount)
     {
         if(arcana >= amount)
         {
-            arcana -= amount;
-            OnArcanaChanged.Invoke(arcana);
             return true;
         }
-        return false;
+        return false; 
+    }
+    public void SpendArcana(int amount)
+    {
+        arcana -= amount;
+        OnArcanaChanged.Invoke(arcana);
     }
     protected override void Update()
     {
@@ -93,8 +94,7 @@ public class Agent : Entity
     public virtual int AddPoints(int addedPoints)
     {
         points += addedPoints;
-        DamageNumTxt.text =$"{points}/{pointsToWin}";
-        DamageSlider.GetComponent<SpriteRenderer>().size = new Vector2(Mathf.Clamp((float)points/(float)pointsToWin, .05f, 1), DamageSlider.GetComponent<SpriteRenderer>().size.y);
+        DamageNumTxt.text =$"{points}";
         return points;    
     }
     public virtual void AddCard(Card card)
@@ -117,6 +117,7 @@ public class Agent : Entity
     public virtual void StartTurn()
     {
         isAgentTurn = true;
+        gameManager.UpdateTurnTxt();
         foreach(Transform power in PowersTransform)
         {
             power.GetComponent<Power>().hasBeenUsedThisTurn = false;
@@ -148,6 +149,7 @@ public class Agent : Entity
             card.GetComponent<Animator>().SetBool("UseCard", false);
             RemoveCard(card);
             cardOnSlot = true;
+            SoundManager.instance.Play(slot.matchSourceSFX);
         });
     }
     public virtual bool UseCardForPower(Card selectedCard)

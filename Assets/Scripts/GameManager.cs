@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text TurnTxt;
     [SerializeField] Color playerTurnColor;
     [SerializeField] Color enemyTurnColor;
+    [SerializeField] Color cardClashTurnColor = Color.yellow;
     [SerializeField] public GameObject Deck;
     [SerializeField] public GameObject AllCardSlots;
     [SerializeField] GameObject RoundTxt;
@@ -92,7 +93,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject EnemyDenominationBonusTxt;
     [SerializeField] int streakAdder = 1;
     [SerializeField] float damageBonusDelay = .1f;
-    [SerializeField] float afterStreakDelay = .25f;
+    [SerializeField] float afterDamageBonusDelay = .25f;
     [NonSerialized] public int playerStreak = 0;
     [NonSerialized] public int enemyStreak = 0;
 
@@ -105,6 +106,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text EndGamePlayerDamageTxt;
     [SerializeField] TMP_Text EndGameEnemyDamageTxt;
     [SerializeField] GameObject WinsTxtObj;
+
     
     void Awake()
     {
@@ -135,8 +137,6 @@ public class GameManager : MonoBehaviour
         }
         AIEnemy.gameObject.SetActive(true);
         cam = Camera.main.GetComponent<Camera>();
-        PlayerDenominationBonusTxt.GetComponent<Animator>().speed = 1.5f;
-        EnemyDenominationBonusTxt.GetComponent<Animator>().speed = 1.5f;
         StartRound();
     }
 
@@ -144,6 +144,20 @@ public class GameManager : MonoBehaviour
     {
         turn++;
         currentPlayer = currentPlayer == player.gameObject ? AIEnemy.gameObject : player.gameObject;
+        if (turn > 1)
+        {
+            TurnTxt.text = "Clash!";
+            TurnTxt.color = cardClashTurnColor;
+            currentDuelNum++;
+            turn = 0;
+            StartCoroutine(CardBattle());
+        } else
+        {
+            currentPlayer.GetComponent<Agent>().StartTurn(); 
+        }
+    }
+    public void UpdateTurnTxt()
+    {
         if(currentPlayer == player.gameObject)
         {
             TurnTxt.text = "Your Turn";
@@ -152,16 +166,6 @@ public class GameManager : MonoBehaviour
         {
             TurnTxt.text = "Enemy's Turn";
             TurnTxt.color = enemyTurnColor;
-        }
-
-        if (turn > 1)
-        {
-            currentDuelNum++;
-            turn = 0;
-            StartCoroutine(CardBattle());
-        } else
-        {
-           currentPlayer.GetComponent<Agent>().StartTurn(); 
         }
     }
     IEnumerator CardBattle()
@@ -185,29 +189,17 @@ public class GameManager : MonoBehaviour
 
         // Ro Sham Bo Bonus
         int roShamBoWinner = RoShamBoWinner(player.cardBeingPlayed.type, AIEnemy.cardBeingPlayed.type);
-        if(roShamBoWinner == 1 || agentDominate == player)
+        if((roShamBoWinner == 1 && agentDominate == null) || agentDominate == player)
         {
             yield return AddRoShamBoBonus(player, PlayerDenominationBonusTxt);
             playerDenominationAdder += RoShamBoWinnerDenominationBonus;
         }
-        if(roShamBoWinner == 2 || agentDominate == AIEnemy)
+        if((roShamBoWinner == 2 && agentDominate == null) || agentDominate == AIEnemy)
         {
             yield return AddRoShamBoBonus(AIEnemy, EnemyDenominationBonusTxt);
             enemyDenominationAdder += RoShamBoWinnerDenominationBonus;
         }
         agentDominate = null;
-        
-        //Adrenaline Bonus
-        if(player.adrenalineActive)
-        {
-            playerDenominationAdder += player.cardBeingPlayed.denomination;
-            yield return AddAdrenalineBonus(player, PlayerDenominationBonusTxt);
-        }
-        if(AIEnemy.adrenalineActive)
-        {
-            enemyDenominationAdder += AIEnemy.cardBeingPlayed.denomination;
-            yield return AddAdrenalineBonus(AIEnemy, EnemyDenominationBonusTxt);
-        }
 
         //Mimicry turn card to 0
         if(mimicryActive)
@@ -257,6 +249,18 @@ public class GameManager : MonoBehaviour
         }
         playerStreak = playerWon ? playerStreak + 1 : 0;
         enemyStreak = playerWon ? 0 : enemyStreak + 1;
+
+        //Adrenaline Bonus
+        if(player.adrenalineActive && agentThatWon == player)
+        {
+            yield return AddAdrenalineBonus(player, damageDealt, PlayerDamageBonusTxt);
+            damageDealt *= 2;
+        }
+        if(AIEnemy.adrenalineActive && agentThatWon == AIEnemy)
+        {
+            yield return AddAdrenalineBonus(AIEnemy, damageDealt, EnemyDamageBonusTxt);
+            damageDealt *= 2;
+        }
 
         // Manage Supreme Card Bonus
         if(player.cardBeingPlayed.type == SupremeCard.type && agentThatWon == player)
@@ -368,7 +372,7 @@ public class GameManager : MonoBehaviour
     {
         DenominationBonusTxt.GetComponent<TMP_Text>().text = agentDominate == null ? "Advantage" : "Dominate";
         DenominationBonusTxt.SetActive(true);
-        yield return new WaitForSeconds(damageBonusDelay / DenominationBonusTxt.GetComponent<Animator>().speed);
+        yield return new WaitForSeconds(damageBonusDelay);
 
         float streakActivateAnimLength = DenominationBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;        
         GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
@@ -383,29 +387,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         CardDenomination.GetComponent<Animator>().SetBool("Add", false);
         DenominationBonusTxt.SetActive(false);
-        yield return new WaitForSeconds(cardClashPowerUseDelay);
-    }
-    IEnumerator AddAdrenalineBonus(Agent agent, GameObject DenominationBonusTxt)
-    {
-        DenominationBonusTxt.GetComponent<TMP_Text>().text = "Surge";
-        DenominationBonusTxt.SetActive(true);
-        yield return new WaitForSeconds(damageBonusDelay / DenominationBonusTxt.GetComponent<Animator>().speed);
-
-        float streakActivateAnimLength = DenominationBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;
-        GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
-
-        CardDenomination.GetComponent<Denomination>().adder = agent.cardBeingPlayed.denomination;
-        CardDenomination.GetComponent<Animator>().SetBool("Add", false);
-        CardDenomination.GetComponent<Animator>().SetBool("Add", true);
-        CardDenomination.GetComponent<Animator>().Play("Add", 0, 0);
-        agent.cardBeingPlayed.denomination *= 2;
-        float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
-        
-        float waitTime = streakActivateAnimLength > supremeCardBonusAnimLength ? streakActivateAnimLength : supremeCardBonusAnimLength;
-        yield return new WaitForSeconds(waitTime);
-        CardDenomination.GetComponent<Animator>().SetBool("Add", false);
-        DenominationBonusTxt.SetActive(false);
-        yield return new WaitForSeconds(cardClashPowerUseDelay);
     }
     IEnumerator MimicryPenalty()
     {
@@ -416,7 +397,7 @@ public class GameManager : MonoBehaviour
         {
             DenominationBonusTxt.GetComponent<TMP_Text>().text = "Mimicry";
             DenominationBonusTxt.SetActive(true);
-            yield return new WaitForSeconds(damageBonusDelay /  DenominationBonusTxt.GetComponent<Animator>().speed);
+            yield return new WaitForSeconds(damageBonusDelay);
 
             float streakActivateAnimLength = DenominationBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;
             GameObject CardDenomination = followingPlayer.cardBeingPlayed.transform.Find($"{followingPlayer.cardBeingPlayed.frontPath}/Denomination").gameObject;
@@ -498,16 +479,38 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", false);
         StreakTxt.SetActive(false);
-        yield return new WaitForSeconds(afterStreakDelay);
+        yield return new WaitForSeconds(afterDamageBonusDelay);
+    }
+    IEnumerator AddAdrenalineBonus(Agent agent, int damageDealt, GameObject AdrenalineBonusTxt)
+    {
+        int bonusDamage = damageDealt;
+        AdrenalineBonusTxt.GetComponent<TMP_Text>().text = "Surge x2";
+        AdrenalineBonusTxt.SetActive(true);
+        yield return new WaitForSeconds(damageBonusDelay);
+
+        float streakActivateAnimLength = AdrenalineBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;
+        GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
+
+        DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
+        DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
+        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        float damageNumBonusAnimLength = agent.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());
+        
+        float waitTime = streakActivateAnimLength > damageNumBonusAnimLength ? streakActivateAnimLength : damageNumBonusAnimLength;
+        yield return new WaitForSeconds(waitTime);
+        CardDenomination.GetComponent<Animator>().SetBool("Add", false);
+        AdrenalineBonusTxt.SetActive(false);
     }
     IEnumerator AddSupremeCardBonus(Agent agent, int damageDealt, GameObject SupremeBonusTxt)
     {
         int bonusDamage = damageDealt;
-        SupremeBonusTxt.GetComponent<TMP_Text>().text = $"Supreme Bonus +{bonusDamage}";
+        SupremeBonusTxt.GetComponent<TMP_Text>().text = $"Supreme Bonus x2";
         SupremeBonusTxt.SetActive(true);
-        float supremeBonusActivateAnimLength = player.GetAnimLengthByName("ActivatePowerTxt", SupremeBonusTxt.GetComponent<Animator>());
+
+        yield return new WaitForSeconds(damageBonusDelay);
+        float supremeBonusActivateAnimLength = player.GetAnimLengthByName("ActivatePowerTxt", SupremeBonusTxt.GetComponent<Animator>()) - damageBonusDelay;
         
-        GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
+        /*
         SupremeCardBonus.transform.position = SupremeCardSpawnPoint.Find("TypeProjection").position;
         
         SupremeCardBonus.GetComponent<TMP_Text>().text = "" + bonusDamage;
@@ -521,16 +524,16 @@ public class GameManager : MonoBehaviour
             supremeCardBonusMoveFinished = true;
         });
 
-        yield return new WaitUntil(() => supremeCardBonusMoveFinished);
+        yield return new WaitUntil(() => supremeCardBonusMoveFinished);*/
         DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
         DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
-        float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", CardDenomination.GetComponent<Animator>());
+        float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());
+        float waitTime = supremeBonusActivateAnimLength > supremeCardBonusAnimLength ? supremeBonusActivateAnimLength : supremeCardBonusAnimLength;
         
-        yield return new WaitForSeconds(supremeCardBonusAnimLength);
+        yield return new WaitForSeconds(waitTime);
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", false);
         SupremeBonusTxt.SetActive(false);
-        yield return new WaitForSeconds(cardClashPowerUseDelay);
     }
 
     public static int RoShamBoWinner(MagicType type1, MagicType type2)
@@ -706,10 +709,14 @@ public class GameManager : MonoBehaviour
         damageDealtTxt.SetActive(true);
         damageDealtTxt.GetComponent<TMP_Text>().text = "0";
         int totalDamageDealt = 0;
-        yield return CountWonCards(player, damageDealtTxt, PlayerCardsWonTransform, false, (dmg) => totalDamageDealt += dmg);
-        yield return CountWonCards(AIEnemy, damageDealtTxt, EnemyCardsWonTransform, false, (dmg) => totalDamageDealt += dmg);
+        yield return CountWonCards(player, damageDealtTxt, PlayerCardsWonTransform, (dmg) => totalDamageDealt += dmg);
+        yield return CountWonCards(AIEnemy, damageDealtTxt, EnemyCardsWonTransform, (dmg) => totalDamageDealt += dmg);
         Agent agentThatDidntBust = agentThatBust == player ? AIEnemy : player;
-        damageDealtTxt.SetActive(false);
+        damageDealtTxt.transform.parent.GetComponent<Entity>().StartMoving(agentThatDidntBust.DamageNumTxt.transform.position, agentThatDidntBust.DamageNumTxt.transform.rotation, useLocalRot: false, fn: () =>
+        {
+            damageDealtTxt.SetActive(false);
+        });
+        yield return new WaitUntil(() => !damageDealtTxt.activeSelf);
         yield return new WaitForSeconds(delayBeforeAddingPoints);
         agentThatDidntBust.AddPoints(totalDamageDealt);
         yield return new WaitForSeconds(damageAddedToPointsDelay);
@@ -719,15 +726,18 @@ public class GameManager : MonoBehaviour
     {
         // Return Player Cards
         cam.GetComponent<Animator>().SetBool("LookAtPlayerWonCards", true);
-        
         yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("LookAtPlayerWonCards"));
         PlayerDamageDealtTxt.SetActive(true);
         PlayerDamageDealtTxt.GetComponent<TMP_Text>().text = "0";
         int totalPlayerPoints = 0;
         yield return CountWonCards(player, PlayerDamageDealtTxt, PlayerCardsWonTransform, fn: (dmg) => totalPlayerPoints += dmg);
         cam.GetComponent<Animator>().SetBool("LookAtPlayerWonCards", false);
-        yield return new WaitForSeconds(delayBeforeAddingPoints);
-        player.AddPoints(totalPlayerPoints);
+        PlayerDamageDealtTxt.transform.parent.GetComponent<Entity>().StartMoving(player.DamageNumTxt.transform.position, player.DamageNumTxt.transform.rotation, useLocalRot: false, fn: () =>
+        {
+            PlayerDamageDealtTxt.SetActive(false);
+            player.AddPoints(totalPlayerPoints);
+        });
+        yield return new WaitForSeconds(damageAddedUpDelay);
         yield return new WaitForSeconds(damageAddedToPointsDelay);
 
         // Return Enemy Cards
@@ -737,15 +747,19 @@ public class GameManager : MonoBehaviour
         EnemyDamageDealtTxt.GetComponent<TMP_Text>().text = "0";
         int totalEnemyPoints = 0;
         yield return CountWonCards(AIEnemy, EnemyDamageDealtTxt, EnemyCardsWonTransform, fn: (dmg) => totalEnemyPoints += dmg);
-        yield return new WaitForSeconds(delayBeforeAddingPoints);
-        AIEnemy.AddPoints(totalEnemyPoints);
+        EnemyDamageDealtTxt.transform.parent.GetComponent<Entity>().StartMoving(AIEnemy.DamageNumTxt.transform.position, AIEnemy.DamageNumTxt.transform.rotation, fn: () =>
+        {
+            EnemyDamageDealtTxt.SetActive(false);
+            AIEnemy.AddPoints(totalEnemyPoints);
+        });
+        yield return new WaitForSeconds(damageAddedUpDelay);
         yield return new WaitForSeconds(damageAddedToPointsDelay);
         cam.GetComponent<Animator>().SetBool("LookAtEnemyWonCards", false);
     }
 
-    IEnumerator CountWonCards(Agent agent, GameObject DamageDealtTxt, Transform WonCardsTransform, bool makeDmgTxtFalse = true, Action<int> fn = null)
+    IEnumerator CountWonCards(Agent agent, GameObject DamageDealtTxt, Transform WonCardsTransform, Action<int> fn = null)
     {
-        DamageDealtTxt.GetComponent<Denomination>().PositionInFrontOfCam = true;
+        DamageDealtTxt.transform.parent.GetComponent<Denomination>().PositionInFrontOfCam = true;
         DamageDealtTxt.GetComponent<Animator>().speed = 2;
         int cardDamageStoppedMoving = 0;
         int totalDamageDealt = 0;
@@ -776,11 +790,8 @@ public class GameManager : MonoBehaviour
         }
         yield return new WaitUntil(() => cardDamageStoppedMoving >= agent.WonCards.Count/2);
         yield return new WaitUntil(() => !DamageDealtTxt.GetComponent<Animator>().GetBool("Add"));
-        yield return new WaitForSeconds(damageAddedUpDelay);
-        DamageDealtTxt.GetComponent<Denomination>().PositionInFrontOfCam = false;
+        DamageDealtTxt.transform.parent.GetComponent<Denomination>().PositionInFrontOfCam = false;
         agent.WonCards.Clear();
-        DamageDealtTxt.SetActive(!makeDmgTxtFalse);
-
         fn?.Invoke(totalDamageDealt);
     }
     IEnumerator SetDamageTextAnimToFalse(GameObject DamageDealtTxt)

@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 public class Redraw : Power
 {
-    [SerializeField] Vector3 offsetFromCam = new Vector3(0,0, 1f);
+    [SerializeField] Vector3 playerOffsetFromCam = new Vector3(0,.1f, 1f);
+    [SerializeField] Vector3 enemyOffsetFromCam = new Vector3(.1f,.5f, 1f);
     [NonSerialized] public bool drawedCardInPlace = false;
     GameObject DumpCardButton;
     [NonSerialized] public Card drawedCard;
@@ -30,8 +31,8 @@ public class Redraw : Power
     IEnumerator ChooseRandomCardFromDeck()
     {
         bool takeCardDone = false;
-        Vector3 playerPos = cam.transform.position + cam.transform.forward * offsetFromCam.z + cam.transform.right * offsetFromCam.x + cam.transform.up * offsetFromCam.y;
-        Vector3 enemyPos = AIEnemy.transform.position + AIEnemy.transform.forward * offsetFromCam.z + AIEnemy.transform.right * offsetFromCam.x + AIEnemy.transform.up * offsetFromCam.y;
+        Vector3 playerPos = cam.transform.position + cam.transform.forward * playerOffsetFromCam.z + cam.transform.right * playerOffsetFromCam.x + cam.transform.up * playerOffsetFromCam.y;
+        Vector3 enemyPos = AIEnemy.transform.position + enemyOffsetFromCam;
         Vector3 pos = agent == player ? playerPos : enemyPos;
         Quaternion rot = agent == player ? cam.transform.rotation : AIEnemy.transform.rotation;
         StartCoroutine(gameManager.Deck.GetComponent<Deck>().TakeCardRandomlyFromDeck(pos, rot, fn: (Card newCard) =>
@@ -67,6 +68,7 @@ public class Redraw : Power
         card.isBeingSwapped = true;
 
         bool takeNewCardDone = false;
+        agent.RemoveCard(card);
         drawedCard.StartMoving(card.transform.position, card.moveRotPivot.transform.rotation, fn: () =>
         {
             takeNewCardDone = true;
@@ -79,7 +81,6 @@ public class Redraw : Power
         }));
 
         yield return new WaitUntil(() => takeNewCardDone && insertCardDone);
-        agent.RemoveCard(card);
         agent.AddCard(drawedCard);
         card.isBeingSwapped = false;
         drawedCard.HandTransform = card.HandTransform;

@@ -10,6 +10,7 @@ public class CardSlot : Entity
     [SerializeField] public GameObject MatchSourceAnim;
     [Header("Card Source")]
     [SerializeField] public MagicSource source;
+    [SerializeField] public SFX matchSourceSFX;
     [SerializeField] Sprite primalIcon;
     [SerializeField] Sprite divineIcon;
     [SerializeField] Sprite arcaneIcon;

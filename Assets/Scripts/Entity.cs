@@ -34,6 +34,7 @@ public class Entity : MonoBehaviour
     [Header("Move")]
     [SerializeField] public float moveSpeed = 8;
     [SerializeField] public GameObject moveRotPivot;
+    [SerializeField] SFX moveSFX;
     protected float moveTimer = 0;
     protected Vector3 moveInitialPos;
     protected Quaternion moveInitialRot;
@@ -111,6 +112,7 @@ public class Entity : MonoBehaviour
             {
                 moveRotPivot.transform.rotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
             }
+            Debug.Log($"pos {transform.position} target {moveTargetPos}");
             transform.position = Vector3.Lerp(moveInitialPos, moveTargetPos, moveTimer);
         } else if(isMoving)
         {
@@ -124,6 +126,10 @@ public class Entity : MonoBehaviour
     {
         OnMoveFinished?.Invoke();
         useLocalRotationForMoving = useLocalRot;
+        if(moveSFX != null)
+        {
+            SoundManager.instance.Play(moveSFX);
+        }
             
         moveInitialRot = useLocalRotationForMoving ? moveRotPivot.transform.localRotation : moveRotPivot.transform.rotation;
         moveInitialPos = transform.position;

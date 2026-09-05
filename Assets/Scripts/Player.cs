@@ -110,6 +110,7 @@ public class Player : Agent
     }
     public void OpenShop()
     {
+        OnArcanaChanged.Invoke(arcana);
         Shop.SetActive(true);
         GameManager.paused = true;
     }
