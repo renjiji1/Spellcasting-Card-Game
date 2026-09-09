@@ -18,7 +18,6 @@ public class Agent : Entity
     [NonSerialized] public bool envigorateActive = false;
     [NonSerialized] public bool adrenalineActive = false;
     [NonSerialized] public int points = 0;
-    [SerializeField] public int pointsToWin = 55;
     [SerializeField] public int maxMana = 10;
     [NonSerialized] public int mana;
     [NonSerialized] public int manaLossOnLose = 0;
@@ -44,6 +43,14 @@ public class Agent : Entity
     [SerializeField] protected int arcana = 0;
     protected bool cardMatchesSupremeSource = false;
     [NonSerialized] public bool hasUsedPowerThisTurn = false;
+    [Header("SFX")]
+    [SerializeField] public SFX manaBustSFX;
+    [SerializeField] public SFX hoverUISFX;
+    [SerializeField] public SFX buyPowerSFX;
+    [SerializeField] public SFX getArcanaSFX;
+    [SerializeField] public SFX matchSourceSFX;
+    [SerializeField] public SFX WinSFX;
+    [SerializeField] public SFX LoseSFX;
     public override void Start()
     {
         base.Start();
@@ -143,14 +150,21 @@ public class Agent : Entity
         card.isBeingPlayed = true;
         card.GetComponent<Animator>().SetBool("UseCard", true);
         card.GetComponent<Animator>().speed = card.GetAnimLengthByName("UseCard") / card.GetTotalMoveTime(useCardSpeed);
-        card.StartMoving(slot.transform.position + new Vector3(0, slot.cardOnSlotYOffset,0), slot.transform.rotation, speed: useCardSpeed, fn: () =>
+        card.StartMoving(slot.transform.position + new Vector3(0, slot.cardOnSlotYOffset,0), slot.transform.rotation, speed: useCardSpeed, playSFX: true, fn: () =>
         {
             fn?.Invoke();
             card.GetComponent<Animator>().SetBool("UseCard", false);
             RemoveCard(card);
             cardOnSlot = true;
-            SoundManager.instance.Play(slot.matchSourceSFX);
+            StartCoroutine(WaitEndTurn(card, slot));
         });
+    }
+    protected virtual IEnumerator WaitEndTurn(Card card, CardSlot slot, bool endTurn = true)
+    {
+        SFX sfx = card.GetArcaneWordFromSource(slot.source);
+        SoundManager.instance.Play(sfx);
+        yield return new WaitForSeconds(sfx.clip.length);
+        if(endTurn) EndTurn();
     }
     public virtual bool UseCardForPower(Card selectedCard)
     {
@@ -180,6 +194,7 @@ public class Agent : Entity
             arcana++;
             OnArcanaChanged.Invoke(arcana);
             ArcanaBagTxt.text = "" + arcana;
+            if(GetComponent<Player>() != null) SoundManager.instance.Play(getArcanaSFX);
             float arcanaTxtAnimLength = GetAnimLengthByName("AddedArcana", AddedArcanaTxt.transform.GetChild(0).gameObject.GetComponent<Animator>());
             yield return new WaitForSeconds(arcanaTxtAnimLength);
             AddedArcanaTxt.SetActive(false);

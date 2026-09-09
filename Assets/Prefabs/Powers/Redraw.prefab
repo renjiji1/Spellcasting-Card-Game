@@ -123,6 +123,12 @@ MonoBehaviour:
   BackSprite: {fileID: 0}
   moveSpeed: 8
   moveRotPivot: {fileID: 0}
+  moveSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
   agent: {fileID: 0}
   AmountTxt: {fileID: 5194342444256549144}
   Panel: {fileID: 4918812461898148696}
@@ -142,4 +148,5 @@ MonoBehaviour:
   ShopPanelRune: {fileID: 0}
   ShopPanelAmount: {fileID: 0}
   ShopPanelCost: {fileID: 0}
-  offsetFromCam: {x: 0, y: 0.1, z: 1}
+  playerOffsetFromCam: {x: 0, y: 0.1, z: 1}
+  enemyOffsetFromCam: {x: 0.1, y: 0.5, z: -1}

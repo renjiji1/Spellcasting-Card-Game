@@ -58,25 +58,25 @@ public class Player : Agent
             newHand.Remove(card);
             ReOrderCards(newHand);
         }
-        
-        StartCoroutine(EndTurnDelay(card, slot));
     }
-    IEnumerator EndTurnDelay(Card card, CardSlot slot)
+    protected override IEnumerator WaitEndTurn(Card card, CardSlot slot, bool endTurn = true)
     {
-        yield return new WaitUntil(() => cardOnSlot);
         if(cardMatchesSupremeSource)
         {
             CardMovePreview.SetActive(false);
             slot.MatchSourceAnim.SetActive(true);
+            SoundManager.instance.Play(matchSourceSFX);
             float animLength = GetAnimLengthByName("MatchAnim", slot.MatchSourceAnim.GetComponent<Animator>());
-            yield return new WaitForSeconds(animLength);
+            float waitTime = animLength >= matchSourceSFX.clip.length ? animLength : matchSourceSFX.clip.length;
+            yield return new WaitForSeconds(waitTime);
             slot.MatchSourceAnim.SetActive(false);
         }
-        EndTurn();
+        StartCoroutine(base.WaitEndTurn(card, slot));
     }
     public void OnShopPanelEnter(Power power)
     {
         OnShopPanelExit(power);
+        SoundManager.instance.Play(hoverUISFX);
         power.ShopPanel.GetComponent<Image>().sprite = power.PanelSelectedSprite;
         highlightedPowerPanel = power.ShopPanel;
     }
@@ -93,6 +93,7 @@ public class Player : Agent
         if(power.BuyPower())
         {
             gameManager.LevelUpTxt.SetActive(false);
+            SoundManager.instance.Play(buyPowerSFX);
         } 
     }
     void UpdateShop()

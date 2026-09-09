@@ -11,6 +11,7 @@ public class Deck : Entity
 {
     [NonSerialized] public List<Card> DeckOfCards = new List<Card>();
     [Header("Deck")]
+    [SerializeField] SFX shuffleSFX;
     [SerializeField] Vector3 deckPosInsertOffset = new Vector3(.1f, 0, 0);
     [SerializeField] float deckInsertDelay = 10;
     [SerializeField] float deckInsertSpeed = 2;
@@ -23,6 +24,7 @@ public class Deck : Entity
     [SerializeField] float enterShuffleAnimSpeed = 10;
     [SerializeField] float enterShufflePosXOffset = 10;
     [SerializeField] float exitShuffleAnimSpeed = 10;
+    [SerializeField] float shuffleSFXDurationAdder = .5f;
     
     GameObject ShuffleRotationAxis;
 
@@ -57,7 +59,7 @@ public class Deck : Entity
         bool movedToInsertPos = false;
         card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", true);
         card.GetComponent<Animator>().speed = card.GetAnimLengthByName("Insert&TakeFromDeck") / card.GetTotalMoveTime(deckInsertSpeed);
-        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(-90,0,180), speed: deckInsertSpeed, fn: () =>  {
+        card.StartMoving(transform.position + deckPosInsertOffset, Quaternion.Euler(-90,0,180), speed: deckInsertSpeed, playSFX: true, fn: () =>  {
             movedToInsertPos = true;
             card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", false);
         });
@@ -99,7 +101,7 @@ public class Deck : Entity
         yield return new WaitForSeconds(deckInsertDelay);
         card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", true);
         card.GetComponent<Animator>().speed = card.GetAnimLengthByName("Insert&TakeFromDeck") / card.GetTotalMoveTime(deckTakeReturnSpeed);
-        card.StartMoving(targetPos, targetRot, speed: deckTakeReturnSpeed, fn: () => {
+        card.StartMoving(targetPos, targetRot, speed: deckTakeReturnSpeed, playSFX: true, fn: () => {
             card.GetComponent<Animator>().SetBool("Insert&TakeFromDeck", false);
             if(fn != null) fn.Invoke(card);
         });
@@ -136,6 +138,8 @@ public class Deck : Entity
     }
     IEnumerator ExitShuffle()
     {
+        shuffleSFX.endTime = (delayBetweenCardShuffles * DeckOfCards.Count + shuffleSFXDurationAdder) * Time.timeScale;
+        SoundManager.instance.Play(shuffleSFX);
         List<Card> tmpDeck = new List<Card>(DeckOfCards);
         List<Card> newDeck = new List<Card>();
         int cardsReturnedToDeck = 0;
@@ -191,7 +195,7 @@ public class Deck : Entity
             Card playerCard = tmpDeck[tmpDeck.Count-1-i];
             Transform playerCardTransform = player.Hand.transform.GetChild(futurePlayerCards.IndexOf(playerCard));
             Vector3 playerTargetPos = playerCardTransform.position;
-            playerCard.StartMoving(playerTargetPos, playerCardTransform.rotation, fn: () =>
+            playerCard.StartMoving(playerTargetPos, playerCardTransform.rotation, playSFX: true, fn: () =>
             {
                 player.AddCard(playerCard);
                 DeckOfCards.Remove(playerCard);

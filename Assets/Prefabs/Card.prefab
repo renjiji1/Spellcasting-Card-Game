@@ -400,6 +400,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Denomination
   PositionInFrontOfCam: 0
+  denominationAddSFX:
+    clip: {fileID: 8300000, guid: 6197223a2ea1d4a4da716f85795651b7, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
   distFromCam: 2
   offset: {x: 0, y: 0}
 --- !u!1 &3493204947794412934
@@ -673,7 +679,7 @@ MonoBehaviour:
   moveSpeed: 10
   moveRotPivot: {fileID: 6792965635082947361}
   moveSFX:
-    clip: {fileID: 8300000, guid: 988cb105902761143861855780aebae8, type: 3}
+    clip: {fileID: 8300000, guid: 4753c30c2e8a90b41a9780a5f275f25c, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
@@ -685,6 +691,24 @@ MonoBehaviour:
   abjurationIcon: {fileID: 21300000, guid: e7de7aa51b907a647a58b780a13f7cc8, type: 3}
   evocationIcon: {fileID: 21300000, guid: 13434c8ced3ce9e4f860213783f34409, type: 3}
   selectMoveMultiplier: 3
+  DivineWord:
+    clip: {fileID: 8300000, guid: f23dc639d0adae142bd78802aac76937, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+  PrimalWord:
+    clip: {fileID: 8300000, guid: f4e55f9c053dd724c9a7d42c2261682c, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+  OccultWord:
+    clip: {fileID: 8300000, guid: e5979ed1b2b1f4c4aad3379255cc9818, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
 --- !u!95 &1011708856704261312
 Animator:
   serializedVersion: 7

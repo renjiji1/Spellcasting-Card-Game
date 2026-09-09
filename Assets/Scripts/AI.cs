@@ -848,14 +848,9 @@ public class AI : Agent
             return 0;
         }
     }
-    public override void UseCard(Card card, CardSlot slot, Action fn = null)
+    protected override IEnumerator WaitEndTurn(Card card, CardSlot slot, bool endTurn = true)
     {
-        base.UseCard(card, slot, fn);
-        StartCoroutine(MoveCardToFrontAndEndTurn(card));
-    }
-    IEnumerator MoveCardToFrontAndEndTurn(Card card)
-    {
-        yield return new WaitUntil(() => cardOnSlot);
+        yield return base.WaitEndTurn(card, slot, false);
         yield return new WaitForSeconds(cardToFrontOfCamDelay);
         card.transform.Find($"{card.frontPath}/EnemyHighlightBg").gameObject.SetActive(true);
         bool movedToPosition = false;

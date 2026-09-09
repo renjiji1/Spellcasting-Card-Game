@@ -9,14 +9,26 @@ public class Denomination : MonoBehaviour
 {
     [NonSerialized] public int adder = 0;
     [SerializeField] public bool PositionInFrontOfCam = false;
+    [SerializeField] SFX denominationAddSFX;
+    [SerializeField] float consecutiveSFXPitchIncrease = .5f;
     [ShowIf("PositionInFrontOfCam")]
     [SerializeField] float distFromCam = 2;
     [ShowIf("PositionInFrontOfCam")]
     [SerializeField] Vector2 offset = Vector2.zero;
+    void Start()
+    {
+        GameManager.CardClashFinished.AddListener(() =>
+        {
+            denominationAddSFX.pitch = 1;
+        });
+    }
     public void AddToDenomination()
     {
         GetComponent<TMP_Text>().text = "" + (int.Parse(GetComponent<TMP_Text>().text) + adder);
         adder = 0;
+        SoundManager.instance.Play(denominationAddSFX);
+        denominationAddSFX.pitch += consecutiveSFXPitchIncrease;
+        Debug.Log(denominationAddSFX.pitch - .5f);
     }
     void LateUpdate()
     {

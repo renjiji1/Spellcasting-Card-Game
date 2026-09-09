@@ -112,7 +112,6 @@ public class Entity : MonoBehaviour
             {
                 moveRotPivot.transform.rotation = Quaternion.Lerp(moveInitialRot, moveTargetRot, moveTimer);
             }
-            Debug.Log($"pos {transform.position} target {moveTargetPos}");
             transform.position = Vector3.Lerp(moveInitialPos, moveTargetPos, moveTimer);
         } else if(isMoving)
         {
@@ -122,11 +121,11 @@ public class Entity : MonoBehaviour
             OnMoveFinished = null;
         }
     }
-    public void StartMoving(Vector3 pos, Quaternion? rot = null, float? speed = null, Action fn = null, bool useLocalRot = true)
+    public void StartMoving(Vector3 pos, Quaternion? rot = null, float? speed = null, Action fn = null, bool useLocalRot = true, bool playSFX = false)
     {
         OnMoveFinished?.Invoke();
         useLocalRotationForMoving = useLocalRot;
-        if(moveSFX != null)
+        if(playSFX)
         {
             SoundManager.instance.Play(moveSFX);
         }

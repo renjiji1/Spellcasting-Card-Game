@@ -7,11 +7,13 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using TMPro;
 using Random = UnityEngine.Random;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [SerializeField] SettingsManager settings;
+    public static UnityEvent CardClashFinished = new UnityEvent();
     float animationSpeed = 1;
     Camera cam;
     [NonSerialized] public static bool paused = false;
@@ -343,6 +345,7 @@ public class GameManager : MonoBehaviour
         {
             yield return ReturnWonCardsOnManaBust(AIEnemy);
         }
+        CardClashFinished.Invoke();
         
         if(currentDuelNum >= maxDuels || manaBust)
         {
@@ -472,7 +475,7 @@ public class GameManager : MonoBehaviour
         float streakActivateAnimLength = player.GetAnimLengthByName("ActivatePowerTxt", StreakTxt.GetComponent<Animator>()) - damageBonusDelay;
         DamageNumTxt.GetComponent<Denomination>().adder = streak * streakAdder;
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
-        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        //DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
         float damageNumAddAnimLength = player.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());  
         
         float waitTime = streakActivateAnimLength > damageNumAddAnimLength ? streakActivateAnimLength : damageNumAddAnimLength;
@@ -493,7 +496,7 @@ public class GameManager : MonoBehaviour
 
         DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
-        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        //DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
         float damageNumBonusAnimLength = agent.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());
         
         float waitTime = streakActivateAnimLength > damageNumBonusAnimLength ? streakActivateAnimLength : damageNumBonusAnimLength;
@@ -509,25 +512,10 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(damageBonusDelay);
         float supremeBonusActivateAnimLength = player.GetAnimLengthByName("ActivatePowerTxt", SupremeBonusTxt.GetComponent<Animator>()) - damageBonusDelay;
-        
-        /*
-        SupremeCardBonus.transform.position = SupremeCardSpawnPoint.Find("TypeProjection").position;
-        
-        SupremeCardBonus.GetComponent<TMP_Text>().text = "" + bonusDamage;
-        SupremeCardBonus.SetActive(true);
-        
-        yield return new WaitForSeconds(supremeCardBonusMoveDelay);
-        bool supremeCardBonusMoveFinished = false;
-        SupremeCardBonus.GetComponent<Entity>().StartMoving(DamageNumTxt.transform.position, DamageNumTxt.transform.rotation, fn: () =>
-        {
-            SupremeCardBonus.SetActive(false);
-            supremeCardBonusMoveFinished = true;
-        });
 
-        yield return new WaitUntil(() => supremeCardBonusMoveFinished);*/
         DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
-        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        //DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
         float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());
         float waitTime = supremeBonusActivateAnimLength > supremeCardBonusAnimLength ? supremeBonusActivateAnimLength : supremeCardBonusAnimLength;
         
@@ -631,21 +619,14 @@ public class GameManager : MonoBehaviour
         enemyDamageDone = 0;
         player.ResetMana();
         AIEnemy.ResetMana();
-        if(player.points >= player.pointsToWin && AIEnemy.points >= AIEnemy.pointsToWin || round > 3)
+        if(round > 3)
         {
-            Agent wonAgent = player.points >= AIEnemy.pointsToWin ? player : AIEnemy;
+            Agent wonAgent = player.points >= AIEnemy.points ? player : AIEnemy;
             yield return EndGame(wonAgent);
-        } else if(player.points >= player.pointsToWin)
-        {
-            yield return EndGame(player);
-        } else if(AIEnemy.points >= AIEnemy.pointsToWin)
-        {
-            yield return EndGame(AIEnemy);
         } else
         {
             StartRound(); 
-        }
-        
+        } 
     }
     IEnumerator EndGame(Agent winningAgent)
     {
@@ -656,12 +637,14 @@ public class GameManager : MonoBehaviour
         EndGameEnemyDamageTxt.text = $"{AIEnemy.points} Dmg Dealt";
         if(winningAgent == player)
         {
+            SoundManager.instance.Play(player.WinSFX);
             EndGameWinPanel.SetActive(true);
             SaveData.instance.numOfWinsPerDifficulty[SaveData.instance.currentDifficulty]++;
             EndGameWinPanel.transform.Find("WinTxt").GetComponent<TMP_Text>().text = "You Beat The " + AIEnemy.name + "!";
             WinsTxt = EndGamePlayerWinsTxt;
         } else
         {
+            SoundManager.instance.Play(player.LoseSFX);
             EndGameLosePanel.SetActive(true);
             SaveData.instance.numOfLossesPerDifficulty[SaveData.instance.currentDifficulty]++;
             EndGameLosePanel.transform.Find("LoseTxt").GetComponent<TMP_Text>().text = "The " + AIEnemy.name + " Wins";
@@ -677,6 +660,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator ReturnWonCardsOnManaBust(Agent agentThatBust)
     {
+        SoundManager.instance.Play(player.manaBustSFX);
         //Activate Mana Bust Txt
         ManaBustTxt.GetComponent<TMP_Text>().color = agentThatBust == player ? Color.red : Color.blue;
         ManaBustTxt.SetActive(true);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using System;
 using TMPro;
+using Unity.VisualScripting;
 
 public enum MagicType {Illusion, Abjuration, Evocation};
 public class Card : Entity
@@ -27,6 +28,10 @@ public class Card : Entity
     [NonSerialized] public Transform HandTransform;
     [NonSerialized] public Vector3 ogHandPos; 
     Vector3 highlightMoveOffset = new Vector3(0, .1f, .05f);
+    [Header("Words")]
+    [SerializeField] SFX DivineWord;
+    [SerializeField] SFX PrimalWord;
+    [SerializeField] SFX OccultWord;
 
     public override void Start()
     {
@@ -79,12 +84,12 @@ public class Card : Entity
         GameObject shuffleRotAxis = GameManager.instance.Deck.transform.Find("ShuffleRotationAxis").gameObject;
         Quaternion backTurnedRot = Quaternion.Euler(0, 0, 0);
         Vector3 aroundShuffleAxis = new Vector3(shuffleRotAxis.transform.position.x + xOffset, shuffleRotAxis.transform.position.y, shuffleRotAxis.transform.position.z);
-        StartMoving(aroundShuffleAxis, backTurnedRot, speed, () =>
+        StartMoving(aroundShuffleAxis, backTurnedRot,  speed, () =>
         {
             transform.parent = shuffleRotAxis.transform;
             moveRotPivot.transform.rotation = backTurnedRot;
             fn?.Invoke();
-        });
+        }, playSFX: true);
         shuffle = true;
     }
     
@@ -151,5 +156,18 @@ public class Card : Entity
     {
         player.selectedCard = null;
         transform.Find($"{frontPath}/HighlightBg").gameObject.SetActive(false);
+    }
+    public SFX GetArcaneWordFromSource(MagicSource source)
+    {
+        switch(source)
+        {
+            case MagicSource.Arcane:
+                return OccultWord;
+            case MagicSource.Primal:
+                return PrimalWord;
+            case MagicSource.Divine:
+                return DivineWord;
+        }
+        return null;
     }
 }
