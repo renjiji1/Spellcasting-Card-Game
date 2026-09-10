@@ -1393,6 +1393,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -1422,6 +1423,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
 --- !u!4 &156982729
 Transform:
   m_ObjectHideFlags: 0
@@ -1581,6 +1583,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
 --- !u!4 &241645795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
@@ -4072,6 +4075,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -4101,6 +4105,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
 --- !u!4 &538573030
 Transform:
   m_ObjectHideFlags: 0
@@ -7531,6 +7536,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -8153,6 +8159,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 2
   offset: {x: 0, y: 0}
@@ -8203,10 +8210,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.55
-  m_fontSizeBase: 16
+  m_fontSize: 5.6
+  m_fontSizeBase: 5.6
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 1
   m_fontSizeMax: 130
   m_fontStyle: 0
@@ -8317,7 +8324,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.085}
-  m_SizeDelta: {x: 0.44, y: 0.43}
+  m_SizeDelta: {x: 0.40658, y: 0.40658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1295226510
 GameObject:
@@ -8499,6 +8506,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 2
   offset: {x: 0, y: 0}
@@ -8546,6 +8554,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -10057,12 +10066,14 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   shuffleSFX:
     clip: {fileID: 8300000, guid: e84d7448dac02d7458fedeb6401c348f, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   deckPosInsertOffset: {x: 0.29, y: 0, z: 0}
   deckInsertDelay: 1
   deckInsertSpeed: 4
@@ -11840,6 +11851,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 2
   offset: {x: 0, y: 0}

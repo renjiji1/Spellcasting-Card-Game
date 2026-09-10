@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField] SettingsManager settings;
     public static UnityEvent CardClashFinished = new UnityEvent();
+    public static UnityEvent PauseGame = new UnityEvent();
+    public static UnityEvent ResumeGame = new UnityEvent();
     float animationSpeed = 1;
     Camera cam;
     [NonSerialized] public static bool paused = false;
@@ -475,7 +477,7 @@ public class GameManager : MonoBehaviour
         float streakActivateAnimLength = player.GetAnimLengthByName("ActivatePowerTxt", StreakTxt.GetComponent<Animator>()) - damageBonusDelay;
         DamageNumTxt.GetComponent<Denomination>().adder = streak * streakAdder;
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
-        //DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
         float damageNumAddAnimLength = player.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());  
         
         float waitTime = streakActivateAnimLength > damageNumAddAnimLength ? streakActivateAnimLength : damageNumAddAnimLength;
@@ -496,7 +498,7 @@ public class GameManager : MonoBehaviour
 
         DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
-        //DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
         float damageNumBonusAnimLength = agent.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());
         
         float waitTime = streakActivateAnimLength > damageNumBonusAnimLength ? streakActivateAnimLength : damageNumBonusAnimLength;

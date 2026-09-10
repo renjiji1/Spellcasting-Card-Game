@@ -30,14 +30,12 @@ public class SettingsManager : MonoBehaviour
         if(SaveData.instance.masterVolume == -1)
         {
             float masterVolume;
-            Debug.Log("first time");
             Mixer.GetFloat("Master", out masterVolume);
             masterVolume = Mathf.Pow(10f, (masterVolume - maxDb) / 20f);
             MasterSlider.value = masterVolume;
             MasterNumTxt.GetComponent<TMP_Text>().text = masterVolume.ToString("F2");
         } else
         {
-            Debug.Log(SaveData.instance.masterVolume);
             MasterSlider.value = SaveData.instance.masterVolume;
             OnMasterVolumeChange(SaveData.instance.masterVolume);
         }
@@ -123,11 +121,13 @@ public class SettingsManager : MonoBehaviour
     {
         gameObject.SetActive(false);
         GameManager.paused = false;
+        GameManager.ResumeGame.Invoke();
     }
     public void OpenSettings()
     {
         gameObject.SetActive(true);
         GameManager.paused = true;
+        GameManager.PauseGame.Invoke();
     }
     public void UpdateSettings()
     {

@@ -114,11 +114,13 @@ public class Player : Agent
         OnArcanaChanged.Invoke(arcana);
         Shop.SetActive(true);
         GameManager.paused = true;
+        GameManager.PauseGame.Invoke();
     }
     public void CloseShop()
     {
         Shop.SetActive(false);
         GameManager.paused = false;
+        GameManager.ResumeGame.Invoke();
     }
     public override IEnumerator AddArcana(Action finishedFn = null)
     {

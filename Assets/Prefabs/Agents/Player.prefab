@@ -477,6 +477,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   maxMana: 9
   useCardSpeed: 4
   Hand: {fileID: 2336655914420305033}
@@ -494,42 +495,49 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   hoverUISFX:
     clip: {fileID: 8300000, guid: edf599548017b924fbb45046c11be953, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 1
   buyPowerSFX:
     clip: {fileID: 8300000, guid: 4c27c7827b5a6904892efeb2898fd48c, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   getArcanaSFX:
     clip: {fileID: 8300000, guid: 7122c3ed33b39484faa9217551ddfacc, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   matchSourceSFX:
     clip: {fileID: 8300000, guid: 5fcc8af7eca68244a94899141eab18a8, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   WinSFX:
     clip: {fileID: 8300000, guid: e7ee6b647ca8f8741be2295d8e630c42, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   LoseSFX:
     clip: {fileID: 0}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
+    useRealTimeSeconds: 0
   CardMovePreview: {fileID: 0}
   cardPosDifference: {x: 0.2, y: 0, z: 0.005}
   powerPanelsPoses:
