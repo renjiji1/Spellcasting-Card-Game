@@ -201,6 +201,7 @@ public class Power : Entity
         PanelAmount.text = "x" + amount;
         hasBeenUsedThisTurn = true;
         OnSelectEffect.Play(true);
+        agent.UsePower(this);
         OnHoverExit();
         StartCoroutine(ActivatePowerNameTxt());
     }

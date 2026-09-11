@@ -517,7 +517,7 @@ public class GameManager : MonoBehaviour
 
         DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
         DamageNumTxt.GetComponent<Animator>().SetBool("Add", true);
-        //DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
+        DamageNumTxt.GetComponent<Animator>().Play("Add", 0, 0);
         float supremeCardBonusAnimLength = agent.GetAnimLengthByName("Add", DamageNumTxt.GetComponent<Animator>());
         float waitTime = supremeBonusActivateAnimLength > supremeCardBonusAnimLength ? supremeBonusActivateAnimLength : supremeCardBonusAnimLength;
         

@@ -51,6 +51,7 @@ public class Agent : Entity
     [SerializeField] public SFX matchSourceSFX;
     [SerializeField] public SFX WinSFX;
     [SerializeField] public SFX LoseSFX;
+    [SerializeField] public SFX UsePowerSFX;
     public override void Start()
     {
         base.Start();
@@ -202,6 +203,10 @@ public class Agent : Entity
         {
             finishedFn?.Invoke();
         }
+    }
+    public virtual void UsePower(Power power)
+    {
+        SoundManager.instance.Play(UsePowerSFX);
     }
 
     public virtual void EndRound()

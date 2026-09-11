@@ -8186,7 +8186,7 @@ MonoBehaviour:
   m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
-  m_sharedMaterial: {fileID: -3825852989030664849, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
+  m_sharedMaterial: {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8255,7 +8255,7 @@ MonoBehaviour:
   _SortingLayer: 0
   _SortingLayerID: 0
   _SortingOrder: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_renderer: {fileID: 1281366856}
   m_maskType: 0
 --- !u!23 &1281366856
@@ -8283,7 +8283,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3825852989030664849, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
+  - {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8324,7 +8324,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.085}
-  m_SizeDelta: {x: 0.40658, y: 0.40658}
+  m_SizeDelta: {x: 1, y: 0.40658}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1295226510
 GameObject:
