@@ -56,6 +56,7 @@ public class Card : Entity
         }
         obj.transform.Find($"{frontPath}/Background").GetComponent<SpriteRenderer>().sprite = image;
         obj.transform.Find($"{frontPath}/Denomination").GetComponent<TMP_Text>().text = "" + denomination;
+        Debug.Log(type);
     }
 
     protected override void Update()

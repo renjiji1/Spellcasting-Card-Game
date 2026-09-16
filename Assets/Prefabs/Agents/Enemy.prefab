@@ -707,7 +707,7 @@ MonoBehaviour:
     endTime: Infinity
     useRealTimeSeconds: 0
   UsePowerSFX:
-    clip: {fileID: 8300000, guid: 8bd09978c8b0f0a4a808465915737535, type: 3}
+    clip: {fileID: 8300000, guid: d75f59d4fc925c645ad5c6f6029470ea, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
