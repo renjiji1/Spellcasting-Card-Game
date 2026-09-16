@@ -509,7 +509,7 @@ MonoBehaviour:
     pitch: 1
     startTime: 0
     endTime: Infinity
-    useRealTimeSeconds: 0
+    useRealTimeSeconds: 1
   getArcanaSFX:
     clip: {fileID: 8300000, guid: 7122c3ed33b39484faa9217551ddfacc, type: 3}
     volume: 1
@@ -533,6 +533,13 @@ MonoBehaviour:
     useRealTimeSeconds: 0
   LoseSFX:
     clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  UsePowerSFX:
+    clip: {fileID: 8300000, guid: d75f59d4fc925c645ad5c6f6029470ea, type: 3}
     volume: 1
     pitch: 1
     startTime: 0

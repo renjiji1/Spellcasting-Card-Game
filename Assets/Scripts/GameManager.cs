@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] float afterDamageBonusDelay = .25f;
     [NonSerialized] public int playerStreak = 0;
     [NonSerialized] public int enemyStreak = 0;
+    [SerializeField] SFX enterCardClashSFX;
 
     [Header("End Game")]
     [SerializeField] GameObject EndGameLosePanel;
@@ -187,6 +188,7 @@ public class GameManager : MonoBehaviour
         {
             cardsInPositionForClash++;
         });
+        SoundManager.instance.Play(enterCardClashSFX);
         int enemyDenominationAdder = 0;
         int playerDenominationAdder = 0;
         yield return new WaitUntil(() => cardsInPositionForClash >= 2);

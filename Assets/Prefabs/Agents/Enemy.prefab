@@ -212,35 +212,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.965
+      value: -1.086
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.186
+      value: 0.027
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.212
+      value: 1.236
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.12473243
+      value: 0.12497827
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.0078093424
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.99022084
+      value: -0.9921595
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.06199648
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 7.165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -639,12 +639,17 @@ MonoBehaviour:
   BackSprite: {fileID: 5782012695346955960}
   moveSpeed: 8
   moveRotPivot: {fileID: 0}
-  pointsToWin: 150
+  moveSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
   maxMana: 9
   useCardSpeed: 5
   Hand: {fileID: 2377273794550827063}
   ManaCrystalFill: {fileID: 2636593594958805893}
-  DamageSlider: {fileID: 0}
   DamageNumTxt: {fileID: 9218754968672937981}
   PowersTransform: {fileID: 4636051425405875211}
   ManaTxt: {fileID: 7302051570679894526}
@@ -652,6 +657,62 @@ MonoBehaviour:
   ArcanaBagTxt: {fileID: 6204900073261620608}
   AddedArcanaTxtYOffset: 0
   arcana: 0
+  manaBustSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  hoverUISFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  buyPowerSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  getArcanaSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  matchSourceSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  WinSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  LoseSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+  UsePowerSFX:
+    clip: {fileID: 8300000, guid: 8bd09978c8b0f0a4a808465915737535, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
   waitToChooseBehavior: 0.5
   waitAfterActivatingPower: 1
   cardInitialDistFromCam: 1.4

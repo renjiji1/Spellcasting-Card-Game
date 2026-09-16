@@ -37,21 +37,23 @@ public class SoundManager : MonoBehaviour
                 allSources.Add(newInstance);
                 return newInstance;
             }, 
-            (SFXInstance instance) => {instance.source.gameObject.SetActive(true);},
+            (SFXInstance instance) => {instance.source.gameObject.SetActive(true); instance.source.clip = null;},
             (SFXInstance instance) => {instance.source.gameObject.SetActive(false);},
             (SFXInstance instance) => {Destroy(instance.source.gameObject); }, false, 100); 
             
     }
-    /*public void Play(AudioClip clip, float volume = 1, float pitch = 1, float startTime = 0, float endTime = Mathf.Infinity)
+    public static float GetSFXLength(SFX sfx)
     {
-        AudioSource newSource = sourcePool.Get();
-        newSource.clip = clip;
-        newSource.volume = volume;
-        newSource.pitch = pitch;
-        newSource.Play((ulong)startTime);
-        float deleteSourceTime = endTime == Mathf.Infinity ? clip.length : endTime;
-        StartCoroutine(DestroySource(deleteSourceTime, newSource));
-    }*/
+        if(sfx.clip != null)
+        {
+            float length = sfx.endTime == Mathf.Infinity ? sfx.clip.length : sfx.endTime;
+            length /= sfx.pitch;
+            return length - sfx.startTime;
+        } else
+        {
+            return 0;
+        }
+    }
     public void Play(SFX sfx)
     {
         if(sfx.clip != null)
@@ -63,8 +65,7 @@ public class SoundManager : MonoBehaviour
             newSource.volume = sfx.volume;
             newSource.pitch = sfx.pitch;
             newSource.Play((ulong)sfx.startTime);
-            float deleteSourceTime = sfx.endTime == Mathf.Infinity ? sfx.clip.length : sfx.endTime;
-            StartCoroutine(DestroySource(deleteSourceTime, newSFXInstance));
+            StartCoroutine(DestroySource(GetSFXLength(sfx), newSFXInstance));
         }
     }
     public void PauseAllActiveSFX()

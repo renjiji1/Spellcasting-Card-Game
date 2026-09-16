@@ -13859,6 +13859,13 @@ MonoBehaviour:
   streakAdder: 1
   damageBonusDelay: 0.1
   afterDamageBonusDelay: 0.25
+  enterCardClashSFX:
+    clip: {fileID: 8300000, guid: df680c7aa634faa41bfaa5b587e70499, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
   EndGameLosePanel: {fileID: 2053737494}
   EndGameWinPanel: {fileID: 881092479}
   EndGameButtons: {fileID: 461104823}

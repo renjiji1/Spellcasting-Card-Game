@@ -33,6 +33,7 @@ public class Agent : Entity
     [NonSerialized] public CardSlot cardSlotBeingPlayed;
 
     [SerializeField] GameObject ManaCrystalFill;
+    Vector2 manaCrystalFillOgScale;
     [SerializeField] public TMP_Text DamageNumTxt;
     [SerializeField] protected Transform PowersTransform;
     [SerializeField] protected TMP_Text ManaTxt;
@@ -56,6 +57,7 @@ public class Agent : Entity
     {
         base.Start();
         mana = maxMana;
+        manaCrystalFillOgScale = ManaCrystalFill.transform.localScale;
         ResetMana();
         DamageNumTxt.text = "" + points;
         ArcanaBagTxt.text = "" + arcana;
@@ -86,7 +88,7 @@ public class Agent : Entity
             int manaSubtracter = win ? manaLossOnWin : manaLossOnLose;
             mana = Mathf.Clamp(mana - manaSubtracter, 0, maxMana);
             ManaTxt.text = "" + mana;
-            ManaCrystalFill.transform.localScale = new Vector3((float)mana/(float)maxMana, (float)mana/(float)maxMana, ManaCrystalFill.transform.localScale.z);
+            ManaCrystalFill.transform.localScale = new Vector3((float)mana/(float)maxMana * manaCrystalFillOgScale.x, (float)mana/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
         }
         adrenalineActive = false;
         envigorateActive = false;
@@ -97,7 +99,7 @@ public class Agent : Entity
     {
         mana = maxMana;
         ManaTxt.text = "" + mana;
-        ManaCrystalFill.transform.localScale = new Vector3((float)mana/(float)maxMana, (float)mana/(float)maxMana, ManaCrystalFill.transform.localScale.z);
+        ManaCrystalFill.transform.localScale = new Vector3((float)mana/(float)maxMana * manaCrystalFillOgScale.x, (float)mana/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
     }
     public virtual int AddPoints(int addedPoints)
     {
