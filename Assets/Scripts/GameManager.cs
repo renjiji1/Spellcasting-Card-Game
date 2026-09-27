@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
+using Microsoft.Unity.VisualStudio.Editor;
 
 public class GameManager : MonoBehaviour
 {
@@ -102,6 +103,11 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int enemyStreak = 0;
     [SerializeField] SFX enterCardClashSFX;
 
+    [Header("Card Clash Animations")]
+    [SerializeField] GameObject PrimalSlashEffect;
+    [SerializeField] float primalSlashToHitDelay = .2f;
+    [SerializeField] float occultEffectDelay = .1f;
+
     [Header("End Game")]
     [SerializeField] GameObject EndGameLosePanel;
     [SerializeField] GameObject EndGameWinPanel;
@@ -169,7 +175,7 @@ public class GameManager : MonoBehaviour
             TurnTxt.color = playerTurnColor;
         } else
         {
-            TurnTxt.text = "Enemy's Turn";
+            TurnTxt.text = $"{AIEnemy.name}'s Turn";
             TurnTxt.color = enemyTurnColor;
         }
     }
@@ -279,7 +285,13 @@ public class GameManager : MonoBehaviour
             yield return AddSupremeCardBonus(AIEnemy, damageDealt, EnemyDamageBonusTxt);
             damageDealt *= 2;
         }
-        
+
+        MusicPlayer.instance.DamageDoneInATurn(damageDealt);
+        agentThatWon.acculumatedDamagePerRound += damageDealt;
+
+        //Card Clash Anims
+        yield return StartCardClashAnimations(agentThatWon);
+
         //Move the cards to the winner's side
         yield return new WaitForSeconds(cardClashExitDelay);
         int cardsMovedToPosition = 0;
@@ -357,6 +369,79 @@ public class GameManager : MonoBehaviour
         } else
         {
             StartCoroutine(StartDuel(agentThatWon));
+        }
+    }
+    IEnumerator StartCardClashAnimations(Agent agentThatWon)
+    {
+        Agent agentThatLost = agentThatWon == player ? AIEnemy : player;
+        GameObject cardAnimOverlay = agentThatLost.cardBeingPlayed.transform.Find($"{agentThatLost.cardBeingPlayed.frontPath}/AnimationOverlay").gameObject;
+        GameObject winnerCardAnimOverlay = agentThatWon.cardBeingPlayed.transform.Find($"{agentThatWon.cardBeingPlayed.frontPath}/AnimationOverlay").gameObject;
+        agentThatLost.cardBeingPlayed.GetComponent<Animator>().speed = 1;
+        agentThatWon.cardBeingPlayed.GetComponent<Animator>().speed = 1;
+        // Source
+        MagicSource sourceOfWinner = agentThatWon.cardSlotBeingPlayed.source;
+        if(sourceOfWinner == MagicSource.Primal)
+        {
+            PrimalSlashEffect.SetActive(true);
+            PrimalSlashEffect.transform.rotation = agentThatWon == player ? Quaternion.Euler(0,0,0) : Quaternion.Euler(0,-180,0);
+            yield return new WaitForSeconds(primalSlashToHitDelay);
+            agentThatLost.cardBeingPlayed.GetComponent<Animator>().SetBool("PrimalClash", true);
+            float hurtAnimTime = Player.GetAnimLengthByName("PrimalClash", agentThatLost.cardBeingPlayed.GetComponent<Animator>());
+            float animTime = Player.GetAnimLengthByName("PrimalSlash", PrimalSlashEffect.GetComponent<Animator>());
+            float waitTime = animTime - primalSlashToHitDelay >= hurtAnimTime ? animTime - primalSlashToHitDelay : hurtAnimTime;
+            yield return new WaitForSeconds(waitTime);
+            agentThatLost.cardBeingPlayed.GetComponent<Animator>().SetBool("PrimalClash", false);
+            PrimalSlashEffect.SetActive(false);
+        }
+        if(sourceOfWinner == MagicSource.Divine)
+        {
+            yield return agentThatWon.cardBeingPlayed.ActivateDivineCardClashEffect();
+        }
+        if(sourceOfWinner == MagicSource.Arcane)
+        {
+            cardAnimOverlay.SetActive(true);
+            cardAnimOverlay.GetComponent<Animator>().Play("Occult", 0, 0);
+            yield return new WaitForSeconds(occultEffectDelay);
+            agentThatLost.cardBeingPlayed.OccultCardClashEffect.SetActive(true);
+            float effectAnimTime = agentThatLost.cardBeingPlayed.OccultCardClashEffect.GetComponent<ParticleSystem>().main.duration;
+            float animTime = Player.GetAnimLengthByName("Occult", cardAnimOverlay.GetComponent<Animator>());
+            float waitTime = animTime - primalSlashToHitDelay >= effectAnimTime ? animTime - primalSlashToHitDelay : effectAnimTime;
+            yield return new WaitForSeconds(waitTime);
+            agentThatLost.cardBeingPlayed.OccultCardClashEffect.SetActive(false);
+            cardAnimOverlay.SetActive(false);
+        }
+
+        // Type
+        MagicType winningCardType = agentThatWon.cardBeingPlayed.type;
+        if(winningCardType == MagicType.Evocation)
+        {
+            cardAnimOverlay.SetActive(true);
+            cardAnimOverlay.GetComponent<Animator>().Play("Evocation", 0, 0);
+            agentThatLost.cardBeingPlayed.EvocationCardClashEffect.SetActive(true);
+            float animTime = Player.GetAnimLengthByName("Evocation", cardAnimOverlay.GetComponent<Animator>());
+            yield return new WaitForSeconds(animTime);
+            agentThatLost.cardBeingPlayed.EvocationCardClashEffect.SetActive(false);
+            cardAnimOverlay.SetActive(false);
+        }
+        if(winningCardType == MagicType.Abjuration)
+        {
+            winnerCardAnimOverlay.SetActive(true);
+            winnerCardAnimOverlay.GetComponent<Animator>().Play("Abjuration", 0, 0);
+            float animTime = Player.GetAnimLengthByName("Abjuration", winnerCardAnimOverlay.GetComponent<Animator>());
+            yield return new WaitForSeconds(animTime);
+            winnerCardAnimOverlay.SetActive(false);
+        }
+        if(winningCardType == MagicType.Illusion)
+        {
+            foreach(GameObject clone in agentThatWon.cardBeingPlayed.IllusionClones)
+            {
+                agentThatWon.cardBeingPlayed.InitializeCard(clone, agentThatWon.cardBeingPlayed.type, agentThatWon.cardBeingPlayed.denomination, agentThatWon.cardBeingPlayed.Image, frontPath: "Front");
+            }
+            string animName = agentThatWon == player ? "IllusionClashRight" : "IllusionClashLeft";
+            agentThatWon.cardBeingPlayed.GetComponent<Animator>().SetBool(animName, true);
+            float animTime = Player.GetAnimLengthByName(animName, agentThatWon.cardBeingPlayed.GetComponent<Animator>());
+            yield return new WaitForSeconds(animTime);
+            agentThatWon.cardBeingPlayed.GetComponent<Animator>().SetBool(animName, false);
         }
     }
     IEnumerator ActivateDamageNumTxt(bool playerWon, int damageDealt)
@@ -610,6 +695,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator EndRound()
     {
+        MusicPlayer.instance.PlayAmbientTheme();
         Agent winningAgent = playerDamageDone >= enemyDamageDone ? player : AIEnemy;
         if(!manaBust)
         {

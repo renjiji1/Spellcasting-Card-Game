@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine.InputSystem;
 using System;
 using TMPro;
@@ -10,7 +11,7 @@ public class Card : Entity
 {
     InputAction selectInput;
     [Header("Card")]
-    [SerializeField] Sprite Image;
+    [SerializeField] public Sprite Image;
     [SerializeField] public int denomination = 1;
     [NonSerialized] public bool isBeingPlayed = false;
     [NonSerialized] public bool hasBeenPlayed = false;
@@ -33,15 +34,25 @@ public class Card : Entity
     [SerializeField] SFX PrimalWord;
     [SerializeField] SFX OccultWord;
 
+    [Header("Card Clash")]
+    [SerializeField] GameObject DivineCardClashEffect;
+    [SerializeField] GameObject PrimalCardClashEffect;
+    public GameObject EvocationCardClashEffect;
+    public GameObject OccultCardClashEffect;
+    Quaternion primalCardClashEffectOgRot;
+    public GameObject[] IllusionClones;
+
     public override void Start()
     {
         if(startHasRan) return;
         base.Start();
         selectInput = InputSystem.actions.FindAction("Select");
         InitializeCard(gameObject, type, denomination, Image);
+        primalCardClashEffectOgRot = PrimalCardClashEffect.transform.rotation;
     }
-    public void InitializeCard(GameObject obj, MagicType type, int denomination, Sprite image)
+    public void InitializeCard(GameObject obj, MagicType type, int denomination, Sprite image, string frontPath = null)
     {
+        frontPath = frontPath == null ? this.frontPath : frontPath;
         switch(type)
         {
             case MagicType.Illusion:
@@ -56,7 +67,6 @@ public class Card : Entity
         }
         obj.transform.Find($"{frontPath}/Background").GetComponent<SpriteRenderer>().sprite = image;
         obj.transform.Find($"{frontPath}/Denomination").GetComponent<TMP_Text>().text = "" + denomination;
-        Debug.Log(type);
     }
 
     protected override void Update()
@@ -170,5 +180,25 @@ public class Card : Entity
                 return DivineWord;
         }
         return null;
+    }
+    public IEnumerator ActivateDivineCardClashEffect()
+    {
+        DivineCardClashEffect.SetActive(true);
+        float particleTime = DivineCardClashEffect.GetComponent<ParticleSystem>().main.duration;
+        yield return new WaitForSeconds(particleTime);
+        DivineCardClashEffect.SetActive(false);
+    }
+    public IEnumerator ActivatePrimalCardClashEffect()
+    {
+        if(this == player.cardBeingPlayed) {
+            PrimalCardClashEffect.transform.rotation = Quaternion.Euler(primalCardClashEffectOgRot.x-90,primalCardClashEffectOgRot.y,primalCardClashEffectOgRot.z);
+        } else
+        {
+            PrimalCardClashEffect.transform.rotation = primalCardClashEffectOgRot;
+        }
+        PrimalCardClashEffect.SetActive(true);
+        float particleTime = PrimalCardClashEffect.GetComponent<ParticleSystem>().main.duration;
+        yield return new WaitForSeconds(particleTime);
+        PrimalCardClashEffect.SetActive(false);
     }
 }

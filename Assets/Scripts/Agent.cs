@@ -18,6 +18,7 @@ public class Agent : Entity
     [NonSerialized] public bool envigorateActive = false;
     [NonSerialized] public bool adrenalineActive = false;
     [NonSerialized] public int points = 0;
+    [NonSerialized] public int acculumatedDamagePerRound = 0;
     [SerializeField] public int maxMana = 10;
     [NonSerialized] public int mana;
     [NonSerialized] public int manaLossOnLose = 0;
@@ -165,8 +166,10 @@ public class Agent : Entity
     protected virtual IEnumerator WaitEndTurn(Card card, CardSlot slot, bool endTurn = true)
     {
         SFX sfx = card.GetArcaneWordFromSource(slot.source);
+        MusicPlayer.instance.FadeOut();
         SoundManager.instance.Play(sfx);
         yield return new WaitForSeconds(sfx.clip.length);
+        MusicPlayer.instance.FadeIn();
         if(endTurn) EndTurn();
     }
     public virtual bool UseCardForPower(Card selectedCard)
@@ -209,11 +212,13 @@ public class Agent : Entity
     public virtual void UsePower(Power power)
     {
         SoundManager.instance.Play(UsePowerSFX);
+        MusicPlayer.instance.UsedPower();
     }
 
     public virtual void EndRound()
     {
         mana = maxMana;
+        acculumatedDamagePerRound = 0;
     }
     public virtual void WinRound()
     {
