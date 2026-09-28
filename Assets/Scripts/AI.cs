@@ -551,8 +551,8 @@ public class AI : Agent
     }
     CardRating GetCardRatingInfo(Card card, GamePlan gamePlan, Card opposingCard = null)
     {
-        int targetRating = opposingCard == null ? defaultTargetRating : RateCard(player.cardBeingPlayed, player); 
-        int cardRating = RateCard(card, this);
+        int targetRating = opposingCard == null ? defaultTargetRating : RateCard(player.cardBeingPlayed, player, card); 
+        int cardRating = RateCard(card, this, opposingCard);
         
         CardRating cardRatingInfo = new CardRating(card, cardRating, 0, 0, 0);
         if(cardRatingInfo.ratingTargetDiff < 0 && gamePlan == GamePlan.MaxDamage || cardRatingInfo.ratingTargetDiff > 0 && gamePlan == GamePlan.Bust)
@@ -567,6 +567,8 @@ public class AI : Agent
             if(gameManager.turn == 1)
             {
                 winsRoShamBo = GameManager.RoShamBoWinner(card.type, player.cardBeingPlayed.type) == 1;
+                targetRating = !winsRoShamBo ? targetRating + gameManager.cardClashTieWinnerBonus : targetRating;
+                cardRating = !winsRoShamBo ? cardRating + gameManager.cardClashTieWinnerBonus : cardRatings;
             }
             if(winsRoShamBo && gamePlan == GamePlan.MaxDamage || !winsRoShamBo && gamePlan == GamePlan.Bust)
             {
@@ -636,48 +638,50 @@ public class AI : Agent
 
             if(gamePlan == GamePlan.MaxDamage && gameManager.turn == 1)
             {
-                int maxDmgTurn1DeadZoneRange = 3;
+                int maxDmgTurn1DeadZoneRange = 1;
                 int maxDmgTurn1SupremeTypeDeadZoneRange = 2;
-                int maxDmgTurn1MinStreakToOverrideDeadZone = 2;
+                int turn1MinStreakToOverrideDeadZone = 2;
 
                 duelPickRatings[i] = cardRating.damage;
-                if(gameManager.enemyStreak < maxDmgTurn1MinStreakToOverrideDeadZone)
+                if(gameManager.enemyStreak < turn1MinStreakToOverrideDeadZone)
                 {
                     if(cardRating.damage > 0 && cardRating.damage <= maxDmgTurn1DeadZoneRange)
                     {
-                        duelPickRatings[i] = -2 * (maxDmgTurn1DeadZoneRange - cardRating.damage);
+                        duelPickRatings[i] = -(maxDmgTurn1DeadZoneRange - cardRating.damage);
                     }
-                    if(cardRating.card.type == gameManager.SupremeCard.type && cardRating.ratingTargetDiff <= maxDmgTurn1SupremeTypeDeadZoneRange)
-                    {
-                        duelPickRatings[i] = -4 * (maxDmgTurn1DeadZoneRange - cardRating.ratingTargetDiff);
-                    }
+                }
+                if(cardRating.card.type == gameManager.SupremeCard.type && cardRating.damage <= maxDmgTurn1SupremeTypeDeadZoneRange)
+                {
+                    duelPickRatings[i] = -(maxDmgTurn1DeadZoneRange - cardRating.damage);
                 }
             }
 
             if(gamePlan == GamePlan.Bust && gameManager.turn == 0)
             {
-                float bustTurn0SupremeTypeRatingEffect = -3;
+                float bustTurn0SupremeTypeRatingEffect = 3;
 
                 duelPickRatings[i] = GameManager.maxCardDenomination - cardRating.rating;
                 if(cardRating.card.type == gameManager.SupremeCard.type)
                 {
-                    duelPickRatings[i] += bustTurn0SupremeTypeRatingEffect;
+                    duelPickRatings[i] += Mathf.Clamp(bustTurn0SupremeTypeRatingEffect - cardRating.rating, -float.MaxValue, 0);
                 }
             }
 
             if(gamePlan == GamePlan.Bust && gameManager.turn == 1)
             {
+                int bustTurn1SupremeTypeRatingEffect = 3;
                 int diff = cardRating.ratingTargetDiff;
-                if(cardRating.card.type == gameManager.SupremeCard.type && cardRating.ratingTargetDiff <= 0)
-                {
-                    diff = -GameManager.maxCardDenomination;
-                }
-                if(diff <= 0)
+                
+                if(cardRating.clearsTarget)
                 {
                     diff += GameManager.maxCardDenomination;
                 }  else
                 {
                     diff -= GameManager.maxCardDenomination;
+                }
+                if(cardRating.card.type == gameManager.SupremeCard.type)
+                {
+                    diff += Mathf.Clamp(bustTurn1SupremeTypeRatingEffect - cardRating.rating, -int.MaxValue, 0);
                 }
                 duelPickRatings[i] = diff;
             }
@@ -702,16 +706,17 @@ public class AI : Agent
         }
         return cardRatings;
     }
-    int RateCard(Card card, Agent agent)
+    int RateCard(Card card, Agent agent, Card opposingCard = null)
     {
         int rating = card.denomination;
+        Card opponentCard = opposingCard == null ? otherAgent.cardBeingPlayed : opposingCard;
         Agent otherAgent = agent == AIEnemy ? player : AIEnemy;
         if(gameManager.agentDominate == agent)
         {
             rating += gameManager.RoShamBoWinnerDenominationBonus;
-        } else if(otherAgent.cardBeingPlayed != null)
+        } else if(opponentCard != null)
         {
-            if(GameManager.RoShamBoWinner(card.type, otherAgent.cardBeingPlayed.type) == 1)
+            if(GameManager.RoShamBoWinner(card.type, opponentCard.type) == 1 && gameManager.agentDominate == null)
             {
                 rating += gameManager.RoShamBoWinnerDenominationBonus;
             }
@@ -720,14 +725,9 @@ public class AI : Agent
             rating = RateCardForRound(card);
         }
         
-        if(agent.adrenalineActive)
-        {
-            rating *= 2;
-        }
-        
         if(gameManager.mimicryActive && gameManager.turn == 1 && gameManager.currentPlayer == agent)
         {
-            if(card.type != otherAgent.cardBeingPlayed.type)
+            if(card.type != opponentCard.type)
             {
                 rating = 0;
             }
