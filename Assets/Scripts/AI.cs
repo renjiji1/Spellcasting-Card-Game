@@ -43,6 +43,7 @@ public class AI : Agent
     CardSlot ArcaneSlot;
     
     [SerializeField] const int defaultTargetRating = 6;
+    [SerializeField] int gamePlanRatingThresholdAdder = 6;
     [SerializeField] float delayBetweenActivateAndUsePower = .5f;
     [SerializeField] Difficulty difficulty;
     GamePlan currentGamePlan;
@@ -117,13 +118,13 @@ public class AI : Agent
     {
         int[] cardRatings = RateAllCards();
         // Choose Game Plan based on current mana and card ratings
-        float agentRating = mana - (player.maxMana - player.mana);
+        float agentRating = -(player.maxMana - player.mana);
         for(int i = 0; i < cardRatings.Length; i++)
         {
             agentRating += cardRatings[i];
         }        
-        float gamePlanRatingThresh = defaultTargetRating * Hand.transform.childCount + 5;
-        if(agentRating > gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum < player.mana)
+        float gamePlanRatingThresh = defaultTargetRating * Hand.transform.childCount + gamePlanRatingThresholdAdder;
+        if(agentRating > gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum > player.mana)
         {
             currentGamePlan = GamePlan.MaxDamage;
         } else
@@ -591,11 +592,11 @@ public class AI : Agent
         int damage = Mathf.Abs(diff);
         if(diff > 0)
         {
-            damage += gameManager.playerStreak;
+            damage += gameManager.enemyStreak;
             if(card.type == gameManager.SupremeCard.type) damage *= 2;
         } else
         {
-            damage += gameManager.enemyStreak;
+            damage += gameManager.playerStreak;
             if(opposingCard != null)
             {
                 if(opposingCard.type == gameManager.SupremeCard.type) damage *= 2;
