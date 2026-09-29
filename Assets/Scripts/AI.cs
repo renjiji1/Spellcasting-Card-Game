@@ -568,7 +568,7 @@ public class AI : Agent
             {
                 winsRoShamBo = GameManager.RoShamBoWinner(card.type, player.cardBeingPlayed.type) == 1;
                 targetRating = !winsRoShamBo ? targetRating + gameManager.cardClashTieWinnerBonus : targetRating;
-                cardRating = !winsRoShamBo ? cardRating + gameManager.cardClashTieWinnerBonus : cardRatings;
+                cardRating = !winsRoShamBo ? cardRating + gameManager.cardClashTieWinnerBonus : cardRating;
             }
             if(winsRoShamBo && gamePlan == GamePlan.MaxDamage || !winsRoShamBo && gamePlan == GamePlan.Bust)
             {
@@ -604,6 +604,7 @@ public class AI : Agent
                 if(opposingCard.type == gameManager.SupremeCard.type) damage *= 2;
             } 
         }
+        cardRatingInfo.rating = cardRating;
         cardRatingInfo.damage = damage;
         cardRatingInfo.extraDamage = damage - diff;
         cardRatingInfo.ratingTargetDiff = diff;
@@ -709,8 +710,8 @@ public class AI : Agent
     int RateCard(Card card, Agent agent, Card opposingCard = null)
     {
         int rating = card.denomination;
-        Card opponentCard = opposingCard == null ? otherAgent.cardBeingPlayed : opposingCard;
         Agent otherAgent = agent == AIEnemy ? player : AIEnemy;
+        Card opponentCard = opposingCard == null ? otherAgent.cardBeingPlayed : opposingCard;
         if(gameManager.agentDominate == agent)
         {
             rating += gameManager.RoShamBoWinnerDenominationBonus;
