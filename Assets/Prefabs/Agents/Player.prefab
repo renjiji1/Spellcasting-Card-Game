@@ -478,7 +478,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
-  maxMana: 9
+  maxMana: 8
   useCardSpeed: 4
   Hand: {fileID: 2336655914420305033}
   ManaCrystalFill: {fileID: 2596239564801347387}

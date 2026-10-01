@@ -87,9 +87,10 @@ public class Agent : Entity
         if(!envigorateActive)
         {
             int manaSubtracter = win ? manaLossOnWin : manaLossOnLose;
-            mana = Mathf.Clamp(mana - manaSubtracter, 0, maxMana);
-            ManaTxt.text = "" + mana;
-            ManaCrystalFill.transform.localScale = new Vector3((float)mana/(float)maxMana * manaCrystalFillOgScale.x, (float)mana/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
+            mana = Mathf.Clamp(mana - manaSubtracter, -1, maxMana);
+            int manaShown = Mathf.Clamp(mana, 0, maxMana);
+            ManaTxt.text = "" + manaShown;
+            ManaCrystalFill.transform.localScale = new Vector3((float)manaShown/(float)maxMana * manaCrystalFillOgScale.x, (float)manaShown/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
         }
         adrenalineActive = false;
         envigorateActive = false;
@@ -99,8 +100,9 @@ public class Agent : Entity
     public virtual void ResetMana()
     {
         mana = maxMana;
-        ManaTxt.text = "" + mana;
-        ManaCrystalFill.transform.localScale = new Vector3((float)mana/(float)maxMana * manaCrystalFillOgScale.x, (float)mana/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
+        int manaShown = Mathf.Clamp(mana, 0, maxMana);
+        ManaTxt.text = "" + manaShown;
+        ManaCrystalFill.transform.localScale = new Vector3((float)manaShown/(float)maxMana * manaCrystalFillOgScale.x, (float)manaShown/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
     }
     public virtual int AddPoints(int addedPoints)
     {

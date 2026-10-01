@@ -43,7 +43,9 @@ public class AI : Agent
     CardSlot ArcaneSlot;
     
     [SerializeField] const int defaultTargetRating = 6;
-    [SerializeField] int gamePlanRatingThresholdAdder = 6;
+    [SerializeField] int gamePlanRatingLowCardThreshold = 5;
+    [SerializeField] float propOfLowCardsForBurnoutGamePlan = .6f;
+    [SerializeField] float playerManaLeftMaxEffectOnGamePlan = .1f;
     [SerializeField] float delayBetweenActivateAndUsePower = .5f;
     [SerializeField] Difficulty difficulty;
     GamePlan currentGamePlan;
@@ -88,6 +90,10 @@ public class AI : Agent
     public override void StartTurn()
     {
         base.StartTurn();
+        foreach(Card card in HandOfCards)
+        {
+            Debug.Log(card.denomination);
+        }
         StartCoroutine(ChooseBehavior(ChooseCardSlot()));
     }
     CardSlot ChooseCardSlot()
@@ -118,13 +124,18 @@ public class AI : Agent
     {
         int[] cardRatings = RateAllCards();
         // Choose Game Plan based on current mana and card ratings
-        float agentRating = -(player.maxMana - player.mana);
+        float agentRatingsOverThreshold = 0;
         for(int i = 0; i < cardRatings.Length; i++)
         {
-            agentRating += cardRatings[i];
-        }        
-        float gamePlanRatingThresh = defaultTargetRating * Hand.transform.childCount + gamePlanRatingThresholdAdder;
-        if(agentRating > gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum > player.mana)
+            if(cardRatings[i] > gamePlanRatingLowCardThreshold)
+            {
+                agentRatingsOverThreshold++;
+            }
+        }     
+        agentRatingsOverThreshold /= cardRatings.Length;
+        agentRatingsOverThreshold += playerManaLeftMaxEffectOnGamePlan * 2 * ((player.maxMana - player.mana) / player.maxMana - 0.5f);
+        float gamePlanRatingThresh = propOfLowCardsForBurnoutGamePlan * cardRatings.Length;
+        if(agentRatingsOverThreshold > gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum > player.mana)
         {
             currentGamePlan = GamePlan.MaxDamage;
         } else

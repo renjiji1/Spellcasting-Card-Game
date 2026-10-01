@@ -675,8 +675,8 @@ public class GameManager : MonoBehaviour
         SupremeSource = (MagicSource)rng;
         agentWithInitiative = agentForceInitiative == null ? agentWithInitiative : agentForceInitiative;
         agentForceInitiative = null;
-        agentWithInitiative.GetComponent<Agent>().StartTurn();
         currentPlayer = agentWithInitiative.gameObject;
+        agentWithInitiative.GetComponent<Agent>().StartTurn();
     }
     void StartRound()
     {
