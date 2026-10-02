@@ -22,6 +22,7 @@ public class Player : Agent
     [SerializeField] GameObject Shop;
     [SerializeField] TMP_Text ShopArcanaTxt;
     GameObject highlightedPowerPanel;
+    float ogMusicVolume = 1;
     public override void Start()
     {
         base.Start();
@@ -115,12 +116,15 @@ public class Player : Agent
         Shop.SetActive(true);
         GameManager.paused = true;
         GameManager.PauseGame.Invoke();
+        ogMusicVolume = MusicPlayer.instance.GetComponent<AudioSource>().volume;
+        MusicPlayer.instance.FadeOut(.4f, 3, true, false);
     }
     public void CloseShop()
     {
         Shop.SetActive(false);
         GameManager.paused = false;
         GameManager.ResumeGame.Invoke();
+        MusicPlayer.instance.FadeIn(ogMusicVolume, 3, true, false);
     }
     public override IEnumerator AddArcana(Action finishedFn = null)
     {

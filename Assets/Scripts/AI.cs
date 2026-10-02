@@ -90,10 +90,6 @@ public class AI : Agent
     public override void StartTurn()
     {
         base.StartTurn();
-        foreach(Card card in HandOfCards)
-        {
-            Debug.Log(card.denomination);
-        }
         StartCoroutine(ChooseBehavior(ChooseCardSlot()));
     }
     CardSlot ChooseCardSlot()

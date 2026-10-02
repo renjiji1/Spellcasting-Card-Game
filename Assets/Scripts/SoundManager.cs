@@ -14,6 +14,7 @@ public class SFX
     public float startTime = 0;
     public float endTime = Mathf.Infinity;
     public bool useRealTimeSeconds = false;
+    public bool isLooping = false;
 }
 class SFXInstance
 {
@@ -31,6 +32,7 @@ public class SoundManager : MonoBehaviour
         instance = this;
         GameManager.PauseGame.AddListener(PauseAllActiveSFX);
         GameManager.ResumeGame.AddListener(ResumeAllActiveSFX);
+        SettingsManager.OnAnimationSpeedChanged.AddListener((ogSpeed, speed) => RecalculateDestroySourceTimer(ogSpeed, speed));
         sourcePool = new ObjectPool<SFXInstance>(
             () => {
                 SFXInstance newInstance =  new SFXInstance { source = Instantiate(audioSource), sfx = null };
@@ -42,12 +44,23 @@ public class SoundManager : MonoBehaviour
             (SFXInstance instance) => {Destroy(instance.source.gameObject); }, false, 100); 
             
     }
-    public static float GetSFXLength(SFX sfx)
+    public static float GetSFXLength(SFX sfx, float timeScaleParam = -1)
     {
         if(sfx.clip != null)
         {
             float length = sfx.endTime == Mathf.Infinity ? sfx.clip.length : sfx.endTime;
             length /= sfx.pitch;
+            if(!sfx.useRealTimeSeconds)
+            {
+                float timeScale = timeScaleParam == -1 ? Time.timeScale : timeScaleParam;
+                if(sfx.isLooping)
+                {
+                    length /= timeScale;
+                } else
+                {
+                    length *= timeScale;
+                }   
+            }
             return length - sfx.startTime;
         } else
         {
@@ -86,6 +99,18 @@ public class SoundManager : MonoBehaviour
             {
                 instance.source.UnPause();
             }
+        }
+    }
+    void RecalculateDestroySourceTimer(float ogAnimationSpeed, float amimationSpeed)
+    {
+        StopAllCoroutines();
+        
+        foreach(SFXInstance instance in allSources)
+        {
+            float propOfTimeLeft = 1-instance.source.time / GetSFXLength(instance.sfx, ogAnimationSpeed);
+            float timeLeft = GetSFXLength(instance.sfx, GameManager.instance.animationSpeed) * propOfTimeLeft;
+            Debug.Log($"{timeLeft} {GetSFXLength(instance.sfx, GameManager.instance.animationSpeed)} {propOfTimeLeft}");
+            StartCoroutine(DestroySource(Mathf.Clamp(timeLeft,0,float.MaxValue), instance));
         }
     }
     IEnumerator DestroySource(float sec, SFXInstance source)

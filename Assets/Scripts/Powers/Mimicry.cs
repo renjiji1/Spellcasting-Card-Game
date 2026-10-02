@@ -27,7 +27,6 @@ public class Mimicry : Power
     {
         yield return new WaitUntil(() => gameManager.currentPlayer.GetComponent<Agent>() != agent);
         gameManager.MimicryTxt.SetActive(true);
-        Debug.Log($"current player {gameManager.currentPlayer} agent {agent}");
         yield return new WaitUntil(() => gameManager.currentPlayer.GetComponent<Agent>().cardOnSlot);
         
         gameManager.MimicryTxt.SetActive(false);

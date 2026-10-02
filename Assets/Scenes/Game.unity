@@ -1576,6 +1576,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -1606,6 +1607,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
 --- !u!4 &156982729
 Transform:
   m_ObjectHideFlags: 0
@@ -1766,6 +1768,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
 --- !u!4 &241645795 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
@@ -2945,6 +2948,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   AmbientTheme:
     clip: {fileID: 8300000, guid: 5b3d6c1eff1d0784cab6aa54de2d907f, type: 3}
     volume: 1
@@ -2952,6 +2956,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   dmgDoneInASingleTurnToStartBattleTheme: 15
   consecutivePowerUsesToStartBattleTheme: 3
   battleThemePlayDuration: 15
@@ -2970,7 +2975,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 9144336295523243199, guid: 84244fabae642ad4fb7e5e175dcad86e, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 5b3d6c1eff1d0784cab6aa54de2d907f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
@@ -4453,6 +4458,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -4483,6 +4489,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
 --- !u!4 &538573030
 Transform:
   m_ObjectHideFlags: 0
@@ -7494,7 +7501,7 @@ Transform:
   m_GameObject: {fileID: 1126490624}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.175, z: 0}
+  m_LocalPosition: {x: 0, y: -0.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8135,12 +8142,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Denomination
   PositionInFrontOfCam: 0
   denominationAddSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6197223a2ea1d4a4da716f85795651b7, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -8764,6 +8772,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 2
   offset: {x: 0, y: 0}
@@ -9111,6 +9120,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 2
   offset: {x: 0, y: 0}
@@ -9153,12 +9163,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Denomination
   PositionInFrontOfCam: 0
   denominationAddSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6197223a2ea1d4a4da716f85795651b7, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 0.45
   offset: {x: 0, y: 0}
@@ -10944,6 +10955,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   shuffleSFX:
     clip: {fileID: 8300000, guid: e84d7448dac02d7458fedeb6401c348f, type: 3}
     volume: 1
@@ -10951,6 +10963,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 1
   deckPosInsertOffset: {x: 0.29, y: 0, z: 0}
   deckInsertDelay: 1
   deckInsertSpeed: 4
@@ -12821,6 +12834,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   consecutiveSFXPitchIncrease: 0.5
   distFromCam: 2
   offset: {x: 0, y: 0}
@@ -14069,6 +14083,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1156371890}
     - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
+      propertyPath: hoverUISFX.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7e3e0d9ede160a14798bafe7ad1d4943, type: 3}
+    - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
+      propertyPath: hoverUISFX.pitch
+      value: 2.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
       propertyPath: hoverUISFX.volume
       value: 0.5
       objectReference: {fileID: 0}
@@ -14843,6 +14865,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   PrimalSlashEffect: {fileID: 868929223}
   primalSlashToHitDelay: 0.1
   occultEffectDelay: 0.1
@@ -16392,6 +16415,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1969541190}
   - {fileID: 382672609}
+  - {fileID: 288820309}
   - {fileID: 1710329588}
   - {fileID: 330585546}
   - {fileID: 832575519}
@@ -16415,5 +16439,4 @@ SceneRoots:
   - {fileID: 1601732231284600752}
   - {fileID: 1423444464}
   - {fileID: 222670898}
-  - {fileID: 288820309}
   - {fileID: 1126490625}

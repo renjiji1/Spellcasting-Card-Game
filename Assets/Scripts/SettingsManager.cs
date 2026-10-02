@@ -5,9 +5,12 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.Events;
 
 public class SettingsManager : MonoBehaviour
 {
+    public static SettingsManager instance;
+    [NonSerialized] public static UnityEvent<float, float> OnAnimationSpeedChanged = new UnityEvent<float, float>();
     InputAction settingsInput;
     [SerializeField] AudioMixer Mixer;
     [SerializeField] float maxDb = 10;
@@ -19,9 +22,13 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] TMP_Text MusicNumTxt;
     [SerializeField] TMP_Text SFXNumTxt;
     [SerializeField] TMP_Text AnimationSpeedTxt;
+    float ogMusicVolume = 1;
+    float ogAnimationSpeed = 1;
+    float animationSpeed = 1;
 
     void Awake()
     {
+        instance = this;
         if(settingsInput == null)
         settingsInput = InputSystem.actions.FindAction("Settings");
     }
@@ -111,6 +118,7 @@ public class SettingsManager : MonoBehaviour
         SaveData.instance.animationSpeed = value;
         AnimationSpeedTxt.GetComponent<TMP_Text>().text = value.ToString("F2");
         GameManager.instance.ChangeAnimationSpeed(value);
+        animationSpeed = value;
     }
     public void MainMenu()
     {
@@ -122,12 +130,20 @@ public class SettingsManager : MonoBehaviour
         gameObject.SetActive(false);
         GameManager.paused = false;
         GameManager.ResumeGame.Invoke();
+        MusicPlayer.instance.FadeOut(ogMusicVolume, 3, true, false);
+        if(ogAnimationSpeed != animationSpeed)
+        {
+            OnAnimationSpeedChanged.Invoke(ogAnimationSpeed, animationSpeed);
+        }
+        ogAnimationSpeed = animationSpeed;
     }
     public void OpenSettings()
     {
         gameObject.SetActive(true);
         GameManager.paused = true;
         GameManager.PauseGame.Invoke();
+        ogMusicVolume = MusicPlayer.instance.GetComponent<AudioSource>().volume;
+        MusicPlayer.instance.FadeOut(.4f, 3, true, false);
     }
     public void UpdateSettings()
     {
@@ -136,7 +152,7 @@ public class SettingsManager : MonoBehaviour
         {
             if(gameObject.activeSelf)
             {
-               CloseSettings(); 
+                CloseSettings(); 
             } else if(!GameManager.paused)
             {
                 OpenSettings();

@@ -719,7 +719,9 @@ MonoBehaviour:
   cardInitialXOffsetFromMiddle: 0.56
   cardToFrontOfCamDelay: 0.2
   endTurnDelay: 0.1
-  gamePlanRatingThresholdAdder: -10
+  gamePlanRatingLowCardThreshold: 5
+  propOfLowCardsForBurnoutGamePlan: 0.7
+  playerManaLeftMaxEffectOnGamePlan: 0.2
   delayBetweenActivateAndUsePower: 0.5
   difficulty: 4
   ChanceToChooseCorrectSource:

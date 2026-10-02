@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public static UnityEvent CardClashFinished = new UnityEvent();
     public static UnityEvent PauseGame = new UnityEvent();
     public static UnityEvent ResumeGame = new UnityEvent();
-    float animationSpeed = 1;
+    [NonSerialized] public float animationSpeed = 1;
     Camera cam;
     [NonSerialized] public static bool paused = false;
     public static int maxCardDenomination = 10;
@@ -681,6 +681,7 @@ public class GameManager : MonoBehaviour
     void StartRound()
     {
         Deck.GetComponent<Deck>().Start();
+        MusicPlayer.instance.PlayAmbientTheme(.2f, false);
         StartCoroutine(Deck.GetComponent<Deck>().StartShuffle());
         StartCoroutine(ShowRoundTxt());
         StartCoroutine(StartDuel(player));
@@ -695,7 +696,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator EndRound()
     {
-        MusicPlayer.instance.PlayAmbientTheme();
+        MusicPlayer.instance.FadeOut(0, 1);
         Agent winningAgent = playerDamageDone >= enemyDamageDone ? player : AIEnemy;
         if(!manaBust)
         {
@@ -751,6 +752,7 @@ public class GameManager : MonoBehaviour
     IEnumerator ReturnWonCardsOnManaBust(Agent agentThatBust)
     {
         SoundManager.instance.Play(player.manaBustSFX);
+        MusicPlayer.instance.FadeOut(0);
         //Activate Mana Bust Txt
         ManaBustTxt.GetComponent<TMP_Text>().color = agentThatBust == player ? Color.red : Color.blue;
         ManaBustTxt.SetActive(true);
@@ -866,6 +868,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => !DamageDealtTxt.GetComponent<Animator>().GetBool("Add"));
         DamageDealtTxt.transform.parent.GetComponent<Denomination>().PositionInFrontOfCam = false;
         agent.WonCards.Clear();
+        DamageDealtTxt.GetComponent<Denomination>().ResetDenominationSFXPitch();
         fn?.Invoke(totalDamageDealt);
     }
     IEnumerator SetDamageTextAnimToFalse(GameObject DamageDealtTxt)
