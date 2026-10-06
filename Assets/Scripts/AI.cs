@@ -133,7 +133,7 @@ public class AI : Agent
             }
         }     
         agentRatingsOverThreshold /= cardRatings.Length;
-        agentRatingsOverThreshold += playerManaLeftMaxEffectOnGamePlan * 2 * ((player.maxMana - player.mana) / player.maxMana - 0.5f);
+        agentRatingsOverThreshold += playerManaLeftMaxEffectOnGamePlan * 2 * ((float)(player.maxMana - player.mana) / (float)player.maxMana - 0.5f);
         float gamePlanRatingThresh = propOfLowCardsForBurnoutGamePlan * cardRatings.Length;
         if(agentRatingsOverThreshold > gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum > player.mana)
         {
@@ -198,11 +198,12 @@ public class AI : Agent
         Power supremeSwap = PowersTransform.Find("SupremeSwap").GetComponent<Power>();
         Power dominate = PowersTransform.Find("Dominate").GetComponent<Power>();
         Power adrenaline = PowersTransform.Find("Adrenaline").GetComponent<Power>();
+        CardRating cardRatingInfo = GetCardRatingInfo(CardToPlay, currentGamePlan, player.cardBeingPlayed);
         float[] probToActivateEachPower = new float[]
         {
-            GetProbToActivateInitiative(initiative), GetProbToActivateRedraw(redraw), GetProbToActivateMimicry(mimicry),
-            GetProbToActivateEnvigorate(envigorate), GetProbToActivateSupremeSwap(supremeSwap), GetProbToActivateDominate(dominate),
-            GetProbToActivateAdrenaline(adrenaline)
+            GetProbToActivateInitiative(initiative, cardRatingInfo), GetProbToActivateRedraw(redraw, cardRatingInfo), GetProbToActivateMimicry(mimicry, cardRatingInfo),
+            GetProbToActivateEnvigorate(envigorate, cardRatingInfo), GetProbToActivateSupremeSwap(supremeSwap, cardRatingInfo), GetProbToActivateDominate(dominate, cardRatingInfo),
+            GetProbToActivateAdrenaline(adrenaline, cardRatingInfo)
         };
         float maxProb = probToActivateEachPower.Max();
         float unoptimalProbSum = 1 - ChanceToPlayOptimally[(int)difficulty];
@@ -224,14 +225,24 @@ public class AI : Agent
                 continue;
             }
             powerPickProbabilities[i] = Mathf.Abs(powerPickProbabilities[i] - maxProb) / rankDiffSum * unoptimalProbSum;
-        } 
-        int rngCard = Random.Range(0, randomRange);
+
+        }
+        foreach(float prob in powerPickProbabilities)
+        {
+            Debug.Log(prob);
+        }
+        int rngPower = Random.Range(0, randomRange);
         float probSum = 0;
         for(int i = 0; i < probToActivateEachPower.Length; i++)
         {
             probSum += powerPickProbabilities[i];
-            if(rngCard < randomRange * probSum && probToActivateEachPower[i] != 0)
+            if(rngPower < randomRange * probSum)
             {
+                float probToActivate = Random.Range(0, randomRange);
+                if(probToActivate < probToActivateEachPower[i] * ChanceToPlayOptimally[(int)difficulty] * randomRange)
+                {
+                    break;
+                }
                 switch(i)
                 {
                     case 0:
@@ -260,16 +271,35 @@ public class AI : Agent
             }
         }
     }
-    float GetProbToActivateInitiative(Power power)
+    float GetProbToActivateInitiative(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
         {
-            const float initiativeProbScalar = .5f;
-
-            float prob = initiativeProbScalar * ChanceToPlayOptimally[(int)difficulty] * gameManager.currentDuelNum / gameManager.maxDuels;
-            if(gameManager.turn == 1)
+            float prob = 0;
+            if(currentGamePlan == GamePlan.Bust && !cardRatingInfo.clearsTarget)
             {
-                prob /= initiativeProbScalar;
+                float playerManaFactor = (float)(player.maxMana-player.mana) / (float)player.maxMana;
+                if(gameManager.turn == 1)
+                {
+                    prob = .8f + playerManaFactor * .2f;
+                } else
+                {
+                    prob = .5f + playerManaFactor * .2f;
+                }
+            }
+            if(currentGamePlan == GamePlan.MaxDamage && cardRatingInfo.clearsTarget)
+            {
+                const int streakScalar = 4;
+                float manaFactor = (float)(maxMana - mana) / (float)maxMana;
+                float streakFactor = (float)gameManager.enemyStreak / streakScalar;
+                if(gameManager.turn == 1)
+                {
+                    prob = .6f;
+                } else
+                {
+                    prob = .4f;
+                }
+                prob += manaFactor * .3f + streakFactor * .1f;
             }
             return prob;
         } else
@@ -284,7 +314,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateRedraw(Power power)
+    float GetProbToActivateRedraw(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
         {
@@ -331,7 +361,7 @@ public class AI : Agent
         }
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateMimicry(Power power)
+    float GetProbToActivateMimicry(Power power, CardRating cardRatingInfo)
     {
         if((arcana >= power.cost || power.amount > 0) && gameManager.turn == 0 && currentGamePlan == GamePlan.MaxDamage)
         {
@@ -386,7 +416,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateEnvigorate(Power power)
+    float GetProbToActivateEnvigorate(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
         {
@@ -413,7 +443,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateSupremeSwap(Power power)
+    float GetProbToActivateSupremeSwap(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
         {
@@ -489,7 +519,7 @@ public class AI : Agent
         yield return power.GetComponent<SupremeSwap>().SupremeSwapCard(cardToSwap, this, cardToSwap.transform.position, cardToSwap.moveRotPivot.transform.rotation);
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateDominate(Power power)
+    float GetProbToActivateDominate(Power power, CardRating cardRatingInfo)
     {
         if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage)
         {
@@ -527,7 +557,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateAdrenaline(Power power)
+    float GetProbToActivateAdrenaline(Power power, CardRating cardRatingInfo)
     {
         if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage)
         {
@@ -562,7 +592,7 @@ public class AI : Agent
     }
     CardRating GetCardRatingInfo(Card card, GamePlan gamePlan, Card opposingCard = null)
     {
-        int targetRating = opposingCard == null ? defaultTargetRating : RateCard(player.cardBeingPlayed, player, card); 
+        int targetRating = opposingCard == null ? defaultTargetRating : RateCard(opposingCard, player, card); 
         int cardRating = RateCard(card, this, opposingCard);
         
         CardRating cardRatingInfo = new CardRating(card, cardRating, 0, 0, 0);
