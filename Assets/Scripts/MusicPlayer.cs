@@ -28,7 +28,9 @@ public class MusicPlayer : MonoBehaviour
     float startingVolume;
     float endingVolume;
     [SerializeField] float fadeSpeed = 5;
+    float currentFadeSpeed;
     float fadeTimer = -1;
+    bool fadeUseUnscaledTime = false;
     void Awake()
     {
         instance = this;
@@ -55,7 +57,8 @@ public class MusicPlayer : MonoBehaviour
         if(fadeTimer >= 0)
         {
             source.volume = Mathf.Lerp(startingVolume, endingVolume, fadeTimer);
-            fadeTimer += Time.deltaTime * fadeSpeed;
+            float time = fadeUseUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+            fadeTimer += time * currentFadeSpeed;
             if(fadeTimer >= 1) fadeTimer = -1;
         }
     }
@@ -69,37 +72,42 @@ public class MusicPlayer : MonoBehaviour
         consecutivePowerUses++;
         if(consecutivePowerUses >= consecutivePowerUsesToStartBattleTheme) StartCoroutine(PlayTheme(BattleTheme, false));
     }
-    public void PlayAmbientTheme() {StartCoroutine(PlayTheme(AmbientTheme, false));}
-    public IEnumerator PlayTheme(SFX sfx, bool playBattleThemeUntilRoundEnd)
+    public void PlayAmbientTheme(float fadeSpeed = -1, bool fadeOut = true) {StartCoroutine(PlayTheme(AmbientTheme, false, true, fadeSpeed, fadeOut));}
+    public IEnumerator PlayTheme(SFX sfx, bool playBattleThemeUntilRoundEnd, bool restartSong = false, float fadeSpeed = -1, bool fadeOut = true)
     {
         this.playBattleThemeUntilRoundEnd = playBattleThemeUntilRoundEnd;
-        if(sfx.clip != null && source.clip != sfx.clip)
+        if(sfx.clip != null && (source.clip != sfx.clip || restartSong))
         {
-            FadeOut();
+            if(fadeOut) {FadeOut(fadeSpeed: fadeSpeed);} else {source.volume = 0;}
             yield return new WaitUntil(() => fadeTimer < 0);
             float time = source.time;
             source.clip = sfx.clip;
-            source.volume = sfx.volume;
             source.pitch = sfx.pitch;
             source.Play((ulong)time);
-            FadeIn();
+            FadeIn(sfx.volume, fadeSpeed: fadeSpeed);
             if(!playBattleThemeUntilRoundEnd && sfx != AmbientTheme)
             {
                 StartCoroutine(WaitToSetAmbientMusic(battleThemePlayDuration)); 
             }
         }
     }
-    public void FadeOut()
+    public void FadeOut(float finalVolume = 0, float fadeSpeed = -1, bool useUnscaledTime = false, bool interruptOtherFade = true)
     {
+        if(!interruptOtherFade && fadeTimer != -1) return;
         fadeTimer = 0;
-        endingVolume = 0;
+        endingVolume = finalVolume;
         startingVolume = source.volume;
+        currentFadeSpeed = fadeSpeed == -1 ? this.fadeSpeed : fadeSpeed;
+        fadeUseUnscaledTime = useUnscaledTime;
     }
-    public void FadeIn()
+    public void FadeIn(float finalVolume = 1, float fadeSpeed = -1, bool useUnscaledTime = false, bool interruptOtherFade = true)
     {
+        if(!interruptOtherFade && fadeTimer != -1) return;
         fadeTimer = 0;
-        endingVolume = 1;
+        endingVolume = finalVolume;
         startingVolume = source.volume;
+        currentFadeSpeed = fadeSpeed == -1 ? this.fadeSpeed : fadeSpeed;
+        fadeUseUnscaledTime = useUnscaledTime;
     }
     IEnumerator WaitToSetAmbientMusic(float sec)
     {

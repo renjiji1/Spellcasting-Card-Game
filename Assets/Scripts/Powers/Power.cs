@@ -100,7 +100,6 @@ public class Power : Entity
     }
     public bool BuyPower()
     {
-        Debug.Log($"{cost}");
         bool canBuy = agent.CanSpendArcana(cost);
         if(canBuy)
         {

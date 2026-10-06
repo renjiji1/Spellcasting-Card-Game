@@ -17,10 +17,7 @@ public class Denomination : MonoBehaviour
     [SerializeField] Vector2 offset = Vector2.zero;
     void Start()
     {
-        GameManager.CardClashFinished.AddListener(() =>
-        {
-            denominationAddSFX.pitch = 1;
-        });
+        GameManager.CardClashFinished.AddListener(() =>{ ResetDenominationSFXPitch(); });
     }
     public void AddToDenomination()
     {
@@ -28,7 +25,6 @@ public class Denomination : MonoBehaviour
         adder = 0;
         SoundManager.instance.Play(denominationAddSFX);
         denominationAddSFX.pitch += consecutiveSFXPitchIncrease;
-        Debug.Log(denominationAddSFX.pitch - .5f);
     }
     void LateUpdate()
     {
@@ -37,5 +33,9 @@ public class Denomination : MonoBehaviour
             transform.position = Camera.main.transform.position + Camera.main.transform.forward * distFromCam + Camera.main.transform.right * offset.x + Camera.main.transform.up * offset.y;
             transform.rotation = Camera.main.transform.rotation;
         }
+    }
+    public void ResetDenominationSFXPitch()
+    {
+        denominationAddSFX.pitch = 1;
     }
 }
