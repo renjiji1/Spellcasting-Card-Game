@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using System;
 using TMPro;
 
-public class SupremeSwap : Power
+public class Dictate : Power
 {
     public override void OnSelect()
     {
@@ -14,7 +14,7 @@ public class SupremeSwap : Power
         agent.canSupremeCardSwap = true;
         agent.powerActiveCantPlayCard = true;
     } 
-    public IEnumerator SupremeSwapCard(Card card, Agent agent, Vector3 prevCardPos, Quaternion prevCardRot)
+    public IEnumerator DictateCard(Card card, Agent agent, Vector3 prevCardPos, Quaternion prevCardRot)
     {
         card.isBeingSwapped = true;
         int cardsInPosition = 0;

@@ -335,12 +335,10 @@ public class GameManager : MonoBehaviour
         if(playerWon)
         {
             AIEnemy.surgeActive = false;
-            AIEnemy.envigorateActive = false;
             player.UseMana();
             AIEnemy.UseMana(win: false);
         } else {
             player.surgeActive = false;
-            player.envigorateActive = false;
             AIEnemy.UseMana();
             player.UseMana(win: false);
         }

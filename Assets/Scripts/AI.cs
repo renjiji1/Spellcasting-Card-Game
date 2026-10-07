@@ -54,7 +54,7 @@ public class AI : Agent
     [SerializeField] float[] ChanceToPlayOptimally = new float[Enum.GetValues(typeof(Difficulty)).Length];
     Card CardToPlay;
     Card MimicryCardToPlay;
-    MagicType SupremeSwapTypeToSwap;
+    MagicType DictateTypeToSwap;
     bool powerActivatedThisDuel = false;
     
     public override void Start()
@@ -196,15 +196,14 @@ public class AI : Agent
         Power patience = PowersTransform.Find("Patience").GetComponent<Power>();
         Power redraw = PowersTransform.Find("Redraw").GetComponent<Power>();
         Power mimicry = PowersTransform.Find("Mimicry").GetComponent<Power>();
-        Power envigorate = PowersTransform.Find("Envigorate").GetComponent<Power>();
-        Power supremeSwap = PowersTransform.Find("SupremeSwap").GetComponent<Power>();
+        Power dictate = PowersTransform.Find("Dictate").GetComponent<Power>();
         Power dominate = PowersTransform.Find("Dominate").GetComponent<Power>();
         Power surge = PowersTransform.Find("Surge").GetComponent<Power>();
         CardRating cardRatingInfo = GetCardRatingInfo(CardToPlay, currentGamePlan, player.cardBeingPlayed);
         float[] probToActivateEachPower = new float[]
         {
             GetProbToActivatePatience(patience, cardRatingInfo), GetProbToActivateRedraw(redraw, cardRatingInfo), GetProbToActivateMimicry(mimicry, cardRatingInfo),
-            GetProbToActivateSupremeSwap(supremeSwap, cardRatingInfo), GetProbToActivateDominate(dominate, cardRatingInfo), GetProbToActivateSurge(surge, cardRatingInfo)
+            GetProbToActivateDictate(dictate, cardRatingInfo), GetProbToActivateDominate(dominate, cardRatingInfo), GetProbToActivateSurge(surge, cardRatingInfo)
         };
         float maxProb = probToActivateEachPower.Max();
         float unoptimalProbSum = 1 - ChanceToPlayOptimally[(int)difficulty];
@@ -220,18 +219,21 @@ public class AI : Agent
         }
         for(int i = 0; i < probToActivateEachPower.Length; i++)
         {
-            if(probToActivateEachPower[i] == maxProb)
+            if(probToActivateEachPower[i] == maxProb && maxProb != 0)
             {
                 powerPickProbabilities[i] = ChanceToPlayOptimally[(int)difficulty];
                 continue;
             }
-            powerPickProbabilities[i] = Mathf.Abs(powerPickProbabilities[i] - maxProb) / rankDiffSum * unoptimalProbSum;
-
+            if(rankDiffSum != 0)
+            {
+                powerPickProbabilities[i] = Mathf.Abs(probToActivateEachPower[i] - maxProb) / rankDiffSum * unoptimalProbSum;
+            }
         }
         foreach(float prob in probToActivateEachPower)
         {
             Debug.Log(prob);
         }
+        Debug.Log(powerPickProbabilities.Sum());
         int rngPower = Random.Range(0, randomRange);
         float probSum = 0;
         for(int i = 0; i < probToActivateEachPower.Length; i++)
@@ -256,7 +258,7 @@ public class AI : Agent
                         yield return ActivateMimicry(mimicry);
                         break;
                     case 3:
-                        yield return ActivateSupremeSwap(supremeSwap);
+                        yield return ActivateDictate(dictate);
                         break;
                     case 4:
                         yield return ActivateDominate(dominate);
@@ -282,7 +284,7 @@ public class AI : Agent
                     prob = .8f + playerManaFactor * .2f;
                 } else
                 {
-                    prob = .5f + playerManaFactor * .2f;
+                    prob = playerManaFactor * .3f;
                 }
             }
             if(currentGamePlan == GamePlan.MaxDamage && cardRatingInfo.clearsTarget)
@@ -434,7 +436,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateSupremeSwap(Power power, CardRating cardRatingInfo)
+    float GetProbToActivateDictate(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
         {
@@ -465,30 +467,30 @@ public class AI : Agent
             if(numOfIllusionCards >= numOfEvocationCards && numOfIllusionCards >= numOfAbjurationCards)
             {
                 maxNumOfCardsPerType = numOfIllusionCards;
-                SupremeSwapTypeToSwap = MagicType.Illusion;
+                DictateTypeToSwap = MagicType.Illusion;
             }
             if(numOfEvocationCards >= numOfIllusionCards && numOfEvocationCards >= numOfAbjurationCards)
             {
                 maxNumOfCardsPerType = numOfEvocationCards;
-                SupremeSwapTypeToSwap = MagicType.Evocation;
+                DictateTypeToSwap = MagicType.Evocation;
             }
             if(numOfAbjurationCards >= numOfEvocationCards && numOfAbjurationCards >= numOfIllusionCards)
             {
                 maxNumOfCardsPerType = numOfAbjurationCards;
-                SupremeSwapTypeToSwap = MagicType.Abjuration;
+                DictateTypeToSwap = MagicType.Abjuration;
             }
             int newSupremeTypeMaxDenomination = -1;
             Card highestDenominationCardForNewSupremeType = null;
             foreach(Card card in HandOfCards)
             {
-                if(card.type == SupremeSwapTypeToSwap && card.denomination > newSupremeTypeMaxDenomination)
+                if(card.type == DictateTypeToSwap && card.denomination > newSupremeTypeMaxDenomination)
                 {
                     newSupremeTypeMaxDenomination = card.denomination;
                     highestDenominationCardForNewSupremeType = card;
                 }
             }
             float prob = 0;
-            if(CardToPlay.type != gameManager.SupremeCard.type && SupremeSwapTypeToSwap != gameManager.SupremeCard.type)
+            if(CardToPlay.type != gameManager.SupremeCard.type && DictateTypeToSwap != gameManager.SupremeCard.type)
             {
                 float duelNumFactor = (float)(gameManager.maxDuels - gameManager.currentDuelNum) / (float)gameManager.maxDuels;
                 float supremeTypeCardDiffScalar = 4;
@@ -510,13 +512,13 @@ public class AI : Agent
             return 0;
         }
     }
-    IEnumerator ActivateSupremeSwap(Power power)
+    IEnumerator ActivateDictate(Power power)
     {
         power.BuyPower();
         yield return new WaitForSeconds(waitAfterActivatingPower);
         power.OnSelect();
         yield return new WaitForSeconds(delayBetweenActivateAndUsePower);
-        List<Card> cardsOfType = HandOfCards.Where(card => card.type == SupremeSwapTypeToSwap).ToList();
+        List<Card> cardsOfType = HandOfCards.Where(card => card.type == DictateTypeToSwap).ToList();
         GamePlan oppositeGamePlan = currentGamePlan == GamePlan.Burnout ? GamePlan.MaxDamage : GamePlan.Burnout;
         Card cardToSwap;
         if(cardsOfType.Count > 0)
@@ -526,7 +528,7 @@ public class AI : Agent
             cardToSwap = ChooseOptimalCard(oppositeGamePlan);
         }
         
-        yield return power.GetComponent<SupremeSwap>().SupremeSwapCard(cardToSwap, this, cardToSwap.transform.position, cardToSwap.moveRotPivot.transform.rotation);
+        yield return power.GetComponent<Dictate>().DictateCard(cardToSwap, this, cardToSwap.transform.position, cardToSwap.moveRotPivot.transform.rotation);
         ChooseCardToPlay(1000);
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }

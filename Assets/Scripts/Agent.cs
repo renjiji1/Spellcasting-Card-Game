@@ -15,7 +15,6 @@ public class Agent : Entity
     [NonSerialized] public bool powerActiveCantPlayCard = false;
     [NonSerialized] public bool canRedraw = false;
     [NonSerialized] public bool canSupremeCardSwap = false;
-    [NonSerialized] public bool envigorateActive = false;
     [NonSerialized] public bool surgeActive = false;
     [NonSerialized] public int points = 0;
     [NonSerialized] public int acculumatedDamagePerRound = 0;
@@ -84,16 +83,12 @@ public class Agent : Entity
     }
     public virtual void UseMana(bool win = true)
     {
-        if(!envigorateActive)
-        {
-            int manaSubtracter = win ? manaLossOnWin : manaLossOnLose;
-            mana = Mathf.Clamp(mana - manaSubtracter, -1, maxMana);
-            int manaShown = Mathf.Clamp(mana, 0, maxMana);
-            ManaTxt.text = "" + manaShown;
-            ManaCrystalFill.transform.localScale = new Vector3((float)manaShown/(float)maxMana * manaCrystalFillOgScale.x, (float)manaShown/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
-        }
+        int manaSubtracter = win ? manaLossOnWin : manaLossOnLose;
+        mana = Mathf.Clamp(mana - manaSubtracter, -1, maxMana);
+        int manaShown = Mathf.Clamp(mana, 0, maxMana);
+        ManaTxt.text = "" + manaShown;
+        ManaCrystalFill.transform.localScale = new Vector3((float)manaShown/(float)maxMana * manaCrystalFillOgScale.x, (float)manaShown/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
         surgeActive = false;
-        envigorateActive = false;
         manaLossOnLose = 0;
         manaLossOnWin = 1;
     }
@@ -185,7 +180,7 @@ public class Agent : Entity
             } else if(canSupremeCardSwap)
             {
                 canSupremeCardSwap = false;
-                StartCoroutine(PowersTransform.Find("SupremeSwap").GetComponent<SupremeSwap>().SupremeSwapCard(selectedCard, this, selectedCard.transform.position, selectedCard.moveRotPivot.transform.localRotation));
+                StartCoroutine(PowersTransform.Find("Dictate").GetComponent<Dictate>().DictateCard(selectedCard, this, selectedCard.transform.position, selectedCard.moveRotPivot.transform.localRotation));
             } 
             return false;
         } else

@@ -6365,16 +6365,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976470731}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0.30459}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -0.34}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 409841246}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0}
+  m_AnchoredPosition: {x: 0.02699995, y: 0}
   m_SizeDelta: {x: 3.9546, y: 0.83101}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &976470733
@@ -12286,17 +12286,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
---- !u!114 &1678267686 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4258927427382434377, guid: 39a00bbde7215f245910279935df3291, type: 3}
-  m_PrefabInstance: {fileID: 1899694237}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 054935a3a7df24444a93d033a6e1f98c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Envigorate
 --- !u!4 &1679772439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
@@ -13587,6 +13576,18 @@ PrefabInstance:
     - target: {fileID: 2934704277723833121, guid: 39a00bbde7215f245910279935df3291, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0.8432
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208980411238771913, guid: 39a00bbde7215f245910279935df3291, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.889
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208980411238771913, guid: 39a00bbde7215f245910279935df3291, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.035
+      objectReference: {fileID: 0}
+    - target: {fileID: 3208980411238771913, guid: 39a00bbde7215f245910279935df3291, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.788
       objectReference: {fileID: 0}
     - target: {fileID: 3227261285008441284, guid: 39a00bbde7215f245910279935df3291, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15648,15 +15649,15 @@ PrefabInstance:
     - target: {fileID: 2830718262067582682, guid: e9cf01c8a9fba0a45b4bc4444456dc63, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1678267686}
+      objectReference: {fileID: 0}
     - target: {fileID: 2830718262067582682, guid: e9cf01c8a9fba0a45b4bc4444456dc63, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1678267686}
+      objectReference: {fileID: 0}
     - target: {fileID: 2830718262067582682, guid: e9cf01c8a9fba0a45b4bc4444456dc63, type: 3}
       propertyPath: m_Delegates.Array.data[2].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
       value: 
-      objectReference: {fileID: 1678267686}
+      objectReference: {fileID: 0}
     - target: {fileID: 2830718262067582682, guid: e9cf01c8a9fba0a45b4bc4444456dc63, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: Power, Assembly-CSharp
