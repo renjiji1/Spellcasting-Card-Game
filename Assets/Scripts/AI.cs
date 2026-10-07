@@ -532,6 +532,7 @@ public class AI : Agent
     }
     float GetProbToActivateDominate(Power power, CardRating cardRatingInfo)
     {
+        return 0;
         if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage)
         {
             const float dominateStreakMinForBonus = 2;
