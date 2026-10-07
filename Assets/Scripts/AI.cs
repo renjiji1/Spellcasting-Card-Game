@@ -228,7 +228,7 @@ public class AI : Agent
             powerPickProbabilities[i] = Mathf.Abs(powerPickProbabilities[i] - maxProb) / rankDiffSum * unoptimalProbSum;
 
         }
-        foreach(float prob in powerPickProbabilities)
+        foreach(float prob in probToActivateEachPower)
         {
             Debug.Log(prob);
         }
@@ -488,7 +488,7 @@ public class AI : Agent
                 }
             }
             float prob = 0;
-            if(CardToPlay.type != gameManager.SupremeCard.type)
+            if(CardToPlay.type != gameManager.SupremeCard.type && SupremeSwapTypeToSwap != gameManager.SupremeCard.type)
             {
                 float duelNumFactor = (float)(gameManager.maxDuels - gameManager.currentDuelNum) / (float)gameManager.maxDuels;
                 float supremeTypeCardDiffScalar = 4;

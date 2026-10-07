@@ -153,7 +153,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
+  - {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -199,8 +199,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
-  m_sharedMaterial: {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
+  m_sharedMaterial: {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -961,7 +961,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
+  - {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1007,8 +1007,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
-  m_sharedMaterial: {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
+  m_sharedMaterial: {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1675,7 +1675,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
+  - {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1721,8 +1721,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
-  m_sharedMaterial: {fileID: -3825852989030664849, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
+  m_sharedMaterial: {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1930,7 +1930,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2894361051454601827, guid: c9b91e6aad53ae345899643e2da1f053, type: 3}
       propertyPath: m_Name
-      value: Adrenaline
+      value: Surge
       objectReference: {fileID: 0}
     - target: {fileID: 8018303531601771809, guid: c9b91e6aad53ae345899643e2da1f053, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2040,7 +2040,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9181438793241064317, guid: 9465e1a7b98c69e469d50e9c16017f7a, type: 3}
       propertyPath: m_Name
-      value: Initiative
+      value: Patience
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

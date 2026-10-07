@@ -143,7 +143,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 10
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f1cda1e41f423ce4fb2d2f0704a541a6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_sharedMaterial: {fileID: -3825852989030664849, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -236,6 +236,14 @@ MonoBehaviour:
   BackSprite: {fileID: 0}
   moveSpeed: 3
   moveRotPivot: {fileID: 0}
+  moveSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
 --- !u!1 &8231311368654584622
 GameObject:
   m_ObjectHideFlags: 0

@@ -139,6 +139,18 @@ PrefabInstance:
       propertyPath: agent
       value: 
       objectReference: {fileID: 8027675670264089002}
+    - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.854
+      objectReference: {fileID: 0}
+    - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.017
+      objectReference: {fileID: 0}
+    - target: {fileID: 135246425737699811, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.643
+      objectReference: {fileID: 0}
     - target: {fileID: 187464917842316421, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: showPos
       value: 
@@ -351,6 +363,14 @@ PrefabInstance:
       propertyPath: showPos
       value: 
       objectReference: {fileID: 69537471204122683}
+    - target: {fileID: 5237211063044368490, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
+    - target: {fileID: 5237211063044368490, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5445107278709936216, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.032
@@ -379,6 +399,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.06499994
       objectReference: {fileID: 0}
+    - target: {fileID: 5915423465554976361, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_fontSize
+      value: 54.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6084749917034464071, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.032
@@ -403,6 +427,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.748
       objectReference: {fileID: 0}
+    - target: {fileID: 7217276046611179115, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
     - target: {fileID: 7317887023097403063, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: agent
       value: 
@@ -415,6 +443,10 @@ PrefabInstance:
       propertyPath: agent
       value: 
       objectReference: {fileID: 8027675670264089002}
+    - target: {fileID: 8927380466608759828, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_fontSize
+      value: 66.15
+      objectReference: {fileID: 0}
     - target: {fileID: 9177347137429508955, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: agent
       value: 
@@ -478,6 +510,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   maxMana: 8
   useCardSpeed: 4
   Hand: {fileID: 2336655914420305033}
@@ -489,13 +522,14 @@ MonoBehaviour:
   ArcanaBagTxt: {fileID: 6236507446485428542}
   AddedArcanaTxtYOffset: 0
   arcana: 0
-  manaBustSFX:
-    clip: {fileID: 8300000, guid: d6810e84a4837cb45b11db34f01f9c93, type: 3}
+  manaBurnoutSFX:
+    clip: {fileID: 0}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   hoverUISFX:
     clip: {fileID: 8300000, guid: edf599548017b924fbb45046c11be953, type: 3}
     volume: 1
@@ -503,6 +537,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 1
+    isLooping: 0
   buyPowerSFX:
     clip: {fileID: 8300000, guid: 4c27c7827b5a6904892efeb2898fd48c, type: 3}
     volume: 1
@@ -510,6 +545,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 1
+    isLooping: 0
   getArcanaSFX:
     clip: {fileID: 8300000, guid: 7122c3ed33b39484faa9217551ddfacc, type: 3}
     volume: 1
@@ -517,6 +553,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   matchSourceSFX:
     clip: {fileID: 8300000, guid: 5fcc8af7eca68244a94899141eab18a8, type: 3}
     volume: 1
@@ -524,6 +561,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   WinSFX:
     clip: {fileID: 8300000, guid: e7ee6b647ca8f8741be2295d8e630c42, type: 3}
     volume: 1
@@ -531,6 +569,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   LoseSFX:
     clip: {fileID: 0}
     volume: 1
@@ -538,6 +577,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   UsePowerSFX:
     clip: {fileID: 8300000, guid: d75f59d4fc925c645ad5c6f6029470ea, type: 3}
     volume: 1
@@ -545,6 +585,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   CardMovePreview: {fileID: 0}
   cardPosDifference: {x: 0.2, y: 0, z: 0.005}
   powerPanelsPoses:

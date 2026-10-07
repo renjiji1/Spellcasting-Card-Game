@@ -482,6 +482,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 5237211063044368490, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190080
+      objectReference: {fileID: 0}
     - target: {fileID: 5445107278709936216, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1
@@ -646,6 +650,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   maxMana: 8
   useCardSpeed: 5
   Hand: {fileID: 2377273794550827063}
@@ -657,13 +662,14 @@ MonoBehaviour:
   ArcanaBagTxt: {fileID: 6204900073261620608}
   AddedArcanaTxtYOffset: 0
   arcana: 0
-  manaBustSFX:
+  manaBurnoutSFX:
     clip: {fileID: 0}
     volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   hoverUISFX:
     clip: {fileID: 0}
     volume: 1
@@ -671,6 +677,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   buyPowerSFX:
     clip: {fileID: 0}
     volume: 1
@@ -678,6 +685,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   getArcanaSFX:
     clip: {fileID: 0}
     volume: 1
@@ -685,6 +693,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   matchSourceSFX:
     clip: {fileID: 0}
     volume: 1
@@ -692,6 +701,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   WinSFX:
     clip: {fileID: 0}
     volume: 1
@@ -699,6 +709,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   LoseSFX:
     clip: {fileID: 0}
     volume: 1
@@ -706,6 +717,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   UsePowerSFX:
     clip: {fileID: 8300000, guid: d75f59d4fc925c645ad5c6f6029470ea, type: 3}
     volume: 1
@@ -713,6 +725,7 @@ MonoBehaviour:
     startTime: 0
     endTime: Infinity
     useRealTimeSeconds: 0
+    isLooping: 0
   waitToChooseBehavior: 0.5
   waitAfterActivatingPower: 1
   cardInitialDistFromCam: 1.4
@@ -722,6 +735,7 @@ MonoBehaviour:
   gamePlanRatingLowCardThreshold: 5
   propOfLowCardsForBurnoutGamePlan: 0.7
   playerManaLeftMaxEffectOnGamePlan: 0.2
+  manaLeftEffectOnGamePlan: 0.3
   delayBetweenActivateAndUsePower: 0.5
   difficulty: 4
   ChanceToChooseCorrectSource:
