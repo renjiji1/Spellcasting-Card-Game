@@ -42,7 +42,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject RedrawTxt;
     [SerializeField] public GameObject SupremeCardSwapTxt;
     [SerializeField] public GameObject MimicryTxt;
-    [SerializeField] GameObject ManaBustTxt;
+    [SerializeField] GameObject ManaBurnoutTxt;
     [Header("Round")]
     [SerializeField] float returnEnemyWonCardsDelay = .2f;
     [SerializeField] float delayBetweenWonCardsReturnToDeck = .2f;
@@ -58,8 +58,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] float delayBeforeAddingPoints = .3f;
     int playerDamageDone = 0;
     int enemyDamageDone = 0;
-    bool manaBust = false;
-    [NonSerialized] public Agent agentForceInitiative = null;
+    bool manaBurnout = false;
+    [NonSerialized] public Agent agentForcePatience = null;
     [NonSerialized] public Agent agentDominate = null;
     [NonSerialized] public bool mimicryActive = false;
     [SerializeField] public TMP_Text PowerNameTxt;
@@ -262,15 +262,15 @@ public class GameManager : MonoBehaviour
         playerStreak = playerWon ? playerStreak + 1 : 0;
         enemyStreak = playerWon ? 0 : enemyStreak + 1;
 
-        //Adrenaline Bonus
-        if(player.adrenalineActive && agentThatWon == player)
+        //Surge Bonus
+        if(player.surgeActive && agentThatWon == player)
         {
-            yield return AddAdrenalineBonus(player, damageDealt, PlayerDamageBonusTxt);
+            yield return AddSurgeBonus(player, damageDealt, PlayerDamageBonusTxt);
             damageDealt *= 2;
         }
-        if(AIEnemy.adrenalineActive && agentThatWon == AIEnemy)
+        if(AIEnemy.surgeActive && agentThatWon == AIEnemy)
         {
-            yield return AddAdrenalineBonus(AIEnemy, damageDealt, EnemyDamageBonusTxt);
+            yield return AddSurgeBonus(AIEnemy, damageDealt, EnemyDamageBonusTxt);
             damageDealt *= 2;
         }
 
@@ -334,12 +334,12 @@ public class GameManager : MonoBehaviour
 
         if(playerWon)
         {
-            AIEnemy.adrenalineActive = false;
+            AIEnemy.surgeActive = false;
             AIEnemy.envigorateActive = false;
             player.UseMana();
             AIEnemy.UseMana(win: false);
         } else {
-            player.adrenalineActive = false;
+            player.surgeActive = false;
             player.envigorateActive = false;
             AIEnemy.UseMana();
             player.UseMana(win: false);
@@ -352,18 +352,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(AIEnemy.AddArcana(finishedFn: () => {arcanaAdded++;}));
         yield return new WaitUntil(() => arcanaAdded >= 2);
 
-        //Mana Bust
+        //Mana Burnout
         if(player.mana < 0)
         {
-            yield return ReturnWonCardsOnManaBust(player);
+            yield return ReturnWonCardsOnManaBurnout(player);
         }
         if(AIEnemy.mana < 0)
         {
-            yield return ReturnWonCardsOnManaBust(AIEnemy);
+            yield return ReturnWonCardsOnManaBurnout(AIEnemy);
         }
         CardClashFinished.Invoke();
         
-        if(currentDuelNum >= maxDuels || manaBust)
+        if(currentDuelNum >= maxDuels || manaBurnout)
         {
             StartCoroutine(EndRound());
         } else
@@ -573,14 +573,14 @@ public class GameManager : MonoBehaviour
         StreakTxt.SetActive(false);
         yield return new WaitForSeconds(afterDamageBonusDelay);
     }
-    IEnumerator AddAdrenalineBonus(Agent agent, int damageDealt, GameObject AdrenalineBonusTxt)
+    IEnumerator AddSurgeBonus(Agent agent, int damageDealt, GameObject SurgeBonusTxt)
     {
         int bonusDamage = damageDealt;
-        AdrenalineBonusTxt.GetComponent<TMP_Text>().text = "Surge x2";
-        AdrenalineBonusTxt.SetActive(true);
+        SurgeBonusTxt.GetComponent<TMP_Text>().text = "Surge x2";
+        SurgeBonusTxt.SetActive(true);
         yield return new WaitForSeconds(damageBonusDelay);
 
-        float streakActivateAnimLength = AdrenalineBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;
+        float streakActivateAnimLength = SurgeBonusTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length - damageBonusDelay;
         GameObject CardDenomination = agent.cardBeingPlayed.transform.Find($"{agent.cardBeingPlayed.frontPath}/Denomination").gameObject;
 
         DamageNumTxt.GetComponent<Denomination>().adder = bonusDamage;
@@ -591,7 +591,7 @@ public class GameManager : MonoBehaviour
         float waitTime = streakActivateAnimLength > damageNumBonusAnimLength ? streakActivateAnimLength : damageNumBonusAnimLength;
         yield return new WaitForSeconds(waitTime);
         CardDenomination.GetComponent<Animator>().SetBool("Add", false);
-        AdrenalineBonusTxt.SetActive(false);
+        SurgeBonusTxt.SetActive(false);
     }
     IEnumerator AddSupremeCardBonus(Agent agent, int damageDealt, GameObject SupremeBonusTxt)
     {
@@ -668,15 +668,15 @@ public class GameManager : MonoBehaviour
         return MagicType.Abjuration;
     }
 
-    IEnumerator StartDuel(Agent agentWithInitiative)
+    IEnumerator StartDuel(Agent agentWithPatience)
     {
         yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing && !isChoosingSupremeCard);
         int rng = Random.Range(0, Enum.GetValues(typeof(MagicSource)).Length);
         SupremeSource = (MagicSource)rng;
-        agentWithInitiative = agentForceInitiative == null ? agentWithInitiative : agentForceInitiative;
-        agentForceInitiative = null;
-        currentPlayer = agentWithInitiative.gameObject;
-        agentWithInitiative.GetComponent<Agent>().StartTurn();
+        agentWithPatience = agentForcePatience == null ? agentWithPatience : agentForcePatience;
+        agentForcePatience = null;
+        currentPlayer = agentWithPatience.gameObject;
+        agentWithPatience.GetComponent<Agent>().StartTurn();
     }
     void StartRound()
     {
@@ -698,11 +698,11 @@ public class GameManager : MonoBehaviour
     {
         MusicPlayer.instance.FadeOut(0, 1);
         Agent winningAgent = playerDamageDone >= enemyDamageDone ? player : AIEnemy;
-        if(!manaBust)
+        if(!manaBurnout)
         {
             yield return ReturnWonCardsToDeck();
         }
-        manaBust = false;
+        manaBurnout = false;
         round++;
         turn = 0;
         currentDuelNum = 0;
@@ -749,17 +749,17 @@ public class GameManager : MonoBehaviour
         WinsTxt.GetComponent<Animator>().SetBool("UIAdd", false);
         EndGameButtons.SetActive(true);
     }
-    IEnumerator ReturnWonCardsOnManaBust(Agent agentThatBust)
+    IEnumerator ReturnWonCardsOnManaBurnout(Agent agentThatBurnout)
     {
-        SoundManager.instance.Play(player.manaBustSFX);
+        SoundManager.instance.Play(player.manaBurnoutSFX);
         MusicPlayer.instance.FadeOut(0);
-        //Activate Mana Bust Txt
-        ManaBustTxt.GetComponent<TMP_Text>().color = agentThatBust == player ? Color.red : Color.blue;
-        ManaBustTxt.SetActive(true);
-        float manaBustAnimLength = ManaBustTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length;
+        //Activate Mana Burnout Txt
+        ManaBurnoutTxt.GetComponent<TMP_Text>().color = agentThatBurnout == player ? Color.red : Color.blue;
+        ManaBurnoutTxt.SetActive(true);
+        float manaBurnoutAnimLength = ManaBurnoutTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length;
         
-        yield return new WaitForSeconds(manaBustAnimLength);
-        ManaBustTxt.SetActive(false);
+        yield return new WaitForSeconds(manaBurnoutAnimLength);
+        ManaBurnoutTxt.SetActive(false);
 
         //Return the player and enemy's hand to deck
         List<Card> tmpPlayerHand = new List<Card>(player.HandOfCards);
@@ -781,22 +781,22 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(damageAddedToPointsDelay);
         
         //Return WonCards To Deck
-        GameObject damageDealtTxt = agentThatBust == player ? EnemyDamageDealtTxt : PlayerDamageDealtTxt;
+        GameObject damageDealtTxt = agentThatBurnout == player ? EnemyDamageDealtTxt : PlayerDamageDealtTxt;
         damageDealtTxt.SetActive(true);
         damageDealtTxt.GetComponent<TMP_Text>().text = "0";
         int totalDamageDealt = 0;
         yield return CountWonCards(player, damageDealtTxt, PlayerCardsWonTransform, (dmg) => totalDamageDealt += dmg);
         yield return CountWonCards(AIEnemy, damageDealtTxt, EnemyCardsWonTransform, (dmg) => totalDamageDealt += dmg);
-        Agent agentThatDidntBust = agentThatBust == player ? AIEnemy : player;
-        damageDealtTxt.transform.parent.GetComponent<Entity>().StartMoving(agentThatDidntBust.DamageNumTxt.transform.position, agentThatDidntBust.DamageNumTxt.transform.rotation, useLocalRot: false, fn: () =>
+        Agent agentThatDidntBurnout = agentThatBurnout == player ? AIEnemy : player;
+        damageDealtTxt.transform.parent.GetComponent<Entity>().StartMoving(agentThatDidntBurnout.DamageNumTxt.transform.position, agentThatDidntBurnout.DamageNumTxt.transform.rotation, useLocalRot: false, fn: () =>
         {
             damageDealtTxt.SetActive(false);
         });
         yield return new WaitUntil(() => !damageDealtTxt.activeSelf);
         yield return new WaitForSeconds(delayBeforeAddingPoints);
-        agentThatDidntBust.AddPoints(totalDamageDealt);
+        agentThatDidntBurnout.AddPoints(totalDamageDealt);
         yield return new WaitForSeconds(damageAddedToPointsDelay);
-        manaBust = true;
+        manaBurnout = true;
     }
     IEnumerator ReturnWonCardsToDeck()
     {

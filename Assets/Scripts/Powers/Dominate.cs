@@ -15,7 +15,7 @@ public class Dominate : Power
             gameManager.agentDominate = agent;
         } else
         {
-            StartCoroutine(ShowCantUsePowerTxt("Opponent Already Used Initiative"));
+            StartCoroutine(ShowCantUsePowerTxt("Opponent Already Used Patience"));
         }
     }  
 }

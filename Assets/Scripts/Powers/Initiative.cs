@@ -5,14 +5,14 @@ using UnityEngine.InputSystem;
 using System;
 using TMPro;
 
-public class Initiative : Power
+public class Patience : Power
 {
     public override void OnSelect()
     {
-        if(gameManager.agentForceInitiative == null)
+        if(gameManager.agentForcePatience == null)
         {
             base.OnSelect();
-            gameManager.agentForceInitiative = agent == player ? AIEnemy : player;
+            gameManager.agentForcePatience = agent == player ? AIEnemy : player;
         } else
         {
             StartCoroutine(ShowCantUsePowerTxt("Opponent Already Used Patience"));

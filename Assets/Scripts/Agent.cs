@@ -16,7 +16,7 @@ public class Agent : Entity
     [NonSerialized] public bool canRedraw = false;
     [NonSerialized] public bool canSupremeCardSwap = false;
     [NonSerialized] public bool envigorateActive = false;
-    [NonSerialized] public bool adrenalineActive = false;
+    [NonSerialized] public bool surgeActive = false;
     [NonSerialized] public int points = 0;
     [NonSerialized] public int acculumatedDamagePerRound = 0;
     [SerializeField] public int maxMana = 10;
@@ -46,7 +46,7 @@ public class Agent : Entity
     protected bool cardMatchesSupremeSource = false;
     [NonSerialized] public bool hasUsedPowerThisTurn = false;
     [Header("SFX")]
-    [SerializeField] public SFX manaBustSFX;
+    [SerializeField] public SFX manaBurnoutSFX;
     [SerializeField] public SFX hoverUISFX;
     [SerializeField] public SFX buyPowerSFX;
     [SerializeField] public SFX getArcanaSFX;
@@ -92,7 +92,7 @@ public class Agent : Entity
             ManaTxt.text = "" + manaShown;
             ManaCrystalFill.transform.localScale = new Vector3((float)manaShown/(float)maxMana * manaCrystalFillOgScale.x, (float)manaShown/(float)maxMana * manaCrystalFillOgScale.y, ManaCrystalFill.transform.localScale.z);
         }
-        adrenalineActive = false;
+        surgeActive = false;
         envigorateActive = false;
         manaLossOnLose = 0;
         manaLossOnWin = 1;

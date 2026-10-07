@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 using System;
 using TMPro;
 
-public class Adrenaline : Power
+public class Surge : Power
 {
     public static int manaLossOnLose = 1;
     public static int manaLossOnWin = 1;
@@ -14,7 +14,7 @@ public class Adrenaline : Power
         if(gameManager.turn == 0)
         {
             base.OnSelect();
-            agent.adrenalineActive = true;
+            agent.surgeActive = true;
             agent.manaLossOnLose = manaLossOnLose;
             agent.manaLossOnWin = manaLossOnWin;
         } else
