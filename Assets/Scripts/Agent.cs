@@ -39,6 +39,7 @@ public class Agent : Entity
     [SerializeField] protected TMP_Text ManaTxt;
     [NonSerialized] public List<Power> powers = new List<Power>();
     [SerializeField] protected GameObject AddedArcanaTxt;
+    [SerializeField] protected GameObject ArcanaCrystal;
     [SerializeField] protected TMP_Text ArcanaBagTxt;
     [SerializeField] float AddedArcanaTxtYOffset = .5f;
     [SerializeField] protected int arcana = 0;

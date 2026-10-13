@@ -21,6 +21,8 @@ public class Player : Agent
     [SerializeField] Transform[] powerPanelsPoses;
     [SerializeField] GameObject Shop;
     [SerializeField] TMP_Text ShopArcanaTxt;
+    Sprite ArcanaCrystalOgSprite;
+    [SerializeField] Sprite ArcanaCrystalHighlightedSprite;
     GameObject highlightedPowerPanel;
     float ogMusicVolume = 1;
     public override void Start()
@@ -28,6 +30,7 @@ public class Player : Agent
         base.Start();
         ShopInput = InputSystem.actions.FindAction("Shop");
         OnArcanaChanged.AddListener((arcana) => {ShopArcanaTxt.text = ""+arcana;});
+        ArcanaCrystalOgSprite = ArcanaCrystal.GetComponent<SpriteRenderer>().sprite;
     }
 
     protected override void Update()
@@ -36,6 +39,7 @@ public class Player : Agent
         UpdateShop();
         if(RunUpdate())
         {
+            OnHoverOverArcanaCrystal();
             if(isAgentTurn)
             {
                 foreach(Card card in HandOfCards)
@@ -145,6 +149,35 @@ public class Player : Agent
             orderedHandOfCards[i].HandTransform.localPosition = currentPos;
             currentPos += new Vector3(-cardPosDifference.x, cardPosDifference.y, cardPosDifference.z);
             orderedHandOfCards[i].StartMoving(orderedHandOfCards[i].HandTransform.position);
+        }
+    }
+    
+
+    public void OnHoverOverArcanaCrystal()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit))
+        {
+            if(hit.collider == ArcanaCrystal.GetComponent<Collider>())
+            {
+                //hover enter
+                ArcanaCrystal.GetComponent<SpriteRenderer>().sprite = ArcanaCrystalHighlightedSprite;
+                if (selectInput.WasPressedThisFrame())
+                {
+                    //on select
+                    ArcanaCrystal.GetComponent<SpriteRenderer>().sprite = ArcanaCrystalOgSprite;
+                    OpenShop();
+                } 
+            } else 
+            {
+                //hover exit
+                ArcanaCrystal.GetComponent<SpriteRenderer>().sprite = ArcanaCrystalOgSprite;
+            }
+        } else
+        {
+            //hover exit
+            ArcanaCrystal.GetComponent<SpriteRenderer>().sprite = ArcanaCrystalOgSprite;
         }
     }
 }

@@ -133,7 +133,7 @@ public class AI : Agent
         agentRatingsOverThreshold += playerManaLeftMaxEffectOnGamePlan * 2 * ((float)(player.maxMana - player.mana) / (float)player.maxMana - 0.5f);
         agentRatingsOverThreshold += manaLeftEffectOnGamePlan * 2 * ((float)mana / (float)maxMana - 0.5f);
         float gamePlanRatingThresh = propOfLowCardsForBurnoutGamePlan * cardRatings.Length;
-        if(agentRatingsOverThreshold > gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum > player.mana)
+        if(agentRatingsOverThreshold < gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum > player.mana)
         {
             currentGamePlan = GamePlan.MaxDamage;
         } else
