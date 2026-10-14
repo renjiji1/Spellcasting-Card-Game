@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
-using Microsoft.Unity.VisualStudio.Editor;
 
 public class MusicPlayer : MonoBehaviour
 {
@@ -80,7 +79,7 @@ public class MusicPlayer : MonoBehaviour
         if(sfx.clip != null && (source.clip != sfx.clip || restartSong))
         {
             if(fadeOut) {FadeOut(fadeSpeed: fadeSpeedOnSwitchTheme);} else {source.volume = 0;}
-            yield return new WaitUntil(() => fadeTimer < 0);
+            yield return new WaitUntil(() => fadeTimer < 0 || !fadeOut);
             float time = source.time;
             source.clip = sfx.clip;
             source.pitch = sfx.pitch;

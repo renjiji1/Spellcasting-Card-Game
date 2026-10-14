@@ -8,7 +8,6 @@ using UnityEngine.InputSystem;
 using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
-using Microsoft.Unity.VisualStudio.Editor;
 
 public class GameManager : MonoBehaviour
 {
