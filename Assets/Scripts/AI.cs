@@ -208,14 +208,14 @@ public class AI : Agent
         float maxProb = probToActivateEachPower.Max();
         float unoptimalProbSum = 1 - ChanceToPlayOptimally[(int)difficulty];
         float[] powerPickProbabilities = new float[probToActivateEachPower.Length];
-        float rankDiffSum = 0;
+        float rankSum = 0;
         for(int i = 0; i < probToActivateEachPower.Length; i++)
         {
             if(probToActivateEachPower[i] == maxProb)
             {
                 continue;
             }
-            rankDiffSum += Mathf.Abs(probToActivateEachPower[i] - maxProb);
+            rankSum += probToActivateEachPower[i];
         }
         for(int i = 0; i < probToActivateEachPower.Length; i++)
         {
@@ -224,16 +224,11 @@ public class AI : Agent
                 powerPickProbabilities[i] = ChanceToPlayOptimally[(int)difficulty];
                 continue;
             }
-            if(rankDiffSum != 0)
+            if(rankSum != 0)
             {
-                powerPickProbabilities[i] = Mathf.Abs(probToActivateEachPower[i] - maxProb) / rankDiffSum * unoptimalProbSum;
+                powerPickProbabilities[i] = maxProb / rankSum * unoptimalProbSum;
             }
         }
-        foreach(float prob in probToActivateEachPower)
-        {
-            Debug.Log(prob);
-        }
-        Debug.Log(powerPickProbabilities.Sum());
         int rngPower = Random.Range(0, randomRange);
         float probSum = 0;
         for(int i = 0; i < probToActivateEachPower.Length; i++)

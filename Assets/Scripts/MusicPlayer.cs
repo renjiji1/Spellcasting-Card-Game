@@ -28,6 +28,7 @@ public class MusicPlayer : MonoBehaviour
     float startingVolume;
     float endingVolume;
     [SerializeField] float fadeSpeed = 5;
+    [SerializeField] float fadeSpeedOnSwitchTheme = 1;
     float currentFadeSpeed;
     float fadeTimer = -1;
     bool fadeUseUnscaledTime = false;
@@ -78,13 +79,13 @@ public class MusicPlayer : MonoBehaviour
         this.playBattleThemeUntilRoundEnd = playBattleThemeUntilRoundEnd;
         if(sfx.clip != null && (source.clip != sfx.clip || restartSong))
         {
-            if(fadeOut) {FadeOut(fadeSpeed: fadeSpeed);} else {source.volume = 0;}
+            if(fadeOut) {FadeOut(fadeSpeed: fadeSpeedOnSwitchTheme);} else {source.volume = 0;}
             yield return new WaitUntil(() => fadeTimer < 0);
             float time = source.time;
             source.clip = sfx.clip;
             source.pitch = sfx.pitch;
             source.Play((ulong)time);
-            FadeIn(sfx.volume, fadeSpeed: fadeSpeed);
+            FadeIn(sfx.volume, fadeSpeed: fadeSpeedOnSwitchTheme);
             if(!playBattleThemeUntilRoundEnd && sfx != AmbientTheme)
             {
                 StartCoroutine(WaitToSetAmbientMusic(battleThemePlayDuration)); 
