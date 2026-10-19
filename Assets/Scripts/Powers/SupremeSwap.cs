@@ -24,7 +24,7 @@ public class Dictate : Power
         {
             cardsInPosition++;
             card.isBeingSwapped = false;
-            gameManager.SupremeCard = card;
+            gameManager.Player.ChangeSupremeCard(card);;
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
         });
         currentSupremeCard.StartMoving(prevCardPos, prevCardRot, fn: () =>

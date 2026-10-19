@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
     int enemyDamageDone = 0;
     bool manaBurnout = false;
     [NonSerialized] public Agent agentForcePatience = null;
-    [NonSerialized] public Agent agentDominate = null;
+    [NonSerialized] public bool reversoActive = false;
     [NonSerialized] public bool mimicryActive = false;
     [SerializeField] public TMP_Text PowerNameTxt;
     [Header("Supreme Card")]
@@ -101,6 +101,10 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public int playerStreak = 0;
     [NonSerialized] public int enemyStreak = 0;
     [SerializeField] SFX enterCardClashSFX;
+    [SerializeField] SFX ClashWord;
+    List<AudioClip> allDivineWords = new List<AudioClip>();
+    List<AudioClip> allPrimalWords = new List<AudioClip>();
+    List<AudioClip> allOccultWords = new List<AudioClip>();
 
     [Header("Card Clash Animations")]
     [SerializeField] GameObject PrimalSlashEffect;
@@ -144,6 +148,15 @@ public class GameManager : MonoBehaviour
             case 4:
                 AIEnemy = LichEnemy.GetComponent<AI>();
                 break;
+        }
+        foreach(Transform child in Deck.transform)
+        {
+            if(child.GetComponent<Card>() != null)
+            {
+                allDivineWords.AddRange(child.GetComponent<Card>().DivineWords);
+                allPrimalWords.AddRange(child.GetComponent<Card>().PrimalWords);
+                allOccultWords.AddRange(child.GetComponent<Card>().OccultWords);
+            }
         }
         AIEnemy.gameObject.SetActive(true);
         cam = Camera.main.GetComponent<Camera>();
@@ -200,17 +213,17 @@ public class GameManager : MonoBehaviour
 
         // Ro Sham Bo Bonus
         int roShamBoWinner = RoShamBoWinner(player.cardBeingPlayed.type, AIEnemy.cardBeingPlayed.type);
-        if((roShamBoWinner == 1 && agentDominate == null) || agentDominate == player)
+        if((roShamBoWinner == 1 && !reversoActive) || (roShamBoWinner == 2 && reversoActive))
         {
             yield return AddRoShamBoBonus(player, PlayerDenominationBonusTxt);
             playerDenominationAdder += RoShamBoWinnerDenominationBonus;
         }
-        if((roShamBoWinner == 2 && agentDominate == null) || agentDominate == AIEnemy)
+        if((roShamBoWinner == 2 && !reversoActive) || (roShamBoWinner == 1 && reversoActive))
         {
             yield return AddRoShamBoBonus(AIEnemy, EnemyDenominationBonusTxt);
             enemyDenominationAdder += RoShamBoWinnerDenominationBonus;
         }
-        agentDominate = null;
+        reversoActive = false;
 
         //Mimicry turn card to 0
         if(mimicryActive)
@@ -459,7 +472,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator AddRoShamBoBonus(Agent agent, GameObject DenominationBonusTxt)
     {
-        DenominationBonusTxt.GetComponent<TMP_Text>().text = agentDominate == null ? "Advantage" : "Dominate";
+        DenominationBonusTxt.GetComponent<TMP_Text>().text = reversoActive == false ? "Advantage" : "Reverso";
         DenominationBonusTxt.SetActive(true);
         yield return new WaitForSeconds(damageBonusDelay);
 
@@ -537,12 +550,12 @@ public class GameManager : MonoBehaviour
         {
             CardDenomination = player.cardBeingPlayed.transform.Find($"{player.cardBeingPlayed.frontPath}/Denomination").gameObject;
             CardClashTieEnemyTypeProjection.SetActive(false);
-            player.cardBeingPlayed.denomination += RoShamBoWinnerDenominationBonus;
+            player.cardBeingPlayed.denomination += cardClashTieWinnerBonus;
         } else
         {
             CardDenomination = AIEnemy.cardBeingPlayed.transform.Find($"{AIEnemy.cardBeingPlayed.frontPath}/Denomination").gameObject;
             CardClashTiePlayerTypeProjection.SetActive(false);
-            AIEnemy.cardBeingPlayed.denomination += RoShamBoWinnerDenominationBonus;
+            AIEnemy.cardBeingPlayed.denomination += cardClashTieWinnerBonus;
         }
         CardDenomination.GetComponent<Denomination>().adder = cardClashTieWinnerBonus;
         CardDenomination.GetComponent<Animator>().SetBool("Add", true);
@@ -665,11 +678,31 @@ public class GameManager : MonoBehaviour
         return MagicType.Abjuration;
     }
 
-    IEnumerator StartDuel(Agent agentWithPatience)
+    public IEnumerator StartDuel(Agent agentWithPatience)
     {
         yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing && !isChoosingSupremeCard);
         int rng = Random.Range(0, Enum.GetValues(typeof(MagicSource)).Length);
         SupremeSource = (MagicSource)rng;
+        float ogVolume = MusicPlayer.instance.GetComponent<AudioSource>().volume;
+        MusicPlayer.instance.FadeOut();
+        switch(SupremeSource)
+        {
+            case MagicSource.Divine:
+                int rngDivine = Random.Range(0, allDivineWords.Count);
+                ClashWord.clip = allDivineWords[rng];
+                break;
+            case MagicSource.Primal:
+                int rngPrimal = Random.Range(0, allPrimalWords.Count);
+                ClashWord.clip = allPrimalWords[rng];
+                break;
+            case MagicSource.Arcane:
+                int rngOccult = Random.Range(0, allOccultWords.Count);
+                ClashWord.clip = allOccultWords[rng];
+                break;
+        }
+        SoundManager.instance.Play(ClashWord);
+        yield return new WaitForSeconds(SoundManager.GetSFXLength(ClashWord));
+        MusicPlayer.instance.FadeIn(ogVolume);
         agentWithPatience = agentForcePatience == null ? agentWithPatience : agentForcePatience;
         agentForcePatience = null;
         currentPlayer = agentWithPatience.gameObject;
@@ -681,7 +714,6 @@ public class GameManager : MonoBehaviour
         MusicPlayer.instance.PlayAmbientTheme(.2f, false);
         StartCoroutine(Deck.GetComponent<Deck>().StartShuffle());
         StartCoroutine(ShowRoundTxt());
-        StartCoroutine(StartDuel(player));
     }
     IEnumerator ShowRoundTxt()
     {

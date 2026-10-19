@@ -529,7 +529,7 @@ MonoBehaviour:
   AddedArcanaTxtYOffset: 0
   arcana: 0
   manaBurnoutSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d6810e84a4837cb45b11db34f01f9c93, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
@@ -577,7 +577,7 @@ MonoBehaviour:
     useRealTimeSeconds: 0
     isLooping: 0
   LoseSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 60ce4fe80b237b4499eaaaf87e83ca28, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
@@ -601,6 +601,7 @@ MonoBehaviour:
   Shop: {fileID: 0}
   ShopArcanaTxt: {fileID: 0}
   ArcanaCrystalHighlightedSprite: {fileID: 21300000, guid: 99b065aa677ff62409df7baadc3d9113, type: 3}
+  SupremeCardPreview: {fileID: 0}
 --- !u!4 &3501867937281122937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2157726780328701779, guid: d96fc794349e697429e7698def7b2ac4, type: 3}

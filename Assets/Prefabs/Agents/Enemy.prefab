@@ -194,6 +194,10 @@ PrefabInstance:
       propertyPath: agent
       value: 
       objectReference: {fileID: 5747029250946383795}
+    - target: {fileID: 27379644616247947, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: nameTxt
+      value: Reverso
+      objectReference: {fileID: 0}
     - target: {fileID: 117483148113228526, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_LocalScale.x
       value: 0
@@ -554,6 +558,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -0.022
       objectReference: {fileID: 0}
+    - target: {fileID: 6787474389026354441, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
+      propertyPath: m_Name
+      value: Reverso
+      objectReference: {fileID: 0}
     - target: {fileID: 6789839077691167713, guid: d96fc794349e697429e7698def7b2ac4, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -659,11 +667,12 @@ MonoBehaviour:
   PowersTransform: {fileID: 4636051425405875211}
   ManaTxt: {fileID: 7302051570679894526}
   AddedArcanaTxt: {fileID: 8341242839483361909}
+  ArcanaCrystal: {fileID: 0}
   ArcanaBagTxt: {fileID: 6204900073261620608}
   AddedArcanaTxtYOffset: 0
   arcana: 0
   manaBurnoutSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: d6810e84a4837cb45b11db34f01f9c93, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
@@ -671,7 +680,7 @@ MonoBehaviour:
     useRealTimeSeconds: 0
     isLooping: 0
   hoverUISFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7e3e0d9ede160a14798bafe7ad1d4943, type: 3}
     volume: 1
     pitch: 1
     startTime: 0

@@ -4,8 +4,7 @@ using System.Collections;
 using UnityEngine.InputSystem;
 using System;
 using TMPro;
-using Unity.VisualScripting;
-
+using Random = UnityEngine.Random;
 public enum MagicType {Illusion, Abjuration, Evocation};
 public class Card : Entity
 {
@@ -30,9 +29,10 @@ public class Card : Entity
     [NonSerialized] public Vector3 ogHandPos; 
     Vector3 highlightMoveOffset = new Vector3(0, .1f, .05f);
     [Header("Words")]
-    [SerializeField] SFX DivineWord;
-    [SerializeField] SFX PrimalWord;
-    [SerializeField] SFX OccultWord;
+    [SerializeField] SFX WordSFX;
+    [SerializeField] public AudioClip[] DivineWords;
+    [SerializeField] public AudioClip[] PrimalWords;
+    [SerializeField] public AudioClip[] OccultWords;
 
     [Header("Card Clash")]
     [SerializeField] GameObject DivineCardClashEffect;
@@ -173,13 +173,19 @@ public class Card : Entity
         switch(source)
         {
             case MagicSource.Arcane:
-                return OccultWord;
+                int rng = Random.Range(0, OccultWords.Length);
+                WordSFX.clip = OccultWords[rng];
+                break;
             case MagicSource.Primal:
-                return PrimalWord;
+                int rng2 = Random.Range(0, PrimalWords.Length);
+                WordSFX.clip = PrimalWords[rng2];
+                break;
             case MagicSource.Divine:
-                return DivineWord;
+                int rng3 = Random.Range(0, DivineWords.Length);
+                WordSFX.clip = DivineWords[rng3];
+                break;
         }
-        return null;
+        return WordSFX;
     }
     public IEnumerator ActivateDivineCardClashEffect()
     {

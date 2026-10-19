@@ -56,9 +56,9 @@ public class MusicPlayer : MonoBehaviour
     {
         if(fadeTimer >= 0)
         {
-            source.volume = Mathf.Lerp(startingVolume, endingVolume, fadeTimer);
             float time = fadeUseUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
             fadeTimer += time * currentFadeSpeed;
+            source.volume = Mathf.Lerp(startingVolume, endingVolume, fadeTimer);
             if(fadeTimer >= 1) fadeTimer = -1;
         }
     }
@@ -78,18 +78,25 @@ public class MusicPlayer : MonoBehaviour
         this.playBattleThemeUntilRoundEnd = playBattleThemeUntilRoundEnd;
         if(sfx.clip != null && (source.clip != sfx.clip || restartSong))
         {
+            float ogVolume = sfx.volume;
+            
             if(fadeOut) {FadeOut(fadeSpeed: fadeSpeedOnSwitchTheme);} else {source.volume = 0;}
             yield return new WaitUntil(() => fadeTimer < 0 || !fadeOut);
+            Debug.Log(fadeTimer);
             float time = source.time;
             source.clip = sfx.clip;
             source.pitch = sfx.pitch;
             source.Play((ulong)time);
-            FadeIn(sfx.volume, fadeSpeed: fadeSpeedOnSwitchTheme);
+            FadeIn(ogVolume, fadeSpeed: fadeSpeedOnSwitchTheme);
             if(!playBattleThemeUntilRoundEnd && sfx != AmbientTheme)
             {
                 StartCoroutine(WaitToSetAmbientMusic(battleThemePlayDuration)); 
             }
         }
+    }
+    public void InterruptFade()
+    {
+        fadeTimer = -1;
     }
     public void FadeOut(float finalVolume = 0, float fadeSpeed = -1, bool useUnscaledTime = false, bool interruptOtherFade = true)
     {

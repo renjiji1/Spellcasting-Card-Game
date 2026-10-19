@@ -24,6 +24,7 @@ public class Player : Agent
     Sprite ArcanaCrystalOgSprite;
     [SerializeField] Sprite ArcanaCrystalHighlightedSprite;
     GameObject highlightedPowerPanel;
+    [SerializeField] GameObject SupremeCardPreview;
     float ogMusicVolume = 1;
     public override void Start()
     {
@@ -40,6 +41,7 @@ public class Player : Agent
         if(RunUpdate())
         {
             OnHoverOverArcanaCrystal();
+            OnHoverOverSupremeCard();
             if(isAgentTurn)
             {
                 foreach(Card card in HandOfCards)
@@ -128,6 +130,7 @@ public class Player : Agent
         Shop.SetActive(false);
         GameManager.paused = false;
         GameManager.ResumeGame.Invoke();
+        MusicPlayer.instance.InterruptFade();
         MusicPlayer.instance.FadeIn(ogMusicVolume, 3, true, false);
     }
     public override IEnumerator AddArcana(Action finishedFn = null)
@@ -178,6 +181,49 @@ public class Player : Agent
         {
             //hover exit
             ArcanaCrystal.GetComponent<SpriteRenderer>().sprite = ArcanaCrystalOgSprite;
+        }
+    }
+    public void OnHoverOverSupremeCard()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if(gameManager.SupremeCard != null)
+        {
+            if(Physics.Raycast(ray, out hit))
+            {
+                if(hit.collider == gameManager.SupremeCard.moveRotPivot.GetComponent<Collider>())
+                {
+                    //hover enter
+                    gameManager.SupremeCard.transform.Find($"{gameManager.SupremeCard.frontPath}/HighlightBg").gameObject.SetActive(true);
+                    SupremeCardPreview.SetActive(true);
+                } else 
+                {
+                    //hover exit
+                    gameManager.SupremeCard.transform.Find($"{gameManager.SupremeCard.frontPath}/HighlightBg").gameObject.SetActive(false);
+                    SupremeCardPreview.SetActive(false);
+                }
+            } else
+            {
+                //hover exit
+                gameManager.SupremeCard.transform.Find($"{gameManager.SupremeCard.frontPath}/HighlightBg").gameObject.SetActive(false);
+                SupremeCardPreview.SetActive(false);
+            }  
+        }
+        
+    }
+    public void ChangeSupremeCard(Card newSupremeCard)
+    {
+        SupremeCardPreview.SetActive(false);
+        if(gameManager.SupremeCard != null)
+        {
+            gameManager.SupremeCard.transform.Find($"{gameManager.SupremeCard.frontPath}/HighlightBg").gameObject.SetActive(true);
+        }
+        
+        gameManager.SupremeCard = newSupremeCard;
+
+        if(newSupremeCard != null)
+        {
+            newSupremeCard.InitializeCard(SupremeCardPreview, newSupremeCard.type, newSupremeCard.denomination, newSupremeCard.transform.Find($"{newSupremeCard.frontPath}/Background").GetComponent<SpriteRenderer>().sprite);
         }
     }
 }

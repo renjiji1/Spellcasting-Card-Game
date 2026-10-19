@@ -130,6 +130,7 @@ public class SettingsManager : MonoBehaviour
         gameObject.SetActive(false);
         GameManager.paused = false;
         GameManager.ResumeGame.Invoke();
+        MusicPlayer.instance.InterruptFade();
         MusicPlayer.instance.GetComponent<AudioSource>().volume = ogMusicVolume;
         if(ogAnimationSpeed != animationSpeed)
         {

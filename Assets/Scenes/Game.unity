@@ -192,7 +192,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 1
   m_Range: 1.2
   m_SpotAngle: 179
   m_InnerSpotAngle: 57.13532
@@ -315,6 +315,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b0f53358559aa0042a33438fc2080914, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e98be055bf0221a46a5e0482c66d9aef, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2061855451c6a014098561aa8698b877, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard5
@@ -685,8 +709,8 @@ Transform:
   m_GameObject: {fileID: 59156208}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.34, y: 0.85, z: 2.11}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 4.759, y: 0.44, z: 3.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126490625}
@@ -1324,6 +1348,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e19f80eb8005402499e5eb5fa06ec1e9, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a46baaa742aa7ac499ac6988707b159d, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0f79a402a030e794fb880e2b4d946b20, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard2
@@ -1396,6 +1444,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b7ef1fab0463c4446a67f1647c15f7a2, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 5d5c8c34230c56642a8fc5f14c396aec, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 71bdda4157d1c40488461ad6133d4f6e, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard3
@@ -1540,8 +1612,8 @@ Transform:
   m_GameObject: {fileID: 122745240}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.31, y: 0.85, z: -1.48}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: -4.641, y: 0.44, z: -0.388}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126490625}
@@ -1682,7 +1754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Denomination
   PositionInFrontOfCam: 1
   denominationAddSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6197223a2ea1d4a4da716f85795651b7, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
@@ -1756,6 +1828,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9a4d61e6bc0fe29448161fc35161dd54, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 159140ac1b419a247a126219234b6dca, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 7a15942bdba0a534fb17c21b0536c0eb, type: 3}
     - target: {fileID: 3770556042814974653, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -1914,10 +2010,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DivineEnemySlot
       objectReference: {fileID: 0}
+    - target: {fileID: 2262060238099989348, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2594060980005249164, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9bde22f9c5240024c99241ee75aa41e3, type: 3}
+    - target: {fileID: 2637371979931902535, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3634863296156479790, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.065
@@ -1966,6 +2070,58 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880927457953781895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -1977,6 +2133,26 @@ PrefabInstance:
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.r
       value: 0.6226415
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795555529226356511, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2083,6 +2259,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9bc673fd4f4c58e4f981f5cbb12a740b, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a23d381d60ca1bf438131c6ade48ac64, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 6ea4f1c36a9f562489ac02af77c441d3, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard9
@@ -2202,6 +2402,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c8617ac8e670bf14285ac6b9013d1ea0, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4ed0f1c60f7148c4f948769d5a25b4d4, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c1929f41a4806d946a1a69579e3261fb, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard2
@@ -2279,6 +2503,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: cd65cd2ce1f8a2144b96ae58104c6e51, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8d94fc70ce9132e44b0d82a991dbb35d, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9737e1975d9d10b4db2f982b6a9c56e0, type: 3}
     - target: {fileID: 3770556042814974653, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -2827,6 +3075,42 @@ PrefabInstance:
       propertyPath: denomination
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d996c779364b2b649987e0d2ffa7fcbb, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 6d913e5546d1b254ebddfea44c1b67bd, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 903d97640d3ead544a6294c43e2d4827, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f4d7e140d32ea4d409db17d39a2376cc, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e862f586de23b8345a4e6b25569c7205, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c033406d5565da947b72932dc4b819cf, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: EvocationCard10
@@ -2899,6 +3183,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 711d854403965b24093e27af37b2f6ee, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d78babc1fba354a4ebd1092294b1bcbd, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: bd1f39cd6153fa142807f3774c5284db, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard5
@@ -3086,7 +3394,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 9144336295523243199, guid: 84244fabae642ad4fb7e5e175dcad86e, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 5b3d6c1eff1d0784cab6aa54de2d907f, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -3475,6 +3783,7 @@ Transform:
   m_Children:
   - {fileID: 976470732}
   - {fileID: 1078220410}
+  - {fileID: 1431377013}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &412869049
@@ -3493,6 +3802,30 @@ PrefabInstance:
       propertyPath: Image
       value: 
       objectReference: {fileID: 21300000, guid: 0601070a566d9104e83a25efe914df0e, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b4ee55d6fd47f6489505f2a0ce47d80, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8a2c15b631c09714cb4a9a8289e86459, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a034484973637a94491e76389e68484a, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard1
@@ -3745,6 +4078,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 572a4f3253a996745903274d1268c60c, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 317831fa39f74534ca719fc259f1ae2c, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a63903544eb92d140993c391fa65e0e3, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard3
@@ -3876,15 +4233,55 @@ PrefabInstance:
     - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269246647154563895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.b
       value: 0.8748238
@@ -3900,7 +4297,19 @@ PrefabInstance:
     - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3930,6 +4339,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: ecb85d9240965394a935429d626dc3ab, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d180357d6c7e5bd4ba6721cd6674ea49, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 3c16710572cdff34f9a0bf8aef0a5001, type: 3}
     - target: {fileID: 3770556042814974653, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0
@@ -4207,6 +4640,54 @@ PrefabInstance:
       propertyPath: Image
       value: 
       objectReference: {fileID: 21300000, guid: 5c09f1634d7b7c54e984ad955cdc3294, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4f6c058d8db25314cb7f5499c4a0f89b, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a1a7b717d0acfff48a9cc7df87d52564, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b4ee55d6fd47f6489505f2a0ce47d80, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: aa41b5239db0d9246a25bfd012b3f180, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d01d226796f428143a2d144a55d96323, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8a2c15b631c09714cb4a9a8289e86459, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 079911a7ce0c10e4a8297689c1aeab0a, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: cf73126851734ea448be6defcb0a0aaa, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a034484973637a94491e76389e68484a, type: 3}
     - target: {fileID: 1969449674619324067, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -0.074
@@ -4564,7 +5045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Denomination
   PositionInFrontOfCam: 1
   denominationAddSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 6197223a2ea1d4a4da716f85795651b7, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
@@ -4638,6 +5119,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: eb23915e2f66dd54885b5f82a0e16948, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: effe9ad6e4a47af4ea627f2049cc4213, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 14266a870bab2c44ca1ee84df5cea7c7, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard6
@@ -4863,6 +5368,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d9405a75cdeffe4ca9ab7db5d9e724d, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: b156d4d7fe9a4df45b467480050af545, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d2595fde03eba94b8684052c691ed0a, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard7
@@ -4973,7 +5502,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.3
+  m_Intensity: 1
   m_Range: 1.2
   m_SpotAngle: 179
   m_InnerSpotAngle: 57.13532
@@ -5605,6 +6134,141 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
   m_PrefabInstance: {fileID: 278613413}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &868177166
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 409841246}
+    m_Modifications:
+    - target: {fileID: 51865949616359908, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_fontColor.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 51865949616359908, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 2533359615
+      objectReference: {fileID: 0}
+    - target: {fileID: 412952146495408416, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 412952146495408416, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 412952146495408416, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770556042814974653, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770556042814974653, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3770556042814974653, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_Name
+      value: SupremeCardPreview
+      objectReference: {fileID: 0}
+    - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597844819223966992, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_Color.a
+      value: 0.972549
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597844819223966992, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597844819223966992, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597844819223966992, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6597844819223966992, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.542
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.977
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.954
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9498568
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.25451347
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.17545566
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.047013234
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 27.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 23.829
+      objectReference: {fileID: 0}
+    - target: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 11.654
+      objectReference: {fileID: 0}
+    - target: {fileID: 7615705990208871967, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.454
+      objectReference: {fileID: 0}
+    - target: {fileID: 7810851290096057863, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.545
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602023408775605673, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: m_Color.a
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 8602023408775605673, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+    m_RemovedComponents:
+    - {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 4793073832816409342, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+    - {fileID: 5787798240555332579, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1431395470}
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
 --- !u!1 &868244574
 GameObject:
   m_ObjectHideFlags: 0
@@ -6155,8 +6819,8 @@ Transform:
   m_GameObject: {fileID: 920658242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.56, y: 0.85, z: 3.92}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: -5.39, y: 0.54, z: 6.17}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126490625}
@@ -6240,6 +6904,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 6beb354bbe0af574ca00318f87d6507d, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2d455403928059541b233b7c4086be61, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 50f50f30ea8c648408e5918b851e2f42, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard7
@@ -7546,10 +8234,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: DivinePlayerSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 2262060238099989348, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2594060980005249164, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9bde22f9c5240024c99241ee75aa41e3, type: 3}
+    - target: {fileID: 2637371979931902535, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3634863296156479790, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.065
@@ -7598,6 +8294,62 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269246647154563895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880927457953781895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.b
       value: 0
@@ -7609,6 +8361,26 @@ PrefabInstance:
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.r
       value: 0.6226415
+      objectReference: {fileID: 0}
+    - target: {fileID: 8795555529226356511, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9635534
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8238,6 +9010,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 900cccd0ed3420446ad38c35714265b7, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 5cca6a6d5c3d0e04baa2a02d16256fe1, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: dac358b3a4d952748a361d009584a3ce, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard6
@@ -8353,7 +9149,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 1
   m_Range: 1.2
   m_SpotAngle: 179
   m_InnerSpotAngle: 57.13532
@@ -8438,6 +9234,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 49fc59dd9c5596e4e91e6122c67d5180, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c5e0fa21f34920548acf094e9303b8db, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d65436e557eb7047b341aba880abdd8, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard4
@@ -8739,6 +9559,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1e93b1dda4aef1c45951cffd160f8005, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 51873dacc0575364d8f3bc2304608efe, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 427b11c5ade743544b6ed49e3dc7645f, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: EvocationCard6
@@ -8811,6 +9655,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8b5c3c9638dcd7c489d94079a7a3dc96, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: ee044d456dfec2a4f8153a5609fd4225, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 172c114e21e9a60439b0ab2692a6216a, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: EvocationCard4
@@ -8947,14 +9815,54 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5568628
+      objectReference: {fileID: 0}
+    - target: {fileID: 5269246647154563895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5568628
+      objectReference: {fileID: 0}
     - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5568628
+      objectReference: {fileID: 0}
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.b
       value: 0.24172305
@@ -8971,6 +9879,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5568628
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9064,7 +9984,19 @@ PrefabInstance:
     - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5269246647154563895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -9072,11 +10004,35 @@ PrefabInstance:
     - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.b
       value: 0.8748238
@@ -9092,7 +10048,19 @@ PrefabInstance:
     - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: f16d027020ac71d4f99be8ace41850a1, type: 3}
+      objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90821266
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9788,8 +10756,8 @@ Transform:
   m_GameObject: {fileID: 1326261099}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.85, z: 3.92}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 0, y: 0.54000014, z: 6.17}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126490625}
@@ -10158,8 +11126,8 @@ Transform:
   m_GameObject: {fileID: 1370753842}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.3390007, y: 0.85, z: -1.4780002}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 4.7580004, y: 0.44, z: -0.388}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126490625}
@@ -10478,6 +11446,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: db87a7c5ec8985144818c2edc40d7aa9, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e54fdfc624d74f747a476c3a963fbc4f, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f0577586efcd2fe43a38e10f84073daa, type: 3}
     - target: {fileID: 3770556042814974653, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
@@ -10777,6 +11769,197 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1221382256116628401, guid: 2464a52028da29245b98eac40cb6724c, type: 3}
   m_PrefabInstance: {fileID: 1423444464}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1431377012 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+  m_PrefabInstance: {fileID: 868177166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1431377013 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+  m_PrefabInstance: {fileID: 868177166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1431395469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1431395470}
+  - component: {fileID: 1431395472}
+  - component: {fileID: 1431395471}
+  m_Layer: 0
+  m_Name: SupremeTxt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1431395470
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431395469}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalScale: {x: 0.15, y: 0.15000002, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1431377013}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0.2474}
+  m_SizeDelta: {x: 2, y: 0.41701}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1431395471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431395469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshPro
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: SUPREME
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
+  m_sharedMaterial: {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4288938239
+  m_fontColor: {r: 1, g: 0, b: 0.6417513, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 4.15
+  m_fontSizeBase: 16
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 1
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 0
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  _SortingLayer: 0
+  _SortingLayerID: 0
+  _SortingOrder: 0
+  m_hasFontAssetChanged: 0
+  m_renderer: {fileID: 1431395472}
+  m_maskType: 0
+--- !u!23 &1431395472
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431395469}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -3825852989030664849, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1443577941
 GameObject:
   m_ObjectHideFlags: 0
@@ -11035,7 +12218,7 @@ Transform:
   m_GameObject: {fileID: 1459682313}
   serializedVersion: 2
   m_LocalRotation: {x: 0.6991836, y: 0.105557546, z: -0.105557546, w: 0.6991836}
-  m_LocalPosition: {x: -6.3673897, y: 2.689334, z: 0.056724537}
+  m_LocalPosition: {x: -11.52, y: 6.78, z: -0.193}
   m_LocalScale: {x: 9.916166, y: 1.0939068, z: 66.66667}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11067,8 +12250,8 @@ Transform:
   m_GameObject: {fileID: 1462563117}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -5.309, y: 0.85, z: 2.108}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: -4.64, y: 0.44, z: 3.2}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126490625}
@@ -11353,7 +12536,7 @@ MonoBehaviour:
   moveSpeed: 8
   moveRotPivot: {fileID: 0}
   moveSFX:
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 4753c30c2e8a90b41a9780a5f275f25c, type: 3}
     volume: 1
     pitch: 1
     startTime: 0
@@ -11399,6 +12582,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 84e1f123a66a25b47ba9ded8b574809b, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e36bfe472c9b7694680e6996263d3b57, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 065e4fe3dd91b364abfc02f4aa19f24f, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: EvocationCard8
@@ -11573,6 +12780,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 5a30039affefde042af6fc162bd4fd0c, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c7eff360481b2bd44893bc4b97bed9f1, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 0287835cf9124db49b374c56d38ac42e, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard8
@@ -11746,7 +12977,7 @@ Transform:
   m_GameObject: {fileID: 1531361513}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.153, y: 1.156, z: 0.078}
+  m_LocalPosition: {x: 1.153, y: 1.068, z: 0.078}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11810,6 +13041,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: f1d65cadb8c53ae43af7cf698eec8b0f, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 143b14cffd9e65841ae82c52c5b194e9, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 72e7e1a1baae1444db29e04b0eac753a, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: EvocationCard9
@@ -12379,8 +13634,8 @@ Transform:
   m_GameObject: {fileID: 1631939276}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.57, y: 0.85, z: 3.92}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: 5.38, y: 0.54000014, z: 6.17}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1126490625}
@@ -12536,6 +13791,30 @@ PrefabInstance:
       propertyPath: Image
       value: 
       objectReference: {fileID: 21300000, guid: 4285934c6c038564286ae2792ea63591, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a1a7b717d0acfff48a9cc7df87d52564, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d01d226796f428143a2d144a55d96323, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: cf73126851734ea448be6defcb0a0aaa, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard1
@@ -12742,6 +14021,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 4d3b68bbb914fed438366b5017decc30, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: a81227cefe7440f4a9f7e6b5fee0f0c7, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d297c40d822190b4395132dafc399d61, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard9
@@ -13021,6 +14324,42 @@ PrefabInstance:
       propertyPath: denomination
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 547336e420f972746ba84bbfa150cb46, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8de203dfacad807479e8b077b66c6d08, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 93eb6652d02ef104d9c5f48c8c8ce7fa, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 37f7685088f2c4e48b7b2d456ec10704, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: d9553b909f6d7484baed6beab05e634a, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 8078d22b897c8ca43a5018aec07dd250, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: IllusionCard10
@@ -13712,6 +15051,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2adff0c913e4a9a469a5a77ab6060355, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: aabd9fde3b17c0d4bbb2f6b695e863f9, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 1d30b96edc41588488f0fdd721cd4629, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard8
@@ -14621,16 +15984,24 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 7e3e0d9ede160a14798bafe7ad1d4943, type: 3}
     - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
       propertyPath: hoverUISFX.pitch
-      value: 2.51
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
       propertyPath: hoverUISFX.volume
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
+      propertyPath: SupremeCardPreview
+      value: 
+      objectReference: {fileID: 1431377012}
     - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
       propertyPath: buyPowerSFX.volume
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
+      propertyPath: manaBurnoutSFX.clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d6810e84a4837cb45b11db34f01f9c93, type: 3}
     - target: {fileID: 8027675670264089002, guid: 39a00bbde7215f245910279935df3291, type: 3}
       propertyPath: matchSourceSFX.clip
       value: 
@@ -14833,6 +16204,42 @@ PrefabInstance:
       propertyPath: denomination
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2722abfa26bef714ab5864809a47eb37, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 5956a53b3de8fb547ad040c02825c561, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 824627a6c4c3d6f46a53d29f3dd3a3d3, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2b202037b72177543b39f61b7e11120f, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: e755e2e3a8ad35347992dac13e6de4a9, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[1]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 24ca2e375fc581c479f7d909333f7df2, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: AbjurationCard10
@@ -15046,10 +16453,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: PrimalPlayerSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 2262060238099989348, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2594060980005249164, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 24d0cce455fdd4e4abbd06c640ddf776, type: 3}
+    - target: {fileID: 2637371979931902535, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3634863296156479790, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.065
@@ -15102,6 +16517,18 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 4932913900277856807, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5568628
+      objectReference: {fileID: 0}
     - target: {fileID: 5269246647154563895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -15110,10 +16537,38 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 5731343498134715367, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5568628
+      objectReference: {fileID: 0}
+    - target: {fileID: 5880927457953781895, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.b
+      value: 0.09019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.g
+      value: 0.29803923
+      objectReference: {fileID: 0}
+    - target: {fileID: 7043903861287247973, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5568628
+      objectReference: {fileID: 0}
     - target: {fileID: 8134816747423965636, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.b
       value: 0.24172305
@@ -15126,22 +16581,30 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.5283019
       objectReference: {fileID: 0}
+    - target: {fileID: 8795555529226356511, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: f7003a23f3ab86f41ae773172d517e35, type: 3}
     - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.09019608
       objectReference: {fileID: 0}
     - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.29803923
       objectReference: {fileID: 0}
     - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.5568628
       objectReference: {fileID: 0}
+    - target: {fileID: 9130142230337149997, guid: 06ba990a8a5446942a7d466045c94ea6, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15370,7 +16833,7 @@ MonoBehaviour:
   SupremeCardSpawnPoint: {fileID: 409841246}
   SupremeCardBonus: {fileID: 0}
   supremeCardBonusMoveDelay: 0.2
-  cardClashTieWinnerBonus: 3
+  cardClashTieWinnerBonus: 0
   cardClashTieDelay: 0.2
   cardClashTieFinishDelay: 0.6
   CardClashTiePlayerTypeProjection: {fileID: 117011580}
@@ -15397,7 +16860,15 @@ MonoBehaviour:
   afterDamageBonusDelay: 0.25
   enterCardClashSFX:
     clip: {fileID: 8300000, guid: df680c7aa634faa41bfaa5b587e70499, type: 3}
-    volume: 0.7
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  ClashWord:
+    clip: {fileID: 0}
+    volume: 1
     pitch: 1
     startTime: 0
     endTime: Infinity
@@ -15684,7 +17155,7 @@ Light:
   serializedVersion: 12
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.1
+  m_Intensity: 1
   m_Range: 1.2
   m_SpotAngle: 179
   m_InnerSpotAngle: 57.13532
@@ -16130,6 +17601,30 @@ PrefabInstance:
       propertyPath: denomination
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: DivineWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: OccultWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: PrimalWords.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'DivineWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: c5c33f33acdb2524597f2a940d968e74, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'OccultWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 29644510642d7e4499479f11ddee7582, type: 3}
+    - target: {fileID: 418244530720768795, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
+      propertyPath: 'PrimalWords.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 74c1e9ba67d30f94d85e54ca1b74c54a, type: 3}
     - target: {fileID: 4149979008702108812, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
       propertyPath: m_Name
       value: EvocationCard5

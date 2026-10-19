@@ -145,7 +145,7 @@ public class Agent : Entity
     }
     public virtual void UseCard(Card card, CardSlot slot, Action fn = null)
     {
-        cardMatchesSupremeSource = true;//gameManager.SupremeSource == slot.source;
+        cardMatchesSupremeSource = gameManager.SupremeSource == slot.source;
         cardBeingPlayed = card;
         cardSlotBeingPlayed = slot;
         card.OnDeselect();
@@ -166,7 +166,7 @@ public class Agent : Entity
         SFX sfx = card.GetArcaneWordFromSource(slot.source);
         MusicPlayer.instance.FadeOut();
         SoundManager.instance.Play(sfx);
-        yield return new WaitForSeconds(sfx.clip.length);
+        yield return new WaitForSeconds(SoundManager.GetSFXLength(sfx));
         MusicPlayer.instance.FadeIn();
         if(endTurn) EndTurn();
     }

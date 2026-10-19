@@ -197,13 +197,13 @@ public class AI : Agent
         Power redraw = PowersTransform.Find("Redraw").GetComponent<Power>();
         Power mimicry = PowersTransform.Find("Mimicry").GetComponent<Power>();
         Power dictate = PowersTransform.Find("Dictate").GetComponent<Power>();
-        Power dominate = PowersTransform.Find("Dominate").GetComponent<Power>();
+        Power reverso = PowersTransform.Find("Reverso").GetComponent<Power>();
         Power surge = PowersTransform.Find("Surge").GetComponent<Power>();
         CardRating cardRatingInfo = GetCardRatingInfo(CardToPlay, currentGamePlan, player.cardBeingPlayed);
         float[] probToActivateEachPower = new float[]
         {
             GetProbToActivatePatience(patience, cardRatingInfo), GetProbToActivateRedraw(redraw, cardRatingInfo), GetProbToActivateMimicry(mimicry, cardRatingInfo),
-            GetProbToActivateDictate(dictate, cardRatingInfo), GetProbToActivateDominate(dominate, cardRatingInfo), GetProbToActivateSurge(surge, cardRatingInfo)
+            GetProbToActivateDictate(dictate, cardRatingInfo), GetProbToActivateReverso(reverso, cardRatingInfo), GetProbToActivateSurge(surge, cardRatingInfo)
         };
         float maxProb = probToActivateEachPower.Max();
         float unoptimalProbSum = 1 - ChanceToPlayOptimally[(int)difficulty];
@@ -256,7 +256,7 @@ public class AI : Agent
                         yield return ActivateDictate(dictate);
                         break;
                     case 4:
-                        yield return ActivateDominate(dominate);
+                        yield return ActivateReverso(reverso);
                         break;
                     case 5:
                         yield return ActivateSurge(surge);
@@ -527,7 +527,7 @@ public class AI : Agent
         ChooseCardToPlay(1000);
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    float GetProbToActivateDominate(Power power, CardRating cardRatingInfo)
+    float GetProbToActivateReverso(Power power, CardRating cardRatingInfo)
     {
         return 0;
         if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage)
@@ -559,7 +559,7 @@ public class AI : Agent
             return 0;
         }
     }
-    IEnumerator ActivateDominate(Power power)
+    IEnumerator ActivateReverso(Power power)
     {
         power.BuyPower();
         yield return new WaitForSeconds(waitAfterActivatingPower);
@@ -756,12 +756,9 @@ public class AI : Agent
         int rating = card.denomination;
         Agent otherAgent = agent == AIEnemy ? player : AIEnemy;
         Card opponentCard = opposingCard == null ? otherAgent.cardBeingPlayed : opposingCard;
-        if(gameManager.agentDominate == agent)
+        if(opponentCard != null)
         {
-            rating += gameManager.RoShamBoWinnerDenominationBonus;
-        } else if(opponentCard != null)
-        {
-            if(GameManager.RoShamBoWinner(card.type, opponentCard.type) == 1 && gameManager.agentDominate == null)
+            if((!gameManager.reversoActive && GameManager.RoShamBoWinner(card.type, opponentCard.type) == 1) || (gameManager.reversoActive && GameManager.RoShamBoWinner(card.type, opponentCard.type) == 2))
             {
                 rating += gameManager.RoShamBoWinnerDenominationBonus;
             }

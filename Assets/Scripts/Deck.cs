@@ -25,7 +25,6 @@ public class Deck : Entity
     [SerializeField] float enterShufflePosXOffset = 10;
     [SerializeField] float exitShuffleAnimSpeed = 10;
     [SerializeField] float shuffleSFXDurationAdder = .5f;
-    
     GameObject ShuffleRotationAxis;
 
     public override void Start()
@@ -129,7 +128,7 @@ public class Deck : Entity
         {
             StartCoroutine(InsertCardRandomlyIntoDeck(gameManager.SupremeCard, fn: () =>
             {
-                gameManager.SupremeCard = null;
+                gameManager.Player.ChangeSupremeCard(null);
                 isReturningSupremeCardToDeck = false;
             }));
 
@@ -169,7 +168,7 @@ public class Deck : Entity
         bool isChoosingSupremeCard = true;
         StartCoroutine(TakeCardRandomlyFromDeck(gameManager.SupremeCardSpawnPoint.position, targetRot: Quaternion.Euler(90,0,0), fn: (card) =>
         {
-            gameManager.SupremeCard = card;
+            gameManager.Player.ChangeSupremeCard(card);
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").gameObject.SetActive(true);
             isChoosingSupremeCard = false;
@@ -217,6 +216,7 @@ public class Deck : Entity
         }
         yield return new WaitUntil(() => playerCardsInHand >= player.Hand.transform.childCount && enemyCardsInHand >= AIEnemy.Hand.transform.childCount);
         player.ReOrderCards();
+        gameManager.StartCoroutine(gameManager.StartDuel(player));
         isDealing = false;
     }
     public static List<Card> OrderCards(List<Card> cards)

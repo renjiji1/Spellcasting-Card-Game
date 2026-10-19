@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &5293957515965819574
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1316251446580963604, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Name
+      value: Dictate
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1838106707687478525, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.89888954
+      objectReference: {fileID: 0}
+    - target: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136199749725990486, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7832167967129369256, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4b7f477970715704cb930a38d3c0883f, type: 3}
+    m_RemovedComponents:
+    - {fileID: 6484066249467300376, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1316251446580963604, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3364962921344383485}
+  m_SourcePrefab: {fileID: 100100000, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+--- !u!1 &360426332434532057 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5510039352821148783, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+  m_PrefabInstance: {fileID: 5293957515965819574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1793492208787018292 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5878369484515358850, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+  m_PrefabInstance: {fileID: 5293957515965819574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3277698436585347535 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7208946971126739833, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+  m_PrefabInstance: {fileID: 5293957515965819574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6571783165754180514 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1316251446580963604, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+  m_PrefabInstance: {fileID: 5293957515965819574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3364962921344383485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6571783165754180514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b2218c1bd739cc47a32c01bca381641, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SupremeSwap
+  depthProjection: 0
+  thickness: 0.004
+  projectionOffset: 0.0005
+  ProjectionSprite: {fileID: 0}
+  FrontSprite: {fileID: 0}
+  BackSprite: {fileID: 0}
+  moveSpeed: 8
+  moveRotPivot: {fileID: 0}
+  moveSFX:
+    clip: {fileID: 0}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  agent: {fileID: 0}
+  AmountTxt: {fileID: 8891592196166381293}
+  Panel: {fileID: 8588475329745558701}
+  nameTxt: Dictate
+  description: Change the Supreme card, exchanging the current Supreme card with
+    one in your hand.
+  highlightedGlow: {fileID: 3277698436585347535}
+  canUseGlow: {fileID: 360426332434532057}
+  greyedOutMat: {fileID: 2100000, guid: 3d56c536b1e75db45b7df74152817581, type: 2}
+  OnSelectEffect: {fileID: 1793492208787018292}
+  PanelSelectedSprite: {fileID: 21300000, guid: a68e4f00255d8084880780168ca7a4bc, type: 3}
+  showPos: {fileID: 0}
+  ShopPanelSelectedSprite: {fileID: 0}
+  ShopPanel: {fileID: 0}
+  ShopPanelName: {fileID: 0}
+  ShopPanelDescription: {fileID: 0}
+  ShopPanelRune: {fileID: 0}
+  ShopPanelAmount: {fileID: 0}
+  ShopPanelCost: {fileID: 0}
+--- !u!1 &8588475329745558701 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4487712238074230299, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+  m_PrefabInstance: {fileID: 5293957515965819574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8891592196166381293 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3608137230671348827, guid: 8ab7644d122b7a444b65f7c59561da95, type: 3}
+  m_PrefabInstance: {fileID: 5293957515965819574}
+  m_PrefabAsset: {fileID: 0}
