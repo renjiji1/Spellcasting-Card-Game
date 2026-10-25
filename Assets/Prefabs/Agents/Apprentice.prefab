@@ -156,6 +156,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 36278b8ed97abd24fb8e8fa1dea02812, type: 3}
+    - target: {fileID: 6989943502870290486, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7379357693440584140, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.1
@@ -163,6 +167,34 @@ PrefabInstance:
     - target: {fileID: 7379357693440584140, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679027882886389208, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: VelocityModule.z.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679027882886389208, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: VelocityModule.z.minScalar
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679027882886389208, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679027882886389208, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679027882886389208, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679027882886389208, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.70051455
+      objectReference: {fileID: 0}
+    - target: {fileID: 7679027882886389208, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8622852112716015924, guid: e473fd547d834b74b8f705a6f07ec5c7, type: 3}
       propertyPath: m_LocalPosition.z
