@@ -9,10 +9,11 @@ public class Denomination : MonoBehaviour
 {
     [NonSerialized] public int adder = 0;
     [SerializeField] public bool PositionInFrontOfCam = false;
+    [SerializeField] bool faceCam = false;
     [SerializeField] SFX denominationAddSFX;
     [SerializeField] float consecutiveSFXPitchIncrease = .5f;
     [ShowIf("PositionInFrontOfCam")]
-    [SerializeField] float distFromCam = 2;
+    [SerializeField] public float distFromCam = 2;
     [ShowIf("PositionInFrontOfCam")]
     [SerializeField] Vector2 offset = Vector2.zero;
     void Start()
@@ -31,6 +32,9 @@ public class Denomination : MonoBehaviour
         if(PositionInFrontOfCam)
         {
             transform.position = Camera.main.transform.position + Camera.main.transform.forward * distFromCam + Camera.main.transform.right * offset.x + Camera.main.transform.up * offset.y;
+        }
+        if(faceCam)
+        {
             transform.rotation = Camera.main.transform.rotation;
         }
     }

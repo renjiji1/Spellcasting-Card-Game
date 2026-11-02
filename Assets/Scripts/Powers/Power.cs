@@ -32,13 +32,10 @@ public class Power : Entity
     [NonSerialized] public int amount = 0;
     [NonSerialized] public int cost = 1;
     [Header("Shop Panel")]
-    [NonSerialized] public Sprite ShopPanelUnSelectedSprite;
-    [SerializeField] public Sprite ShopPanelSelectedSprite;
-    [SerializeField] public GameObject ShopPanel;
+    [SerializeField] public GameObject ShopPowerDetails;
     [SerializeField] TMP_Text ShopPanelName;
     [SerializeField] TMP_Text ShopPanelDescription;
     [SerializeField] Image ShopPanelRune;
-    [SerializeField] TMP_Text ShopPanelAmount;
     [SerializeField] TMP_Text ShopPanelCost;
 
     public override void Start()
@@ -60,15 +57,12 @@ public class Power : Entity
 
         if(agent == player)
         {
-            ShopPanelUnSelectedSprite = ShopPanel.GetComponent<Image>().sprite;
             ShopPanelName.text = nameTxt;
             ShopPanelDescription.text = description;
             ShopPanelRune.sprite = GetComponent<SpriteRenderer>().sprite;
-            ShopPanelAmount.text = "x"+amount;
-            ShopPanelCost.text = ""+cost;
+            ShopPanelCost.text = "Costs "+cost;
             agent.OnArcanaChanged.AddListener(OnArcanaChange);
-        }
-        
+        } 
     }
 
     protected override void Update()
@@ -94,7 +88,7 @@ public class Power : Entity
         amount++;
         AmountTxt.SetActive(true);
         AmountTxt.GetComponent<TMP_Text>().text = "x" + amount;
-        if(agent == player) ShopPanelAmount.text = "x"+amount;
+        //if(agent == player) ShopPanelAmount.text = "x"+amount;
         PanelAmount.text = "x" + amount;
         GetComponent<SpriteRenderer>().material = ogMat;
     }
@@ -105,7 +99,7 @@ public class Power : Entity
         {
             int prevCost = cost;
             cost++;
-            if(agent == player) ShopPanelCost.text = ""+cost;
+            if(agent == player) ShopPanelCost.text = "Costs "+cost;
             agent.SpendArcana(prevCost);
             AddPower();
         } else

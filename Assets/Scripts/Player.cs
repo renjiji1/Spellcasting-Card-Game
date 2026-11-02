@@ -84,14 +84,18 @@ public class Player : Agent
     {
         OnShopPanelExit(power);
         SoundManager.instance.Play(hoverUISFX);
-        power.ShopPanel.GetComponent<Image>().sprite = power.PanelSelectedSprite;
-        highlightedPowerPanel = power.ShopPanel;
+        highlightedPowerPanel = power.ShopPowerDetails;
+        highlightedPowerPanel.SetActive(true);
+        ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{Mathf.Clamp(arcana-power.cost,0,int.MaxValue)}";
+        ShopArcanaTxt.GetComponent<TMP_Text>().color = arcana-power.cost < 0 ? Color.red : Color.green;
     }
     public void OnShopPanelExit(Power power)
     {
         if(highlightedPowerPanel != null)
         {
-            highlightedPowerPanel.GetComponent<Image>().sprite = power.PanelUnselectedSprite;
+            ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{arcana}";
+            ShopArcanaTxt.GetComponent<TMP_Text>().color = Color.white;
+            highlightedPowerPanel.SetActive(false);
             highlightedPowerPanel = null;
         }
     }
@@ -128,6 +132,8 @@ public class Player : Agent
     public void CloseShop()
     {
         Shop.SetActive(false);
+        ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{arcana}";
+        ShopArcanaTxt.GetComponent<TMP_Text>().color = Color.white;
         GameManager.paused = false;
         GameManager.ResumeGame.Invoke();
         MusicPlayer.instance.InterruptFade();
