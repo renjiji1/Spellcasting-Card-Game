@@ -23,7 +23,7 @@ public class Player : Agent
     [SerializeField] TMP_Text ShopArcanaTxt;
     Sprite ArcanaCrystalOgSprite;
     [SerializeField] Sprite ArcanaCrystalHighlightedSprite;
-    GameObject highlightedPowerPanel;
+    Power highlightedShopPower;
     [SerializeField] GameObject SupremeCardPreview;
     float ogMusicVolume = 1;
     public override void Start()
@@ -84,19 +84,23 @@ public class Player : Agent
     {
         OnShopPanelExit(power);
         SoundManager.instance.Play(hoverUISFX);
-        highlightedPowerPanel = power.ShopPowerDetails;
-        highlightedPowerPanel.SetActive(true);
+        highlightedShopPower = power;
+        power.ShopPowerImage.sprite = power.ShopPowerHighlightedSprite;
+        power.ShopPowerImage.SetNativeSize(); 
+        power.ShopPowerDetails.SetActive(true);
         ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{Mathf.Clamp(arcana-power.cost,0,int.MaxValue)}";
         ShopArcanaTxt.GetComponent<TMP_Text>().color = arcana-power.cost < 0 ? Color.red : Color.green;
     }
     public void OnShopPanelExit(Power power)
     {
-        if(highlightedPowerPanel != null)
+        if(highlightedShopPower != null)
         {
+            power.ShopPowerImage.sprite = power.ShopPowerOgSprite;
+            power.ShopPowerImage.SetNativeSize(); 
             ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{arcana}";
             ShopArcanaTxt.GetComponent<TMP_Text>().color = Color.white;
-            highlightedPowerPanel.SetActive(false);
-            highlightedPowerPanel = null;
+            highlightedShopPower.ShopPowerDetails.SetActive(false);
+            highlightedShopPower = null;
         }
     }
     public void OnShopPanelSelect(Power power)
@@ -132,8 +136,7 @@ public class Player : Agent
     public void CloseShop()
     {
         Shop.SetActive(false);
-        ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{arcana}";
-        ShopArcanaTxt.GetComponent<TMP_Text>().color = Color.white;
+        OnShopPanelExit(highlightedPower);
         GameManager.paused = false;
         GameManager.ResumeGame.Invoke();
         MusicPlayer.instance.InterruptFade();

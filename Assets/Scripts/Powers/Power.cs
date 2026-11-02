@@ -33,6 +33,9 @@ public class Power : Entity
     [NonSerialized] public int cost = 1;
     [Header("Shop Panel")]
     [SerializeField] public GameObject ShopPowerDetails;
+    [SerializeField] public Sprite ShopPowerHighlightedSprite;
+    [NonSerialized] public Sprite ShopPowerOgSprite;
+    [SerializeField] public Image ShopPowerImage;
     [SerializeField] TMP_Text ShopPanelName;
     [SerializeField] TMP_Text ShopPanelDescription;
     [SerializeField] Image ShopPanelRune;
@@ -59,6 +62,7 @@ public class Power : Entity
         {
             ShopPanelName.text = nameTxt;
             ShopPanelDescription.text = description;
+            ShopPowerOgSprite = ShopPowerImage.sprite;
             ShopPanelRune.sprite = GetComponent<SpriteRenderer>().sprite;
             ShopPanelCost.text = "Costs "+cost;
             agent.OnArcanaChanged.AddListener(OnArcanaChange);
