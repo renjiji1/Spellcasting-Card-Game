@@ -64,6 +64,8 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool mimicryActive = false;
     [SerializeField] public TMP_Text PowerNameTxt;
     [SerializeField] float delayBeforeWordForDuel = .2f;
+    [SerializeField] GameObject WordForDuelDistortionEffect;
+    [SerializeField] float endRoundFadeVolume = .4f;
     [Header("Supreme Card")]
     [NonSerialized] public Card SupremeCard;
     [SerializeField] public Transform SupremeCardSpawnPoint;
@@ -717,9 +719,14 @@ public class GameManager : MonoBehaviour
                 ClashWord.clip = allOccultWords[rng];
                 break;
         }
+        WordForDuelDistortionEffect.SetActive(true);
         yield return new WaitForSeconds(delayBeforeWordForDuel);
         SoundManager.instance.Play(ClashWord);
         yield return new WaitForSeconds(SoundManager.GetSFXLength(ClashWord));
+        WordForDuelDistortionEffect.GetComponent<Animator>().SetBool("Exit", true);
+        float distortionExitAnimLength = Player.GetAnimLengthByName("SupremeSourceDistortionExit", WordForDuelDistortionEffect.GetComponent<Animator>());
+        yield return new WaitForSeconds(distortionExitAnimLength);
+        WordForDuelDistortionEffect.SetActive(false);
         MusicPlayer.instance.FadeIn(ogVolume);
         agentWithPatience = agentForcePatience == null ? agentWithPatience : agentForcePatience;
         agentForcePatience = null;
@@ -743,8 +750,7 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator EndRound()
     {
-        MusicPlayer.instance.FadeOut(0, 1);
-        Agent winningAgent = playerDamageDone >= enemyDamageDone ? player : AIEnemy;
+        MusicPlayer.instance.FadeOut(endRoundFadeVolume, 1);
         if(!manaBurnout)
         {
             yield return ReturnWonCardsToDeck();

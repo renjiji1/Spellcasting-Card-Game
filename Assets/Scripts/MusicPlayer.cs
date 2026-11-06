@@ -116,6 +116,10 @@ public class MusicPlayer : MonoBehaviour
         currentFadeSpeed = fadeSpeed == -1 ? this.fadeSpeed : fadeSpeed;
         fadeUseUnscaledTime = useUnscaledTime;
     }
+    public void SetVolume(float vol)
+    {
+        GetComponent<AudioSource>().volume = vol;
+    }
     IEnumerator WaitToSetAmbientMusic(float sec)
     {
         yield return new WaitForSeconds(sec);
