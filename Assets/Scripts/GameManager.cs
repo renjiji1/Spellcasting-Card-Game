@@ -127,6 +127,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text EndGameEnemyDamageTxt;
     [SerializeField] int arcanaConversionRate = 3;
     [SerializeField] float arcanaBonusPointsDistFromCam = 1;
+    [SerializeField] float arcanaBonusPointsXOffset = 1;
     [SerializeField] GameObject PlayerArcanaBonusPoints;
     [SerializeField] GameObject EnemyArcanaBonusPoints;
 
@@ -702,8 +703,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing && !isChoosingSupremeCard);
         int rng = Random.Range(0, Enum.GetValues(typeof(MagicSource)).Length);
         SupremeSource = (MagicSource)rng;
-        float ogVolume = MusicPlayer.instance.GetComponent<AudioSource>().volume;
-        MusicPlayer.instance.FadeOut();
+        
         switch(SupremeSource)
         {
             case MagicSource.Divine:
@@ -719,12 +719,21 @@ public class GameManager : MonoBehaviour
                 ClashWord.clip = allOccultWords[rng];
                 break;
         }
+        
+        float distortionAnimLength = Player.GetAnimLengthByName("SupremeSourceDistortion", WordForDuelDistortionEffect.GetComponent<Animator>());
+        
+        yield return new WaitForSeconds(delayBeforeWordForDuel - distortionAnimLength);
+        float ogVolume = MusicPlayer.instance.GetComponent<AudioSource>().volume;
+        MusicPlayer.instance.FadeOut();
         WordForDuelDistortionEffect.SetActive(true);
-        yield return new WaitForSeconds(delayBeforeWordForDuel);
+       
+        yield return new WaitForSeconds(distortionAnimLength);
         SoundManager.instance.Play(ClashWord);
+        
         yield return new WaitForSeconds(SoundManager.GetSFXLength(ClashWord));
         WordForDuelDistortionEffect.GetComponent<Animator>().SetBool("Exit", true);
         float distortionExitAnimLength = Player.GetAnimLengthByName("SupremeSourceDistortionExit", WordForDuelDistortionEffect.GetComponent<Animator>());
+        
         yield return new WaitForSeconds(distortionExitAnimLength);
         WordForDuelDistortionEffect.SetActive(false);
         MusicPlayer.instance.FadeIn(ogVolume);
@@ -768,14 +777,16 @@ public class GameManager : MonoBehaviour
             yield return EndGame();
         } else
         {
-            StartRound(); 
+            yield return EndGame();
+            //StartRound(); 
         } 
     }
     IEnumerator EndGame()
     {
         yield return ConvertArcanaToPoints(PlayerArcanaBonusPoints, player);
-        yield return ConvertArcanaToPoints(EnemyArcanaBonusPoints, player);
+        yield return ConvertArcanaToPoints(EnemyArcanaBonusPoints, AIEnemy);
 
+        MusicPlayer.instance.FadeOut(0);
         Agent wonAgent = player.points >= AIEnemy.points ? player : AIEnemy;
         GameObject WinsTxt;
         EndGamePlayerWinsTxt.GetComponent<TMP_Text>().text = "" + SaveData.instance.numOfWinsPerDifficulty[SaveData.instance.currentDifficulty];
@@ -815,7 +826,7 @@ public class GameManager : MonoBehaviour
         agent.SpendArcana(acanaNum);
         ArcanaBonusPoints.transform.parent.position = agent.ArcanaBagTxt.transform.position;
         bool ArcanaBonusPointsInPosition = false;
-        ArcanaBonusPoints.transform.parent.GetComponent<Entity>().StartMoving(cam.transform.position + cam.transform.forward * arcanaBonusPointsDistFromCam, cam.transform.rotation, fn: () =>
+        ArcanaBonusPoints.transform.parent.GetComponent<Entity>().StartMoving(cam.transform.position + cam.transform.forward * arcanaBonusPointsDistFromCam + cam.transform.right * arcanaBonusPointsXOffset, cam.transform.rotation, fn: () =>
         {
             ArcanaBonusPointsInPosition = true;
         });
@@ -899,7 +910,7 @@ public class GameManager : MonoBehaviour
         int totalPlayerPoints = 0;
         yield return CountWonCards(player, PlayerDamageDealtTxt, PlayerCardsWonTransform, fn: (dmg) => totalPlayerPoints += dmg);
         cam.GetComponent<Animator>().SetBool("LookAtPlayerWonCards", false);
-        yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0));
+        yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && !cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("LookAtPlayerWonCards"));
         PlayerDamageDealtTxt.transform.parent.GetComponent<Entity>().StartMoving(player.DamageNumTxt.transform.position, player.DamageNumTxt.transform.rotation, useLocalRot: false, fn: () =>
         {
             PlayerDamageDealtTxt.SetActive(false);

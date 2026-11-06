@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Denomination
   PositionInFrontOfCam: 1
-  faceCam: 1
+  faceCam: 0
   denominationAddSFX:
     clip: {fileID: 8300000, guid: 6197223a2ea1d4a4da716f85795651b7, type: 3}
     volume: 1
@@ -2991,7 +2991,6 @@ GameObject:
   m_Component:
   - component: {fileID: 340950743}
   - component: {fileID: 340950742}
-  - component: {fileID: 340950741}
   m_Layer: 0
   m_Name: ArcanaToPointsPlayerDamageNumParent
   m_TagString: Untagged
@@ -2999,31 +2998,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &340950741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 340950740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d562693f8b3f68428fb6baf0122e7ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Denomination
-  PositionInFrontOfCam: 0
-  faceCam: 0
-  denominationAddSFX:
-    clip: {fileID: 0}
-    volume: 1
-    pitch: 1
-    startTime: 0
-    endTime: Infinity
-    useRealTimeSeconds: 0
-    isLooping: 0
-  consecutiveSFXPitchIncrease: 0.5
-  distFromCam: 2
-  offset: {x: 0, y: 0}
 --- !u!114 &340950742
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3061,7 +3035,7 @@ Transform:
   m_GameObject: {fileID: 340950740}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0307, y: 0.917, z: -0.76021}
+  m_LocalPosition: {x: -0.412, y: 0.917, z: -0.76021}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3797,7 +3771,6 @@ GameObject:
   m_Component:
   - component: {fileID: 395418923}
   - component: {fileID: 395418922}
-  - component: {fileID: 395418921}
   m_Layer: 0
   m_Name: ArcanaToPointsEnemyDamageNumParent
   m_TagString: Untagged
@@ -3805,31 +3778,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &395418921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395418920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d562693f8b3f68428fb6baf0122e7ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Denomination
-  PositionInFrontOfCam: 0
-  faceCam: 0
-  denominationAddSFX:
-    clip: {fileID: 0}
-    volume: 1
-    pitch: 1
-    startTime: 0
-    endTime: Infinity
-    useRealTimeSeconds: 0
-    isLooping: 0
-  consecutiveSFXPitchIncrease: 0.5
-  distFromCam: 2
-  offset: {x: 0, y: 0}
 --- !u!114 &395418922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5045,7 +4993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Denomination
   PositionInFrontOfCam: 1
-  faceCam: 1
+  faceCam: 0
   denominationAddSFX:
     clip: {fileID: 8300000, guid: 6197223a2ea1d4a4da716f85795651b7, type: 3}
     volume: 1
@@ -6238,7 +6186,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: You Beat The Lich!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_sharedMaterial: {fileID: -3825852989030664849, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -6305,7 +6253,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &775921246
@@ -7293,7 +7241,7 @@ RectTransform:
   m_GameObject: {fileID: 902959161}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1351159097}
@@ -7301,9 +7249,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.74801, y: 0.76759}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.05219108, y: -0.0256}
+  m_SizeDelta: {x: 0.748, y: 0.40658}
+  m_Pivot: {x: 0.7325774, y: 0.5}
 --- !u!95 &902959163
 Animator:
   serializedVersion: 7
@@ -7398,7 +7346,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.9
+  m_fontSize: 4.7
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -8143,7 +8091,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 89 Dmg Dealt
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_sharedMaterial: {fileID: -3825852989030664849, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8210,7 +8158,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &965590730
@@ -8901,7 +8849,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 89 Dmg Dealt
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c55d08eaaf6e5a04db798938aad40c35, type: 2}
   m_sharedMaterial: {fileID: -3825852989030664849, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -8968,7 +8916,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!222 &1110587609
@@ -10227,8 +10175,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.603, y: -0.052}
-  m_SizeDelta: {x: 0.4567, y: 0.5242}
+  m_AnchoredPosition: {x: 0.53, y: -0.035}
+  m_SizeDelta: {x: 0.3128, y: 0.3555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1262123445
 Animator:
@@ -10299,7 +10247,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4.85
+  m_fontSize: 3.3
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -11331,8 +11279,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.603, y: -0.052}
-  m_SizeDelta: {x: 0.4567, y: 0.5242}
+  m_AnchoredPosition: {x: 0.551, y: -0.014300033}
+  m_SizeDelta: {x: 0.3128, y: 0.3555}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1351159098
 Animator:
@@ -11403,7 +11351,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 4.85
+  m_fontSize: 3.3
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17122,7 +17070,7 @@ GameObject:
   - component: {fileID: 1944979375}
   - component: {fileID: 1944979374}
   m_Layer: 0
-  m_Name: LensDistortionEffect
+  m_Name: SupremeSourceDistortionEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17165,7 +17113,7 @@ MonoBehaviour:
   m_IsGlobal: 1
   priority: 0
   blendDistance: 0
-  weight: 0
+  weight: 0.06
   sharedProfile: {fileID: 11400000, guid: f3a6901db21f4f145a8d18a5a2fef0fa, type: 2}
 --- !u!4 &1944979376
 Transform:
@@ -17402,7 +17350,7 @@ MonoBehaviour:
   damageAddedToPointsDelay: 1
   delayBeforeAddingPoints: 0.3
   PowerNameTxt: {fileID: 816255097}
-  delayBeforeWordForDuel: 0.2
+  delayBeforeWordForDuel: 0.6
   WordForDuelDistortionEffect: {fileID: 1944979373}
   endRoundFadeVolume: 0.4
   SupremeCardSpawnPoint: {fileID: 409841246}
@@ -17462,6 +17410,7 @@ MonoBehaviour:
   EndGameEnemyDamageTxt: {fileID: 965590729}
   arcanaConversionRate: 3
   arcanaBonusPointsDistFromCam: 0.5
+  arcanaBonusPointsXOffset: -0.1
   PlayerArcanaBonusPoints: {fileID: 902959161}
   EnemyArcanaBonusPoints: {fileID: 2022446525}
 --- !u!4 &1969541190
@@ -17690,7 +17639,7 @@ RectTransform:
   m_GameObject: {fileID: 2022446525}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1262123444}
@@ -17698,9 +17647,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0.74801, y: 0.76759}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.054920085, y: 0}
+  m_SizeDelta: {x: 0.6893, y: 0.40658}
+  m_Pivot: {x: 0.7230283, y: 0.5}
 --- !u!95 &2022446527
 Animator:
   serializedVersion: 7
@@ -17795,7 +17744,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 8.9
+  m_fontSize: 4.7
   m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -17834,7 +17783,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.004766037, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
