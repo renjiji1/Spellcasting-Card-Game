@@ -529,29 +529,17 @@ public class AI : Agent
     }
     float GetProbToActivateReverso(Power power, CardRating cardRatingInfo)
     {
-        return 0;
-        if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage)
+       if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage && gameManager.turn == 0)
         {
-            const float dominateStreakMinForBonus = 2;
-            const float dominateStreakMinScalar = .7f;
-            const float dominateSupremeTypeScalar = .7f;
-            const float dominateTurn1BonusScalar = .7f;
-
-            float prob = dominateStreakMinScalar * dominateSupremeTypeScalar * ChanceToPlayOptimally[(int)difficulty];
-            if(gameManager.SupremeCard.type == CardToPlay.type)
+            float prob = 0;
+            float manaFactor = (float)(mana - Surge.manaLossOnWin) / (float)(gameManager.maxDuels - gameManager.currentDuelNum);
+            float denominationFactor = (float)CardToPlay.denomination / (float)GameManager.maxCardDenomination;
+            const float extraDamageScalar = 7;
+            float extraDamageFactor = (float)cardRatingInfo.extraDamage / (float)extraDamageScalar;
+            prob = manaFactor * .45f * denominationFactor * .2f * extraDamageFactor * .45f;
+            if(manaFactor <= .25f)
             {
-                prob /= dominateSupremeTypeScalar;
-            }
-            if(gameManager.enemyStreak >= dominateStreakMinForBonus)
-            {
-                prob /= dominateStreakMinScalar;
-            }
-            if(gameManager.turn == 1)
-            {
-                if(!GetCardRatingInfo(CardToPlay, currentGamePlan, player.cardBeingPlayed).clearsTarget)
-                {
-                    prob /= dominateTurn1BonusScalar;
-                }
+                prob = 0;
             }
             return prob;
         } else
