@@ -40,7 +40,7 @@ public class Agent : Entity
     [NonSerialized] public List<Power> powers = new List<Power>();
     [SerializeField] protected GameObject AddedArcanaTxt;
     [SerializeField] protected GameObject ArcanaCrystal;
-    [SerializeField] protected TMP_Text ArcanaBagTxt;
+    [SerializeField] public TMP_Text ArcanaBagTxt;
     [SerializeField] float AddedArcanaTxtYOffset = .5f;
     [SerializeField] protected int arcana = 0;
     protected bool cardMatchesSupremeSource = false;
@@ -76,6 +76,7 @@ public class Agent : Entity
     public void SpendArcana(int amount)
     {
         arcana -= amount;
+        ArcanaBagTxt.text = "" + arcana;
         OnArcanaChanged.Invoke(arcana);
     }
     protected override void Update()

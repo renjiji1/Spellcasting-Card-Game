@@ -22,6 +22,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] TMP_Text MusicNumTxt;
     [SerializeField] TMP_Text SFXNumTxt;
     [SerializeField] TMP_Text AnimationSpeedTxt;
+    [SerializeField] float fadeVolume = .4f;
     float ogMusicVolume = 1;
     float ogAnimationSpeed = 1;
     float animationSpeed = 1;
@@ -131,7 +132,7 @@ public class SettingsManager : MonoBehaviour
         GameManager.paused = false;
         GameManager.ResumeGame.Invoke();
         MusicPlayer.instance.InterruptFade();
-        MusicPlayer.instance.GetComponent<AudioSource>().volume = ogMusicVolume;
+        MusicPlayer.instance.SetVolume(ogMusicVolume);
         if(ogAnimationSpeed != animationSpeed)
         {
             OnAnimationSpeedChanged.Invoke(ogAnimationSpeed, animationSpeed);
@@ -144,7 +145,7 @@ public class SettingsManager : MonoBehaviour
         GameManager.paused = true;
         GameManager.PauseGame.Invoke();
         ogMusicVolume = MusicPlayer.instance.GetComponent<AudioSource>().volume;
-        MusicPlayer.instance.FadeOut(.4f, 3, true, false);
+        MusicPlayer.instance.SetVolume(fadeVolume);
     }
     public void UpdateSettings()
     {
