@@ -572,6 +572,14 @@ MonoBehaviour:
     endTime: Infinity
     useRealTimeSeconds: 0
     isLooping: 0
+  cardHitTableSFX:
+    clip: {fileID: 8300000, guid: db46c52efab1e5b4d88d03f6fbcf4712, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
   WinSFX:
     clip: {fileID: 8300000, guid: e7ee6b647ca8f8741be2295d8e630c42, type: 3}
     volume: 1
@@ -606,6 +614,7 @@ MonoBehaviour:
   ShopArcanaTxt: {fileID: 0}
   ArcanaCrystalHighlightedSprite: {fileID: 21300000, guid: 99b065aa677ff62409df7baadc3d9113, type: 3}
   SupremeCardPreview: {fileID: 0}
+  shopFadeOutVolume: 0.4
 --- !u!4 &3501867937281122937 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2157726780328701779, guid: d96fc794349e697429e7698def7b2ac4, type: 3}

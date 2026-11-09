@@ -107,12 +107,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] int damageForScreenShake = 5;
     [SerializeField] SFX enterCardClashSFX;
     [SerializeField] SFX ClashWord;
-
+    [SerializeField] SFX ClashWordIndicatorSFX;
     List<AudioClip> allDivineWords = new List<AudioClip>();
     List<AudioClip> allPrimalWords = new List<AudioClip>();
     List<AudioClip> allOccultWords = new List<AudioClip>();
 
     [Header("Card Clash Animations")]
+    [SerializeField] SFX PrimalClashSFX;
+    [SerializeField] SFX OccultClashSFX;
+    [SerializeField] SFX DivineClashSFX;
+    [SerializeField] SFX EvocationClashSFX;
+    [SerializeField] SFX AbjurationClashSFX;
+    [SerializeField] SFX IllusionClashSFX;
     [SerializeField] GameObject PrimalSlashEffect;
     [SerializeField] float primalSlashToHitDelay = .2f;
     [SerializeField] float occultEffectDelay = .1f;
@@ -120,6 +126,7 @@ public class GameManager : MonoBehaviour
     [Header("End Game")]
     [SerializeField] int numOfRoundsPerGame = 3;
     [SerializeField] GameObject EndGamePanel;
+    [SerializeField] SFX EndGameScrollSFX;
     [SerializeField] GameObject EndGameButtons;
     [SerializeField] GameObject EndGamePlayerWinsTxt;
     [SerializeField] GameObject EndGameEnemyWinsTxt;
@@ -412,6 +419,7 @@ public class GameManager : MonoBehaviour
         MagicSource sourceOfWinner = agentThatWon.cardSlotBeingPlayed.source;
         if(sourceOfWinner == MagicSource.Primal)
         {
+            SoundManager.instance.Play(PrimalClashSFX);
             PrimalSlashEffect.SetActive(true);
             PrimalSlashEffect.transform.rotation = agentThatWon == player ? Quaternion.Euler(0,0,0) : Quaternion.Euler(0,-180,0);
             yield return new WaitForSeconds(primalSlashToHitDelay);
@@ -425,10 +433,12 @@ public class GameManager : MonoBehaviour
         }
         if(sourceOfWinner == MagicSource.Divine)
         {
+            SoundManager.instance.Play(DivineClashSFX);
             yield return agentThatWon.cardBeingPlayed.ActivateDivineCardClashEffect();
         }
         if(sourceOfWinner == MagicSource.Arcane)
         {
+            SoundManager.instance.Play(OccultClashSFX);
             cardAnimOverlay.SetActive(true);
             cardAnimOverlay.GetComponent<Animator>().Play("Occult", 0, 0);
             yield return new WaitForSeconds(occultEffectDelay);
@@ -445,6 +455,7 @@ public class GameManager : MonoBehaviour
         MagicType winningCardType = agentThatWon.cardBeingPlayed.type;
         if(winningCardType == MagicType.Evocation)
         {
+            SoundManager.instance.Play(EvocationClashSFX);
             cardAnimOverlay.SetActive(true);
             cardAnimOverlay.GetComponent<Animator>().Play("Evocation", 0, 0);
             agentThatLost.cardBeingPlayed.EvocationCardClashEffect.SetActive(true);
@@ -455,6 +466,7 @@ public class GameManager : MonoBehaviour
         }
         if(winningCardType == MagicType.Abjuration)
         {
+            SoundManager.instance.Play(AbjurationClashSFX);
             winnerCardAnimOverlay.SetActive(true);
             winnerCardAnimOverlay.GetComponent<Animator>().Play("Abjuration", 0, 0);
             float animTime = Player.GetAnimLengthByName("Abjuration", winnerCardAnimOverlay.GetComponent<Animator>());
@@ -463,6 +475,7 @@ public class GameManager : MonoBehaviour
         }
         if(winningCardType == MagicType.Illusion)
         {
+            SoundManager.instance.Play(IllusionClashSFX);
             foreach(GameObject clone in agentThatWon.cardBeingPlayed.IllusionClones)
             {
                 agentThatWon.cardBeingPlayed.InitializeCard(clone, agentThatWon.cardBeingPlayed.type, agentThatWon.cardBeingPlayed.denomination, agentThatWon.cardBeingPlayed.Image, frontPath: "Front");
@@ -703,7 +716,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing && !isChoosingSupremeCard);
         int rng = Random.Range(0, Enum.GetValues(typeof(MagicSource)).Length);
         SupremeSource = (MagicSource)rng;
-        
+        SoundManager.instance.Play(ClashWordIndicatorSFX);
         switch(SupremeSource)
         {
             case MagicSource.Divine:
@@ -793,6 +806,7 @@ public class GameManager : MonoBehaviour
         EndGameEnemyWinsTxt.GetComponent<TMP_Text>().text = "" + SaveData.instance.numOfLossesPerDifficulty[SaveData.instance.currentDifficulty];
         EndGamePlayerDamageTxt.text = $"{player.points} Dmg Dealt";
         EndGameEnemyDamageTxt.text = $"{AIEnemy.points} Dmg Dealt";
+        SoundManager.instance.Play(EndGameScrollSFX);
         if(wonAgent == player)
         {
             SoundManager.instance.Play(player.WinSFX);

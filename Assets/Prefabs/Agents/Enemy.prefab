@@ -5555,6 +5555,14 @@ MonoBehaviour:
     endTime: Infinity
     useRealTimeSeconds: 0
     isLooping: 0
+  cardHitTableSFX:
+    clip: {fileID: 8300000, guid: db46c52efab1e5b4d88d03f6fbcf4712, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
   WinSFX:
     clip: {fileID: 0}
     volume: 1
@@ -5603,6 +5611,29 @@ MonoBehaviour:
   - 0.7
   - 0.85
   - 1
+  patienceBurnoutTurn1PlayerManaFactor: 0.85
+  patienceBurnoutTurn0PlayerManaFactor: 0.5
+  patienceMaxDamageStreakFactor: 0.05
+  patienceMaxDamageTurn1Factor: 0.6
+  patienceMaxDamageTurn0Factor: 0.25
+  redrawBurnoutNotClearFactor: 0.65
+  redrawOverallBadCardsFactor: 0.5
+  mimicyDenominationFactor: 0.2
+  mimicyCountingCardsFactor: 0.7
+  mimicyStreakFactor: 0.03
+  mimicySupremeCardFactor: 0.15
+  dictateSupremeTypeNumDiffFactor: 0.2
+  dictateNewDamageFactor: 0.07
+  dictateStreakFactor: 0.04
+  dictateMinusBurnoutFactor: 0.25
+  surgeManaFactor: 0.45
+  surgeDenominationFactor: 0.2
+  surgeExtraDamageFactor: 0.45
+  surgeMinManaThresholdFactor: 0.25
+  reversoMaxDamageStreakFactor: 0.04
+  reversoMaxDamageExtraDamageFactor: 0.2
+  reversoBurnoutBreaksThresholdFactor: 0.8
+  reversoBurnoutPlayerManaFactor: 0.2
 --- !u!4 &3461473241860855495 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2157726780328701779, guid: d96fc794349e697429e7698def7b2ac4, type: 3}

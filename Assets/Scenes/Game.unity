@@ -4092,7 +4092,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 453, y: -51}
+  m_AnchoredPosition: {x: 402, y: -51}
   m_SizeDelta: {x: 431.10815, y: 58.591003}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &461104823
@@ -7249,7 +7249,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.05219108, y: -0.0256}
+  m_AnchoredPosition: {x: -0.027, y: -0.0146}
   m_SizeDelta: {x: 0.748, y: 0.40658}
   m_Pivot: {x: 0.7325774, y: 0.5}
 --- !u!95 &902959163
@@ -7319,7 +7319,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: 10
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
   m_sharedMaterial: {fileID: -3825852989030664849, guid: 5a6850307f10a4441ab22232e744cebb, type: 2}
@@ -14644,7 +14644,6 @@ RectTransform:
   - {fileID: 881092480}
   - {fileID: 1274255289}
   - {fileID: 57392324}
-  - {fileID: 1862776826}
   - {fileID: 916007652}
   - {fileID: 1872763022}
   - {fileID: 272852303}
@@ -15201,126 +15200,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7372907549555701703, guid: f4c651d03025c3d4cb0cbbfc3edfb896, type: 3}
   m_PrefabInstance: {fileID: 1725835289}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1862776825
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1862776826}
-  - component: {fileID: 1862776829}
-  - component: {fileID: 1862776828}
-  - component: {fileID: 1862776827}
-  m_Layer: 5
-  m_Name: ControlsButton
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1862776826
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862776825}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1710329588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 145, y: -49}
-  m_SizeDelta: {x: 55, y: 55}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1862776827
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862776825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
-  m_Navigation:
-    m_Mode: 3
-    m_WrapAround: 0
-    m_SelectOnUp: {fileID: 0}
-    m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
-  m_Colors:
-    m_NormalColor: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
-    m_HighlightedColor: {r: 1, g: 0.8826081, b: 0.2971698, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
-    m_ColorMultiplier: 1
-    m_FadeDuration: 0.1
-  m_SpriteState:
-    m_HighlightedSprite: {fileID: 0}
-    m_PressedSprite: {fileID: 0}
-    m_SelectedSprite: {fileID: 0}
-    m_DisabledSprite: {fileID: 0}
-  m_AnimationTriggers:
-    m_NormalTrigger: Normal
-    m_HighlightedTrigger: Highlighted
-    m_PressedTrigger: Pressed
-    m_SelectedTrigger: Selected
-    m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 1862776828}
-  m_OnClick:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &1862776828
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862776825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b8685056ddc3e084992da189a1aedeee, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1862776829
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862776825}
-  m_CullTransparentMesh: 1
 --- !u!1 &1872763021
 GameObject:
   m_ObjectHideFlags: 0
@@ -17398,11 +17277,75 @@ MonoBehaviour:
     endTime: Infinity
     useRealTimeSeconds: 0
     isLooping: 0
+  ClashWordIndicatorSFX:
+    clip: {fileID: 8300000, guid: ed9f92e9834983c4f9bf651d86297364, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  PrimalClashSFX:
+    clip: {fileID: 8300000, guid: 171e249f4ce38f842839bfc27e8802f0, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  OccultClashSFX:
+    clip: {fileID: 8300000, guid: 477f1d6ed8726a2489b2de84f69f0b9f, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  DivineClashSFX:
+    clip: {fileID: 8300000, guid: 1912a305ef1e76d46b0cdcbd528aa53f, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  EvocationClashSFX:
+    clip: {fileID: 8300000, guid: 848b90497dd45ae45876885aef1f774e, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  AbjurationClashSFX:
+    clip: {fileID: 8300000, guid: 7737867849a887743bc0675c34835204, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
+  IllusionClashSFX:
+    clip: {fileID: 8300000, guid: 0c789b8532f7625479b762bfc9c802ea, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
   PrimalSlashEffect: {fileID: 868929223}
   primalSlashToHitDelay: 0.1
   occultEffectDelay: 0.1
   numOfRoundsPerGame: 1
   EndGamePanel: {fileID: 881092479}
+  EndGameScrollSFX:
+    clip: {fileID: 8300000, guid: 6ad5172d12da2a840b4683bd4dfcd516, type: 3}
+    volume: 1
+    pitch: 1
+    startTime: 0
+    endTime: Infinity
+    useRealTimeSeconds: 0
+    isLooping: 0
   EndGameButtons: {fileID: 461104823}
   EndGamePlayerWinsTxt: {fileID: 1295226510}
   EndGameEnemyWinsTxt: {fileID: 1764348172}
@@ -17647,7 +17590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.054920085, y: 0}
+  m_AnchoredPosition: {x: -0.0208, y: -0.0106}
   m_SizeDelta: {x: 0.6893, y: 0.40658}
   m_Pivot: {x: 0.7230283, y: 0.5}
 --- !u!95 &2022446527

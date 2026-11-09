@@ -78,6 +78,9 @@ public class Player : Agent
             float waitTime = animLength >= matchSourceSFX.clip.length ? animLength : matchSourceSFX.clip.length;
             yield return new WaitForSeconds(waitTime);
             slot.MatchSourceAnim.SetActive(false);
+        } else
+        {
+            SoundManager.instance.Play(cardHitTableSFX);
         }
         StartCoroutine(base.WaitEndTurn(card, slot));
     }

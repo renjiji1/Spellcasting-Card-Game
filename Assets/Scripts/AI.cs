@@ -56,6 +56,41 @@ public class AI : Agent
     Card MimicryCardToPlay;
     MagicType DictateTypeToSwap;
     bool powerActivatedThisDuel = false;
+
+    [Header("Patience Factors")]
+    [SerializeField] float patienceBurnoutTurn1PlayerManaFactor = .85f;
+    [SerializeField] float patienceBurnoutTurn0PlayerManaFactor = .5f;
+    [SerializeField] float patienceMaxDamageStreakFactor = .05f;
+    [SerializeField] float patienceMaxDamageTurn1Factor = .6f;
+    [SerializeField] float patienceMaxDamageTurn0Factor = .25f;
+
+    [Header("Redraw Factors")]
+    [SerializeField] float redrawBurnoutNotClearFactor = .65f;
+    [SerializeField] float redrawOverallBadCardsFactor = .5f;
+
+    [Header("Mimicry Factors")]
+    [SerializeField] float mimicyDenominationFactor = .2f;
+    [SerializeField] float mimicyCountingCardsFactor = .7f;
+    [SerializeField] float mimicyStreakFactor = .03f;
+    [SerializeField] float mimicySupremeCardFactor = .15f;
+
+    [Header("Dictate Factors")]
+    [SerializeField] float dictateSupremeTypeNumDiffFactor = .2f;
+    [SerializeField] float dictateNewDamageFactor = .07f;
+    [SerializeField] float dictateStreakFactor = .04f;
+    [SerializeField] float dictateMinusBurnoutFactor = .25f;
+
+    [Header("Surge Factors")]
+    [SerializeField] float surgeManaFactor = .45f;
+    [SerializeField] float surgeDenominationFactor = .2f;
+    [SerializeField] float surgeExtraDamageFactor = .45f;
+    [SerializeField] float surgeMinManaThresholdFactor = .25f;
+
+    [Header("Reverso Factors")]
+    [SerializeField] float reversoMaxDamageStreakFactor = .04f;
+    [SerializeField] float reversoMaxDamageExtraDamageFactor = .2f;
+    [SerializeField] float reversoBurnoutBreaksThresholdFactor = .8f;
+    [SerializeField] float reversoBurnoutPlayerManaFactor = .2f;
     
     public override void Start()
     {
@@ -211,6 +246,7 @@ public class AI : Agent
         float rankSum = 0;
         for(int i = 0; i < probToActivateEachPower.Length; i++)
         {
+            Debug.Log(probToActivateEachPower[i]);
             if(probToActivateEachPower[i] == maxProb)
             {
                 continue;
@@ -266,34 +302,33 @@ public class AI : Agent
             }
         }
     }
+    
     float GetProbToActivatePatience(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
         {
             float prob = 0;
-            if(currentGamePlan == GamePlan.Burnout && !cardRatingInfo.clearsTarget)
+            if(currentGamePlan == GamePlan.Burnout && cardRatingInfo.clearsTarget)
             {
                 float playerManaFactor = (float)(player.maxMana-player.mana) / (float)player.maxMana;
                 if(gameManager.turn == 1)
                 {
-                    prob = .8f + playerManaFactor * .2f;
+                    prob = playerManaFactor * patienceBurnoutTurn1PlayerManaFactor;
                 } else
                 {
-                    prob = playerManaFactor * .3f;
+                    prob = playerManaFactor * patienceBurnoutTurn0PlayerManaFactor;
                 }
             }
             if(currentGamePlan == GamePlan.MaxDamage && cardRatingInfo.clearsTarget)
             {
-                const int streakScalar = 4;
-                float streakFactor = Mathf.Clamp((float)gameManager.enemyStreak / streakScalar, 0f, 1f);
                 if(gameManager.turn == 1)
                 {
-                    prob = .6f;
+                    prob = patienceMaxDamageTurn1Factor;
                 } else
                 {
-                    prob = .4f;
+                    prob = patienceMaxDamageTurn0Factor;
                 }
-                prob += streakFactor * .1f;
+                prob += gameManager.enemyStreak * patienceMaxDamageStreakFactor;
             }
             return prob;
         } else
@@ -308,6 +343,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
+
     float GetProbToActivateRedraw(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
@@ -317,13 +353,8 @@ public class AI : Agent
             {
                 if(currentGamePlan == GamePlan.Burnout)
                 {
-                    prob = .65f;
-                } else if(currentGamePlan == GamePlan.MaxDamage)
-                {
-                    const float damageScalar = 10;
-                    float damageFactor = cardRatingInfo.damage / damageScalar;
-                    prob = .5f + damageFactor * .3f;
-                }
+                    prob = redrawBurnoutNotClearFactor;
+                } 
             } else
             {
                 int[] cardRatingsForRound = RateAllCards(null, true);
@@ -336,7 +367,7 @@ public class AI : Agent
                     }
                 }
                 float badCardsFactor = (float)numOfBadCards / (float)cardRatingsForRound.Length;
-                prob = badCardsFactor * .35f;
+                prob = badCardsFactor * redrawOverallBadCardsFactor;
             }
             return prob;
         } else
@@ -370,6 +401,7 @@ public class AI : Agent
         ChooseCardToPlay(1000);
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
+    
     float GetProbToActivateMimicry(Power power, CardRating cardRatingInfo)
     {
         if((arcana >= power.cost || power.amount > 0) && gameManager.turn == 0 && currentGamePlan == GamePlan.MaxDamage)
@@ -413,10 +445,8 @@ public class AI : Agent
             }
             float countingCardsFactor = (float)countedCards.GetCountFromMagicType(chosenType) / (float)GameManager.maxCardDenomination;
             float denominationFactor = (float)chosenTypeHighestDenomination / (float)GameManager.maxCardDenomination;
-            const int streakScalar = 3;
-            float streakFactor = Mathf.Clamp((float)gameManager.enemyStreak / streakScalar, 0f, 1f);
             float supremeCardFactor = MimicryCardToPlay.type == gameManager.SupremeCard.type ? 1f : 0f;
-            float prob = countingCardsFactor * denominationFactor * .8f + streakFactor * .2f + supremeCardFactor * .15f;
+            float prob = countingCardsFactor * mimicyCountingCardsFactor + denominationFactor * mimicyDenominationFactor + gameManager.enemyStreak * mimicyStreakFactor + supremeCardFactor * mimicySupremeCardFactor;
             return prob;
         } else
         {
@@ -431,6 +461,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
+
     float GetProbToActivateDictate(Power power, CardRating cardRatingInfo)
     {
         if(arcana >= power.cost || power.amount > 0)
@@ -487,18 +518,16 @@ public class AI : Agent
             float prob = 0;
             if(CardToPlay.type != gameManager.SupremeCard.type && DictateTypeToSwap != gameManager.SupremeCard.type)
             {
-                float duelNumFactor = (float)(gameManager.maxDuels - gameManager.currentDuelNum) / (float)gameManager.maxDuels;
-                float supremeTypeCardDiffScalar = 4;
-                float supremeTypeCardDiffFactor = (float)(numOfCurrentSupremeTypeCards - maxNumOfCardsPerType) / supremeTypeCardDiffScalar;
+                float supremeTypeCardDiffFactor = numOfCurrentSupremeTypeCards - maxNumOfCardsPerType;
+                prob = supremeTypeCardDiffFactor * dictateSupremeTypeNumDiffFactor + gameManager.enemyStreak * dictateStreakFactor;
                 if(gameManager.turn == 1 && currentGamePlan == GamePlan.MaxDamage && highestDenominationCardForNewSupremeType != null)
                 {
                     CardRating newCardRatingInfo = GetCardRatingInfo(highestDenominationCardForNewSupremeType, currentGamePlan, player.cardBeingPlayed);
-                    const float ratingTargetDiffScalar = 5;
-                    float newCardDamageScalar = (float)newCardRatingInfo.ratingTargetDiff / ratingTargetDiffScalar;
-                    prob = newCardDamageScalar * .65f + supremeTypeCardDiffFactor * .4f + duelNumFactor * .15f;
+                    prob += newCardRatingInfo.damage * dictateNewDamageFactor;
                 } else
                 {
-                    prob = supremeTypeCardDiffFactor * .5f + duelNumFactor * .2f;
+                    float burnoutFactor = currentGamePlan == GamePlan.Burnout ? dictateMinusBurnoutFactor : 0;
+                    prob += -burnoutFactor;
                 }
             }
             return prob;
@@ -527,26 +556,39 @@ public class AI : Agent
         ChooseCardToPlay(1000);
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
+    
     float GetProbToActivateReverso(Power power, CardRating cardRatingInfo)
     {
-       if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage && gameManager.turn == 0)
+       if((arcana >= power.cost || power.amount > 0) && gameManager.turn == 1)
         {
-            float prob = 0;
-            float manaFactor = (float)(mana - Surge.manaLossOnWin) / (float)(gameManager.maxDuels - gameManager.currentDuelNum);
-            float denominationFactor = (float)CardToPlay.denomination / (float)GameManager.maxCardDenomination;
-            const float extraDamageScalar = 7;
-            float extraDamageFactor = (float)cardRatingInfo.extraDamage / (float)extraDamageScalar;
-            prob = manaFactor * .45f * denominationFactor * .2f * extraDamageFactor * .45f;
-            if(manaFactor <= .25f)
+            if(GameManager.RoShamBoWinner(CardToPlay.type, player.cardBeingPlayed.type) == 2)
             {
-                prob = 0;
+                if(currentGamePlan == GamePlan.MaxDamage)
+                {
+                    float streakFactor = gameManager.enemyStreak * reversoMaxDamageStreakFactor;
+                    float damageWithReverso = GetCardRatingInfo(CardToPlay, currentGamePlan, player.cardBeingPlayed, true).damage;
+                    float extraDamageFactor = (cardRatingInfo.damage - damageWithReverso) * reversoMaxDamageExtraDamageFactor;
+                    if(damageWithReverso < 0) return 0;
+                    return streakFactor + extraDamageFactor;
+                } else
+                {
+                    bool clearsTargetAfterReverso = GetCardRatingInfo(CardToPlay, currentGamePlan, player.cardBeingPlayed, true).clearsTarget;
+                    float reversoBreaksThresholdFactor = 0;
+                    if(clearsTargetAfterReverso && cardRatingInfo.clearsTarget)
+                    {
+                        reversoBreaksThresholdFactor = reversoBurnoutBreaksThresholdFactor;
+                    } else { return 0; }
+                    float playerManaLeftFactor = (float)(player.maxMana - player.mana) / (float)player.maxMana * reversoBurnoutPlayerManaFactor;
+                    return reversoBreaksThresholdFactor + playerManaLeftFactor;
+                }
             }
-            return prob;
+            return 0;
         } else
         {
             return 0;
         }
     }
+    
     IEnumerator ActivateReverso(Power power)
     {
         power.BuyPower();
@@ -554,6 +596,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
+    
     float GetProbToActivateSurge(Power power, CardRating cardRatingInfo)
     {
         if((arcana >= power.cost || power.amount > 0) && currentGamePlan == GamePlan.MaxDamage && gameManager.turn == 0)
@@ -561,10 +604,8 @@ public class AI : Agent
             float prob = 0;
             float manaFactor = (float)(mana - Surge.manaLossOnWin) / (float)(gameManager.maxDuels - gameManager.currentDuelNum);
             float denominationFactor = (float)CardToPlay.denomination / (float)GameManager.maxCardDenomination;
-            const float extraDamageScalar = 7;
-            float extraDamageFactor = (float)cardRatingInfo.extraDamage / (float)extraDamageScalar;
-            prob = manaFactor * .45f * denominationFactor * .2f * extraDamageFactor * .45f;
-            if(manaFactor <= .25f)
+            prob = manaFactor * surgeManaFactor + denominationFactor * surgeDenominationFactor + cardRatingInfo.extraDamage * surgeExtraDamageFactor;
+            if(manaFactor <= surgeMinManaThresholdFactor)
             {
                 prob = 0;
             }
@@ -581,7 +622,7 @@ public class AI : Agent
         power.OnSelect();
         yield return new WaitForSeconds(waitAfterActivatingPower);
     }
-    CardRating GetCardRatingInfo(Card card, GamePlan gamePlan, Card opposingCard = null)
+    CardRating GetCardRatingInfo(Card card, GamePlan gamePlan, Card opposingCard = null, bool reverso = false)
     {
         int targetRating = opposingCard == null ? defaultTargetRating : RateCard(opposingCard, player, card); 
         int cardRating = RateCard(card, this, opposingCard);
@@ -599,8 +640,8 @@ public class AI : Agent
             if(gameManager.turn == 1)
             {
                 winsRoShamBo = GameManager.RoShamBoWinner(card.type, player.cardBeingPlayed.type) == 1;
-                targetRating = !winsRoShamBo ? targetRating + gameManager.cardClashTieWinnerBonus : targetRating;
-                cardRating = !winsRoShamBo ? cardRating + gameManager.cardClashTieWinnerBonus : cardRating;
+                targetRating = (!winsRoShamBo && !reverso) || (winsRoShamBo && reverso)  ? targetRating + gameManager.cardClashTieWinnerBonus : targetRating;
+                cardRating = (winsRoShamBo && !reverso) || (!winsRoShamBo && reverso) ? cardRating + gameManager.cardClashTieWinnerBonus : cardRating;
             }
             if(winsRoShamBo && gamePlan == GamePlan.MaxDamage || !winsRoShamBo && gamePlan == GamePlan.Burnout)
             {
@@ -691,9 +732,9 @@ public class AI : Agent
 
             if(gamePlan == GamePlan.Burnout && gameManager.turn == 0)
             {
-                float burnoutTurn0SupremeTypeRatingEffect = 3;
+                float burnoutTurn0SupremeTypeRatingEffect = -2;
 
-                duelPickRatings[i] = GameManager.maxCardDenomination - cardRating.rating;
+                duelPickRatings[i] = Mathf.Abs(defaultTargetRating - cardRating.rating);
                 if(cardRating.card.type == gameManager.SupremeCard.type)
                 {
                     duelPickRatings[i] += Mathf.Clamp(burnoutTurn0SupremeTypeRatingEffect - cardRating.rating, -float.MaxValue, 0);
@@ -881,6 +922,7 @@ public class AI : Agent
     }
     protected override IEnumerator WaitEndTurn(Card card, CardSlot slot, bool endTurn = true)
     {
+        SoundManager.instance.Play(cardHitTableSFX);
         yield return base.WaitEndTurn(card, slot, false);
         yield return new WaitForSeconds(cardToFrontOfCamDelay);
         card.transform.Find($"{card.frontPath}/EnemyHighlightBg").gameObject.SetActive(true);

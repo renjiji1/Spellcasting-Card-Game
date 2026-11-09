@@ -124,6 +124,7 @@ public class SettingsManager : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1;
+        GameManager.paused = false;
         SceneManager.LoadSceneAsync("MainMenu");
     }
     public void CloseSettings()

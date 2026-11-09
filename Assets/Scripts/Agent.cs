@@ -51,6 +51,7 @@ public class Agent : Entity
     [SerializeField] public SFX buyPowerSFX;
     [SerializeField] public SFX getArcanaSFX;
     [SerializeField] public SFX matchSourceSFX;
+    [SerializeField] public SFX cardHitTableSFX;
     [SerializeField] public SFX WinSFX;
     [SerializeField] public SFX LoseSFX;
     [SerializeField] public SFX UsePowerSFX;
