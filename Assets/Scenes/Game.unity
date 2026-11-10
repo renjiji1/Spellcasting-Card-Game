@@ -17306,7 +17306,7 @@ MonoBehaviour:
   streakAdder: 1
   damageBonusDelay: 0.1
   afterDamageBonusDelay: 0.25
-  damageForScreenShake: 5
+  damageForScreenShake: 10
   enterCardClashSFX:
     clip: {fileID: 8300000, guid: df680c7aa634faa41bfaa5b587e70499, type: 3}
     volume: 1
@@ -17399,7 +17399,7 @@ MonoBehaviour:
   EndGameEnemyDamageTxt: {fileID: 965590729}
   arcanaConversionRate: 3
   arcanaBonusPointsDistFromCam: 0.5
-  arcanaBonusPointsXOffset: -0.1
+  arcanaBonusPointsXOffset: 0
   PlayerArcanaBonusPoints: {fileID: 902959161}
   EnemyArcanaBonusPoints: {fileID: 2022446525}
 --- !u!4 &1969541190

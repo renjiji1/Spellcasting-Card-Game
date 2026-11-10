@@ -717,6 +717,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator StartDuel(Agent agentWithPatience)
     {
+        Debug.Log($"{!Deck.GetComponent<Deck>().isShuffling} {!Deck.GetComponent<Deck>().isDealing} {!isChoosingSupremeCard}");
         yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing && !isChoosingSupremeCard);
         int rng = Random.Range(0, Enum.GetValues(typeof(MagicSource)).Length);
         SupremeSource = (MagicSource)rng;

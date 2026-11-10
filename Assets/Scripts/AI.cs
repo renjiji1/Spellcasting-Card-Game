@@ -273,6 +273,7 @@ public class AI : Agent
             if(rngPower < randomRange * probSum)
             {
                 float probToActivate = Random.Range(0, randomRange);
+                Debug.Log($"power of prob {probToActivateEachPower[i]} thresh {probToActivateEachPower[i] * ChanceToPlayOptimally[(int)difficulty] * randomRange} prob {probToActivate}");
                 if(probToActivate >= probToActivateEachPower[i] * ChanceToPlayOptimally[(int)difficulty] * randomRange)
                 {
                     break;
@@ -518,7 +519,7 @@ public class AI : Agent
             float prob = 0;
             if(CardToPlay.type != gameManager.SupremeCard.type && DictateTypeToSwap != gameManager.SupremeCard.type)
             {
-                float supremeTypeCardDiffFactor = numOfCurrentSupremeTypeCards - maxNumOfCardsPerType;
+                float supremeTypeCardDiffFactor = maxNumOfCardsPerType - numOfCurrentSupremeTypeCards;
                 prob = supremeTypeCardDiffFactor * dictateSupremeTypeNumDiffFactor + gameManager.enemyStreak * dictateStreakFactor;
                 if(gameManager.turn == 1 && currentGamePlan == GamePlan.MaxDamage && highestDenominationCardForNewSupremeType != null)
                 {
@@ -755,7 +756,7 @@ public class AI : Agent
                 }
                 if(cardRating.card.type == gameManager.SupremeCard.type)
                 {
-                    diff += Mathf.Clamp(burnoutTurn1SupremeTypeRatingEffect - cardRating.rating, -int.MaxValue, 0);
+                    diff -= burnoutTurn1SupremeTypeRatingEffect;
                 }
                 duelPickRatings[i] = diff;
             }
@@ -935,10 +936,5 @@ public class AI : Agent
         yield return new WaitUntil(() => movedToPosition);
         yield return new WaitForSeconds(endTurnDelay);
         EndTurn();
-    }
-    public override IEnumerator AddArcana(Action finishedFn = null)
-    {
-        yield return base.AddArcana(finishedFn);
-        finishedFn?.Invoke();
     }
 }

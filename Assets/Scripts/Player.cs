@@ -142,14 +142,6 @@ public class Player : Agent
         GameManager.ResumeGame.Invoke();
         MusicPlayer.instance.SetVolume(shopOgMusicVolume);
     }
-    public override IEnumerator AddArcana(Action finishedFn = null)
-    {
-        yield return base.AddArcana(finishedFn);
-        if(cardMatchesSupremeSource)
-        {
-            finishedFn?.Invoke(); 
-        }
-    }
     public void ReOrderCards(List<Card> cards = null)
     {
         if(cards == null) cards = HandOfCards;

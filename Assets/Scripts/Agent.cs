@@ -194,7 +194,7 @@ public class Agent : Entity
     }
     public virtual IEnumerator AddArcana(Action finishedFn = null)
     { 
-        if(cardMatchesSupremeSource)
+        if(true/*cardMatchesSupremeSource*/)
         {
             AddedArcanaTxt.transform.position = cardSlotBeingPlayed.transform.position + new Vector3(0,AddedArcanaTxtYOffset,0);
             AddedArcanaTxt.SetActive(true);
@@ -205,10 +205,8 @@ public class Agent : Entity
             float arcanaTxtAnimLength = GetAnimLengthByName("AddedArcana", AddedArcanaTxt.transform.GetChild(0).gameObject.GetComponent<Animator>());
             yield return new WaitForSeconds(arcanaTxtAnimLength);
             AddedArcanaTxt.SetActive(false);
-        } else
-        {
-            finishedFn?.Invoke();
-        }
+        } 
+        finishedFn?.Invoke();
     }
     public virtual void UsePower(Power power)
     {
