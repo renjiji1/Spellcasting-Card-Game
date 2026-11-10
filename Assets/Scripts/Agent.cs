@@ -162,6 +162,7 @@ public class Agent : Entity
             cardOnSlot = true;
             StartCoroutine(WaitEndTurn(card, slot));
         });
+        SheetLogger.instance.currentData.Add($"{gameObject.name} plays {card.gameObject.name}, matches the supreme source: {cardMatchesSupremeSource}");
     }
     protected virtual IEnumerator WaitEndTurn(Card card, CardSlot slot, bool endTurn = true)
     {

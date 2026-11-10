@@ -169,6 +169,7 @@ public class Deck : Entity
         StartCoroutine(TakeCardRandomlyFromDeck(gameManager.SupremeCardSpawnPoint.position, targetRot: Quaternion.Euler(90,0,0), fn: (card) =>
         {
             gameManager.Player.ChangeSupremeCard(card);
+            SheetLogger.instance.currentData.Add($"Supreme Card is {gameManager.SupremeCard.name}");
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").gameObject.SetActive(true);
             isChoosingSupremeCard = false;
@@ -189,9 +190,11 @@ public class Deck : Entity
             j -= 2;
         }
         futurePlayerCards = OrderCards(futurePlayerCards);
+        string playerCardNames = "player is dealt:";
         for(int i = 0; i < player.Hand.transform.childCount*2; i += 2)
         {
             Card playerCard = tmpDeck[tmpDeck.Count-1-i];
+            playerCardNames += $" {playerCard.gameObject.name}";
             Transform playerCardTransform = player.Hand.transform.GetChild(futurePlayerCards.IndexOf(playerCard));
             Vector3 playerTargetPos = playerCardTransform.position;
             playerCard.StartMoving(playerTargetPos, playerCardTransform.rotation, playSFX: true, fn: () =>
@@ -214,6 +217,7 @@ public class Deck : Entity
             });
             yield return new WaitForSeconds(delayBetweenCardDealings);
         }
+        SheetLogger.instance.currentData.Add(playerCardNames);
         yield return new WaitUntil(() => playerCardsInHand >= player.Hand.transform.childCount && enemyCardsInHand >= AIEnemy.Hand.transform.childCount);
         player.ReOrderCards();
         gameManager.StartCoroutine(gameManager.StartDuel(player));

@@ -43,14 +43,11 @@ public class Player : Agent
         {
             OnHoverOverArcanaCrystal();
             OnHoverOverSupremeCard();
-            if(isAgentTurn)
+            if(isAgentTurn && cardBeingPlayed == null)
             {
                 foreach(Card card in HandOfCards)
                 {
-                    if(!card.hasBeenPlayed && !card.isBeingPlayed)
-                    {
-                        card.OnHoverOverCard();
-                    } 
+                    card.OnHoverOverCard();
                 }
             }
         }
@@ -93,7 +90,7 @@ public class Player : Agent
         power.ShopPowerImage.SetNativeSize(); 
         power.ShopPowerDetails.SetActive(true);
         ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{Mathf.Clamp(arcana-power.cost,0,int.MaxValue)}";
-        ShopArcanaTxt.GetComponent<TMP_Text>().color = arcana-power.cost < 0 ? Color.red : Color.green;
+        ShopArcanaTxt.GetComponent<TMP_Text>().color = arcana-power.cost < 0 ? Color.crimson : Color.red;
     }
     public void OnShopPanelExit(Power power)
     {

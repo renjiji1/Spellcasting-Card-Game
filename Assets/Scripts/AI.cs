@@ -244,9 +244,9 @@ public class AI : Agent
         float unoptimalProbSum = 1 - ChanceToPlayOptimally[(int)difficulty];
         float[] powerPickProbabilities = new float[probToActivateEachPower.Length];
         float rankSum = 0;
+        Debug.Log($"patience {probToActivateEachPower[0]} redraw {probToActivateEachPower[1]}, mimicry {probToActivateEachPower[2]}, dictate {probToActivateEachPower[3]}, reverso {probToActivateEachPower[4]}, surge {probToActivateEachPower[5]}");
         for(int i = 0; i < probToActivateEachPower.Length; i++)
         {
-            Debug.Log(probToActivateEachPower[i]);
             if(probToActivateEachPower[i] == maxProb)
             {
                 continue;
@@ -273,7 +273,7 @@ public class AI : Agent
             if(rngPower < randomRange * probSum)
             {
                 float probToActivate = Random.Range(0, randomRange);
-                if(probToActivate < probToActivateEachPower[i] * ChanceToPlayOptimally[(int)difficulty] * randomRange)
+                if(probToActivate >= probToActivateEachPower[i] * ChanceToPlayOptimally[(int)difficulty] * randomRange)
                 {
                     break;
                 }

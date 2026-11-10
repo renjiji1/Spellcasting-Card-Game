@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject SupremeCardSwapTxt;
     [SerializeField] public GameObject MimicryTxt;
     [SerializeField] GameObject ManaBurnoutTxt;
+    [NonSerialized] public bool sendPlayerData = true;
+
     [Header("Round")]
     [SerializeField] float returnEnemyWonCardsDelay = .2f;
     [SerializeField] float delayBetweenWonCardsReturnToDeck = .2f;
@@ -175,6 +177,7 @@ public class GameManager : MonoBehaviour
                 allOccultWords.AddRange(child.GetComponent<Card>().OccultWords);
             }
         }
+        SheetLogger.instance.currentData.Add(AIEnemy.gameObject.name);
         AIEnemy.gameObject.SetActive(true);
         cam = Camera.main.GetComponent<Camera>();
         StartRound();
@@ -327,7 +330,8 @@ public class GameManager : MonoBehaviour
                 cam.GetComponent<Animator>().SetBool("ScreenShake", false);
             }, animTime);
         }
-
+        
+        SheetLogger.instance.currentData.Add($"{agentThatWon.gameObject.name} Won the duel dealing {damageDealt} damage");
         //Card Clash Anims
         yield return StartCardClashAnimations(agentThatWon);
 
@@ -765,6 +769,7 @@ public class GameManager : MonoBehaviour
     IEnumerator ShowRoundTxt()
     {
         RoundTxt.GetComponent<TMP_Text>().text = round < 3 ? "Round " + round : "Final Round";
+        SheetLogger.instance.currentData.Add(RoundTxt.GetComponent<TMP_Text>().text);
         RoundTxt.SetActive(true);
         float animLength = RoundTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length;
         yield return new WaitForSeconds(animLength);
@@ -790,9 +795,16 @@ public class GameManager : MonoBehaviour
             yield return EndGame();
         } else
         {
-            yield return EndGame();
-            //StartRound(); 
+            StartRound(); 
         } 
+        if(sendPlayerData)
+        {
+            Debug.Log(sendPlayerData);
+            StartCoroutine(SheetLogger.instance.Append());
+        } else
+        {
+            SheetLogger.instance.currentData.Clear();
+        }
     }
     IEnumerator EndGame()
     {
@@ -801,6 +813,7 @@ public class GameManager : MonoBehaviour
 
         MusicPlayer.instance.FadeOut(0);
         Agent wonAgent = player.points >= AIEnemy.points ? player : AIEnemy;
+        SheetLogger.instance.currentData.Add($"Player won {wonAgent == player} dealing {player.points}, Enemy won {wonAgent == AIEnemy} dealing {AIEnemy.points}");
         GameObject WinsTxt;
         EndGamePlayerWinsTxt.GetComponent<TMP_Text>().text = "" + SaveData.instance.numOfWinsPerDifficulty[SaveData.instance.currentDifficulty];
         EndGameEnemyWinsTxt.GetComponent<TMP_Text>().text = "" + SaveData.instance.numOfLossesPerDifficulty[SaveData.instance.currentDifficulty];
