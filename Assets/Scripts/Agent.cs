@@ -194,7 +194,7 @@ public class Agent : Entity
     }
     public virtual IEnumerator AddArcana(Action finishedFn = null)
     { 
-        if(true/*cardMatchesSupremeSource*/)
+        if(cardMatchesSupremeSource)
         {
             AddedArcanaTxt.transform.position = cardSlotBeingPlayed.transform.position + new Vector3(0,AddedArcanaTxtYOffset,0);
             AddedArcanaTxt.SetActive(true);

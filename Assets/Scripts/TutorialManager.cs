@@ -28,6 +28,7 @@ public class TutorialManager : MonoBehaviour
         tutorialPageIndx = 0;
         TutorialPanel.SetActive(true);
         tutorialPages[tutorialPageIndx].SetActive(true);
+        CloseFirstTimePlayingPanel();
         GameManager.paused = true;
         Time.timeScale = 0;
     }

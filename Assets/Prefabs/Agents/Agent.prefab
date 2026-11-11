@@ -2178,6 +2178,10 @@ PrefabInstance:
       propertyPath: showPos
       value: 
       objectReference: {fileID: 3287593303442009361}
+    - target: {fileID: 7144425635100552620, guid: 10e9f2900bd001344bfa3137a1bcb3dc, type: 3}
+      propertyPath: description
+      value: The RoShamBo is reversed, so that the loser would win against the loser
+      objectReference: {fileID: 0}
     - target: {fileID: 8798562007730361708, guid: 10e9f2900bd001344bfa3137a1bcb3dc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.014
