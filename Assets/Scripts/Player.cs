@@ -90,7 +90,7 @@ public class Player : Agent
         power.ShopPowerImage.SetNativeSize(); 
         power.ShopPowerDetails.SetActive(true);
         ShopArcanaTxt.GetComponent<TMP_Text>().text = $"{Mathf.Clamp(arcana-power.cost,0,int.MaxValue)}";
-        ShopArcanaTxt.GetComponent<TMP_Text>().color = arcana-power.cost < 0 ? Color.crimson : Color.red;
+        ShopArcanaTxt.GetComponent<TMP_Text>().color = arcana-power.cost < 0 ? Color.crimson : Color.grey;
     }
     public void OnShopPanelExit(Power power)
     {
