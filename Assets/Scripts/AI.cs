@@ -718,6 +718,10 @@ public class AI : Agent
                 int turn1MinStreakToOverrideDeadZone = 2;
 
                 duelPickRatings[i] = cardRating.damage;
+                if(!cardRating.clearsTarget)
+                {
+                    duelPickRatings[i] *= -1;
+                }
                 if(gameManager.enemyStreak < turn1MinStreakToOverrideDeadZone)
                 {
                     if(cardRating.damage > 0 && cardRating.damage <= maxDmgTurn1DeadZoneRange)
@@ -741,12 +745,12 @@ public class AI : Agent
                     duelPickRatings[i] += Mathf.Clamp(burnoutTurn0SupremeTypeRatingEffect - cardRating.rating, -float.MaxValue, 0);
                 }
             }
-
+            Debug.Log($"gamePlan {gamePlan} turn {gameManager.turn}");
             if(gamePlan == GamePlan.Burnout && gameManager.turn == 1)
             {
                 int burnoutTurn1SupremeTypeRatingEffect = 3;
                 int diff = cardRating.ratingTargetDiff;
-                
+                Debug.Log("Diff before adjustments: " + diff + "clears target: " + cardRating.clearsTarget);
                 if(cardRating.clearsTarget)
                 {
                     diff += GameManager.maxCardDenomination;
@@ -758,6 +762,7 @@ public class AI : Agent
                 {
                     diff -= burnoutTurn1SupremeTypeRatingEffect;
                 }
+                Debug.Log("Diff after adjustments: " + diff);
                 duelPickRatings[i] = diff;
             }
         }
