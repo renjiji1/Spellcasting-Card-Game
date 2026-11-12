@@ -156,10 +156,11 @@ public class Deck : Entity
             });
             yield return new WaitForSeconds(delayBetweenCardShuffles);
         }
+        cam.GetComponent<Animator>().SetBool("LookAtShuffle", false);
+        yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Default"));
         yield return new WaitUntil(() => cardsReturnedToDeck >= DeckOfCards.Count);
         DeckOfCards = newDeck;
         isShuffling = false;
-        cam.GetComponent<Animator>().SetBool("LookAtShuffle", false);
         yield return ChooseNewSupremeCard();
         StartCoroutine(DealCards());
     }
@@ -169,7 +170,6 @@ public class Deck : Entity
         StartCoroutine(TakeCardRandomlyFromDeck(gameManager.SupremeCardSpawnPoint.position, targetRot: Quaternion.Euler(90,0,0), fn: (card) =>
         {
             gameManager.Player.ChangeSupremeCard(card);
-            SheetLogger.instance.currentData.Add($"Supreme Card is {gameManager.SupremeCard.name}");
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").GetComponent<SpriteRenderer>().sprite = card.transform.Find($"{card.frontPath}/SpellTypeIcon").GetComponent<SpriteRenderer>().sprite;
             gameManager.SupremeCardSpawnPoint.transform.Find("TypeProjection").gameObject.SetActive(true);
             isChoosingSupremeCard = false;
@@ -217,7 +217,6 @@ public class Deck : Entity
             });
             yield return new WaitForSeconds(delayBetweenCardDealings);
         }
-        SheetLogger.instance.currentData.Add(playerCardNames);
         yield return new WaitUntil(() => playerCardsInHand >= player.Hand.transform.childCount && enemyCardsInHand >= AIEnemy.Hand.transform.childCount);
         player.ReOrderCards();
         gameManager.StartCoroutine(gameManager.StartDuel(player));

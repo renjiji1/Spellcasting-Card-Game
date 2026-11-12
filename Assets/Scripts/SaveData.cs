@@ -9,6 +9,9 @@ public class SaveData
     public float SFXVolume = -1;
     public float musicVolume = -1;
     public float animationSpeed = -1;
+    public int gameNum = 1;
+    public int sessionNum = 1;
+    public bool sendPlayerData = true;
     public bool firstTimePlaying = true;
     public int[] numOfWinsPerDifficulty = new int[5];
     public int[] numOfLossesPerDifficulty = new int[5];

@@ -37,7 +37,7 @@ public class MainMenuManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        Debug.Log("Saved");
+        SaveData.instance.sessionNum++;
         SaveData.instance.Save();
     }
 }

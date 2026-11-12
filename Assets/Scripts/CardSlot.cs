@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-public enum MagicSource {Primal, Divine, Arcane};
+public enum MagicSource {Primal, Divine, Eldritch};
 public class CardSlot : Entity
 {
     InputAction selectInput;
@@ -26,7 +26,7 @@ public class CardSlot : Entity
             case MagicSource.Primal:
                 GetComponent<SpriteRenderer>().sprite = primalIcon;
                 break;
-            case MagicSource.Arcane:
+            case MagicSource.Eldritch:
                 GetComponent<SpriteRenderer>().sprite = arcaneIcon;
                 break;
         }
@@ -42,7 +42,7 @@ public class CardSlot : Entity
     }
     public void OnHoverOverSlot()
     {
-        if(isPlayerSlot && player.isAgentTurn && !player.cardOnSlot)
+        if(isPlayerSlot && player.isAgentTurn && !player.cardOnSlot && player.canPlayCard)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

@@ -27,6 +27,7 @@ public class Player : Agent
     [SerializeField] GameObject SupremeCardPreview;
     [SerializeField] float shopFadeOutVolume = .4f;
     float shopOgMusicVolume = 1;
+    [NonSerialized] public bool canPlayCard = true;
     public override void Start()
     {
         base.Start();
@@ -57,6 +58,7 @@ public class Player : Agent
     {
         base.UseCard(card, slot, fn);
         card.HandTransform.position = card.ogHandPos;
+        SheetLogger.instance.SetData("Match Language", cardMatchesSupremeSource);
         if(!gameManager.Deck.GetComponent<Deck>().isDealing)
         {
             List<Card> newHand = new List<Card>(HandOfCards);

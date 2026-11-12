@@ -532,6 +532,7 @@ MonoBehaviour:
   ArcanaBagTxt: {fileID: 6236507446485428542}
   AddedArcanaTxtYOffset: 0
   arcana: 0
+  CardWordSilenceBuffer: 0.3
   manaBurnoutSFX:
     clip: {fileID: 8300000, guid: d6810e84a4837cb45b11db34f01f9c93, type: 3}
     volume: 1

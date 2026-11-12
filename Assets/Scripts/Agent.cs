@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using System;
 using TMPro;
 
@@ -46,6 +47,7 @@ public class Agent : Entity
     protected bool cardMatchesSupremeSource = false;
     [NonSerialized] public bool hasUsedPowerThisTurn = false;
     [Header("SFX")]
+    [SerializeField] float CardWordSilenceBuffer = .2f;
     [SerializeField] public SFX manaBurnoutSFX;
     [SerializeField] public SFX hoverUISFX;
     [SerializeField] public SFX buyPowerSFX;
@@ -147,6 +149,7 @@ public class Agent : Entity
     }
     public virtual void UseCard(Card card, CardSlot slot, Action fn = null)
     {
+        gameManager.RepeatSupremeWordButton.GetComponent<Button>().interactable = false;
         cardMatchesSupremeSource = gameManager.SupremeSource == slot.source;
         cardBeingPlayed = card;
         cardSlotBeingPlayed = slot;
@@ -162,15 +165,30 @@ public class Agent : Entity
             cardOnSlot = true;
             StartCoroutine(WaitEndTurn(card, slot));
         });
-        SheetLogger.instance.currentData.Add($"{gameObject.name} plays {card.gameObject.name}, matches the supreme source: {cardMatchesSupremeSource}");
     }
     protected virtual IEnumerator WaitEndTurn(Card card, CardSlot slot, bool endTurn = true)
     {
         SFX sfx = card.GetArcaneWordFromSource(slot.source);
         MusicPlayer.instance.FadeOut();
+
+        yield return new WaitForSeconds(CardWordSilenceBuffer);
+        
         SoundManager.instance.Play(sfx);
         yield return new WaitForSeconds(SoundManager.GetSFXLength(sfx));
+        
+        yield return new WaitForSeconds(CardWordSilenceBuffer);
+
         MusicPlayer.instance.FadeIn();
+
+        if(GetComponent<Player>() != null)
+        {
+            SheetLogger.instance.SetData("Player Card Word", sfx.clip.name);
+            SheetLogger.instance.SetData("Player Source", slot.source.ToString());
+        } else {
+            SheetLogger.instance.SetData("Enemy Card Word", sfx.clip.name);
+            SheetLogger.instance.SetData("Enemy Source", slot.source.ToString());
+        }
+        gameManager.RepeatSupremeWordButton.GetComponent<Button>().interactable = true;
         if(endTurn) EndTurn();
     }
     public virtual bool UseCardForPower(Card selectedCard)

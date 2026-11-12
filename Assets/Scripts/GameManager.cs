@@ -9,6 +9,7 @@ using TMPro;
 using Random = UnityEngine.Random;
 using UnityEngine.Events;
 using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,7 +44,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject SupremeCardSwapTxt;
     [SerializeField] public GameObject MimicryTxt;
     [SerializeField] GameObject ManaBurnoutTxt;
-    [NonSerialized] public bool sendPlayerData = true;
 
     [Header("Round")]
     [SerializeField] float returnEnemyWonCardsDelay = .2f;
@@ -66,8 +66,10 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public bool mimicryActive = false;
     [SerializeField] public TMP_Text PowerNameTxt;
     [SerializeField] float delayBeforeWordForDuel = .2f;
+    [SerializeField] float clashWordSilenceBufferDelay = .2f;
     [SerializeField] GameObject WordForDuelDistortionEffect;
     [SerializeField] float endRoundFadeVolume = .4f;
+    [SerializeField] public GameObject RepeatSupremeWordButton;
     [Header("Supreme Card")]
     [NonSerialized] public Card SupremeCard;
     [SerializeField] public Transform SupremeCardSpawnPoint;
@@ -177,7 +179,9 @@ public class GameManager : MonoBehaviour
                 allOccultWords.AddRange(child.GetComponent<Card>().OccultWords);
             }
         }
-        SheetLogger.instance.currentData.Add(AIEnemy.gameObject.name);
+        SheetLogger.instance.SetData("Enemy", AIEnemy.gameObject.name);
+        SheetLogger.instance.SetData("Game", SaveData.instance.gameNum);
+        SheetLogger.instance.SetData("Session", SaveData.instance.sessionNum);
         AIEnemy.gameObject.SetActive(true);
         cam = Camera.main.GetComponent<Camera>();
         StartRound();
@@ -215,6 +219,7 @@ public class GameManager : MonoBehaviour
     {
         // move cards into position in front of camera for clash
         yield return new WaitUntil(() => !cam.GetComponent<Animator>().IsInTransition(0) && cam.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("Default"));
+        RepeatSupremeWordButton.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(cardClashEnterDelay);
         AIEnemy.cardBeingPlayed.transform.Find($"{AIEnemy.cardBeingPlayed.frontPath}/EnemyHighlightBg").gameObject.SetActive(false);
         int cardsInPositionForClash = 0;
@@ -330,8 +335,11 @@ public class GameManager : MonoBehaviour
                 cam.GetComponent<Animator>().SetBool("ScreenShake", false);
             }, animTime);
         }
-        
-        SheetLogger.instance.currentData.Add($"{agentThatWon.gameObject.name} Won the duel dealing {damageDealt} damage");
+
+        DateTime dateTime = DateTime.Now;
+        string timestamp =  $"{dateTime.ToString("yyyy-MM-dd")} {dateTime.ToString("HH:mm:ss")}";
+        SheetLogger.instance.SetData("TimeStamp", timestamp);
+        SheetLogger.instance.Send();
         //Card Clash Anims
         yield return StartCardClashAnimations(agentThatWon);
 
@@ -440,7 +448,7 @@ public class GameManager : MonoBehaviour
             SoundManager.instance.Play(DivineClashSFX);
             yield return agentThatWon.cardBeingPlayed.ActivateDivineCardClashEffect();
         }
-        if(sourceOfWinner == MagicSource.Arcane)
+        if(sourceOfWinner == MagicSource.Eldritch)
         {
             SoundManager.instance.Play(OccultClashSFX);
             cardAnimOverlay.SetActive(true);
@@ -717,11 +725,10 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator StartDuel(Agent agentWithPatience)
     {
-        Debug.Log($"{!Deck.GetComponent<Deck>().isShuffling} {!Deck.GetComponent<Deck>().isDealing} {!isChoosingSupremeCard}");
         yield return new WaitUntil(() => !Deck.GetComponent<Deck>().isShuffling && !Deck.GetComponent<Deck>().isDealing && !isChoosingSupremeCard);
+        SheetLogger.instance.SetData("Duel", currentDuelNum);
         int rng = Random.Range(0, Enum.GetValues(typeof(MagicSource)).Length);
         SupremeSource = (MagicSource)rng;
-        SoundManager.instance.Play(ClashWordIndicatorSFX);
         switch(SupremeSource)
         {
             case MagicSource.Divine:
@@ -732,12 +739,32 @@ public class GameManager : MonoBehaviour
                 int rngPrimal = Random.Range(0, allPrimalWords.Count);
                 ClashWord.clip = allPrimalWords[rng];
                 break;
-            case MagicSource.Arcane:
+            case MagicSource.Eldritch:
                 int rngOccult = Random.Range(0, allOccultWords.Count);
                 ClashWord.clip = allOccultWords[rng];
                 break;
         }
+        SheetLogger.instance.SetData("Supreme Source", SupremeSource.ToString());
+        SheetLogger.instance.SetData("Supreme Word", ClashWord.clip.name);
+
+        yield return WaitSaySupremeWord();
         
+        agentWithPatience = agentForcePatience == null ? agentWithPatience : agentForcePatience;
+        agentForcePatience = null;
+        currentPlayer = agentWithPatience.gameObject;
+        agentWithPatience.GetComponent<Agent>().StartTurn();
+        
+    }
+    public void SaySupremeWord()
+    {
+        StartCoroutine(WaitSaySupremeWord());
+    }
+    IEnumerator WaitSaySupremeWord()
+    {
+        RepeatSupremeWordButton.GetComponent<Button>().interactable = false;
+        player.canPlayCard = false;
+
+        SoundManager.instance.Play(ClashWordIndicatorSFX);
         float distortionAnimLength = Player.GetAnimLengthByName("SupremeSourceDistortion", WordForDuelDistortionEffect.GetComponent<Animator>());
         
         yield return new WaitForSeconds(delayBeforeWordForDuel - distortionAnimLength);
@@ -746,19 +773,22 @@ public class GameManager : MonoBehaviour
         WordForDuelDistortionEffect.SetActive(true);
        
         yield return new WaitForSeconds(distortionAnimLength);
+
+        yield return new WaitForSeconds(clashWordSilenceBufferDelay);
         SoundManager.instance.Play(ClashWord);
         
         yield return new WaitForSeconds(SoundManager.GetSFXLength(ClashWord));
+        
+        yield return new WaitForSeconds(clashWordSilenceBufferDelay);
         WordForDuelDistortionEffect.GetComponent<Animator>().SetBool("Exit", true);
         float distortionExitAnimLength = Player.GetAnimLengthByName("SupremeSourceDistortionExit", WordForDuelDistortionEffect.GetComponent<Animator>());
         
         yield return new WaitForSeconds(distortionExitAnimLength);
         WordForDuelDistortionEffect.SetActive(false);
         MusicPlayer.instance.FadeIn(ogVolume);
-        agentWithPatience = agentForcePatience == null ? agentWithPatience : agentForcePatience;
-        agentForcePatience = null;
-        currentPlayer = agentWithPatience.gameObject;
-        agentWithPatience.GetComponent<Agent>().StartTurn();
+
+        player.canPlayCard = true;
+        RepeatSupremeWordButton.GetComponent<Button>().interactable = true;
     }
     void StartRound()
     {
@@ -770,7 +800,7 @@ public class GameManager : MonoBehaviour
     IEnumerator ShowRoundTxt()
     {
         RoundTxt.GetComponent<TMP_Text>().text = round < 3 ? "Round " + round : "Final Round";
-        SheetLogger.instance.currentData.Add(RoundTxt.GetComponent<TMP_Text>().text);
+        SheetLogger.instance.SetData("Round", round);
         RoundTxt.SetActive(true);
         float animLength = RoundTxt.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0)[0].clip.length;
         yield return new WaitForSeconds(animLength);
@@ -798,23 +828,15 @@ public class GameManager : MonoBehaviour
         {
             StartRound(); 
         } 
-        if(sendPlayerData)
-        {
-            Debug.Log(sendPlayerData);
-            StartCoroutine(SheetLogger.instance.Append());
-        } else
-        {
-            SheetLogger.instance.currentData.Clear();
-        }
     }
     IEnumerator EndGame()
     {
         yield return ConvertArcanaToPoints(PlayerArcanaBonusPoints, player);
         yield return ConvertArcanaToPoints(EnemyArcanaBonusPoints, AIEnemy);
 
+        SaveData.instance.gameNum++;
         MusicPlayer.instance.FadeOut(0);
         Agent wonAgent = player.points >= AIEnemy.points ? player : AIEnemy;
-        SheetLogger.instance.currentData.Add($"Player won {wonAgent == player} dealing {player.points}, Enemy won {wonAgent == AIEnemy} dealing {AIEnemy.points}");
         GameObject WinsTxt;
         EndGamePlayerWinsTxt.GetComponent<TMP_Text>().text = "" + SaveData.instance.numOfWinsPerDifficulty[SaveData.instance.currentDifficulty];
         EndGameEnemyWinsTxt.GetComponent<TMP_Text>().text = "" + SaveData.instance.numOfLossesPerDifficulty[SaveData.instance.currentDifficulty];
@@ -967,6 +989,7 @@ public class GameManager : MonoBehaviour
     IEnumerator CountWonCards(Agent agent, GameObject DamageDealtTxt, Transform WonCardsTransform, Action<int> fn = null)
     {
         DamageDealtTxt.transform.parent.GetComponent<Denomination>().PositionInFrontOfCam = true;
+        DamageDealtTxt.transform.parent.rotation = cam.transform.rotation;
         DamageDealtTxt.GetComponent<Animator>().speed = 2;
         int cardDamageStoppedMoving = 0;
         int totalDamageDealt = 0;
@@ -1012,6 +1035,7 @@ public class GameManager : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        SaveData.instance.sessionNum++;
         SaveData.instance.Save();
     }
     public void PlayAgain()

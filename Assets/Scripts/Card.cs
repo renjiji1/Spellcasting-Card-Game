@@ -172,7 +172,7 @@ public class Card : Entity
     {
         switch(source)
         {
-            case MagicSource.Arcane:
+            case MagicSource.Eldritch:
                 int rng = Random.Range(0, OccultWords.Length);
                 WordSFX.clip = OccultWords[rng];
                 break;

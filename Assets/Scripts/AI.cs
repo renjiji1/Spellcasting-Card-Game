@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -110,7 +111,7 @@ public class AI : Agent
                 case MagicSource.Divine:
                     DivineSlot = slot;
                     break;
-                case MagicSource.Arcane:
+                case MagicSource.Eldritch:
                     ArcaneSlot = slot;
                     break;
             }
@@ -175,7 +176,7 @@ public class AI : Agent
         {
             currentGamePlan = GamePlan.Burnout;
         }
-        
+        gameManager.RepeatSupremeWordButton.GetComponent<Button>().interactable = false;
         yield return new WaitForSeconds(waitToChooseBehavior);
         int randomRange = 1000;
         ChooseCardToPlay(randomRange);
