@@ -167,7 +167,7 @@ public class AI : Agent
         }     
         agentRatingsOverThreshold /= cardRatings.Length;
         agentRatingsOverThreshold += playerManaLeftMaxEffectOnGamePlan * 2 * ((float)(player.maxMana - player.mana) / (float)player.maxMana - 0.5f);
-        agentRatingsOverThreshold += manaLeftEffectOnGamePlan * 2 * ((float)mana / (float)maxMana - 0.5f);
+        agentRatingsOverThreshold += manaLeftEffectOnGamePlan * 2 * ((float)mana / ((float)maxMana) - 0.5f);
         float gamePlanRatingThresh = propOfLowCardsForBurnoutGamePlan * cardRatings.Length;
         if(agentRatingsOverThreshold < gamePlanRatingThresh && gameManager.maxDuels - gameManager.currentDuelNum > player.mana)
         {
@@ -740,13 +740,13 @@ public class AI : Agent
             {
                 float burnoutTurn0SupremeTypeRatingEffect = -2;
 
-                duelPickRatings[i] = Mathf.Abs(defaultTargetRating - cardRating.rating);
+                duelPickRatings[i] = Mathf.Abs(GameManager.maxCardDenomination - cardRating.rating);
                 if(cardRating.card.type == gameManager.SupremeCard.type)
                 {
                     duelPickRatings[i] += Mathf.Clamp(burnoutTurn0SupremeTypeRatingEffect - cardRating.rating, -float.MaxValue, 0);
                 }
             }
-            Debug.Log($"gamePlan {gamePlan} turn {gameManager.turn}");
+
             if(gamePlan == GamePlan.Burnout && gameManager.turn == 1)
             {
                 int burnoutTurn1SupremeTypeRatingEffect = 3;

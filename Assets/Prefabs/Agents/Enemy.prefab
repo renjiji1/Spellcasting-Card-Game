@@ -5595,7 +5595,7 @@ MonoBehaviour:
   cardToFrontOfCamDelay: 0.2
   endTurnDelay: 0.1
   gamePlanRatingLowCardThreshold: 5
-  propOfLowCardsForBurnoutGamePlan: 0.6
+  propOfLowCardsForBurnoutGamePlan: 0.65
   playerManaLeftMaxEffectOnGamePlan: 0.2
   manaLeftEffectOnGamePlan: 0.2
   delayBetweenActivateAndUsePower: 0.5
